@@ -38,6 +38,12 @@
 
 화면 파일을 고치면 `index.html` 의 `?v=` 와 `app.js` 의 `VER` 를 같이 올린다 — Pages 가 파일을 10분 캐시해 고친 화면이 늦게 보인다.
 
+## 검색 최적화(10-18)
+
+- `index.html` 머리: 제목·설명·키워드(산재맵 · 산재보험 의료기관 찾기 · 산재 특진 의료기관 지도 등), canonical, 공유 미리보기(Open Graph·Twitter, `og-image.png` 1200×630 — `tools/og_image.py` 로 만든다), 구조화 데이터(JSON-LD `WebApplication`), `favicon.svg`.
+- `sitemap.xml` — 프로젝트 사이트라 `robots.txt` 는 도메인 루트(`himnuszkorea.github.io/robots.txt`, 없음 = 전부 허용)에만 둘 수 있어 두지 않았다. 사이트맵은 검색엔진 도구에서 직접 제출한다.
+- 숫자(6,742곳·220곳)가 설명·공유 그림에 박혀 있다 — 자료를 갱신하면 같이 고친다.
+
 ## 갱신 절차
 
 ```bash

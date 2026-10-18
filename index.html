@@ -3,8 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>산재맵 — 산재보험 지정의료기관 지도</title>
-<meta name="description" content="근로복지공단 산재보험 지정의료기관 전국 위치 검색 — 기관명·지역·종류 검색, 출발지 거리순, 길찾기">
+<title>산재맵 | 산재보험 지정의료기관·산재 특진 의료기관 지도</title>
+<meta name="description" content="산재맵은 근로복지공단 산재보험 지정의료기관 6,742곳과 소음성 난청 청력 특진 의뢰 의료기관 220곳, 공단 지사를 한 지도에서 찾는 무료 검색지도입니다. 지역·기관명·종류로 산재보험 의료기관을 찾고 가까운 순 정렬과 길찾기를 제공합니다.">
+<meta name="keywords" content="산재맵, 산재보험 의료기관 찾기, 산재 지정병원, 산재보험 지정의료기관, 산재 특진 의료기관 지도, 소음성 난청 특별진찰, 청력 특진, 근로복지공단 지사, 산재병원 지도">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://himnuszkorea.github.io/sanjaemap/">
+<meta name="theme-color" content="#1b2a4a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- 공유 미리보기(카카오톡·페이스북·X 등) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="산재맵">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://himnuszkorea.github.io/sanjaemap/">
+<meta property="og:title" content="산재맵 — 산재보험 지정의료기관·산재 특진 의료기관 지도">
+<meta property="og:description" content="산재보험 의료기관 찾기: 지정의료기관 6,742곳·소음성 난청 특진 의뢰기관 220곳·공단 지사를 지도에서 검색하고 가까운 순으로 보고 길찾기까지.">
+<meta property="og:image" content="https://himnuszkorea.github.io/sanjaemap/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="산재맵 — 산재보험 지정의료기관·산재 특진 의료기관 지도">
+<meta name="twitter:description" content="산재보험 의료기관 찾기 — 지정의료기관·소음성 난청 특진 의뢰기관·공단 지사 검색지도">
+<meta name="twitter:image" content="https://himnuszkorea.github.io/sanjaemap/og-image.png">
+<!-- 검색엔진용 구조화 데이터 -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"산재맵","alternateName":["산재보험 지정의료기관 검색지도","산재 특진 의료기관 지도"],
+ "url":"https://himnuszkorea.github.io/sanjaemap/","inLanguage":"ko","applicationCategory":"HealthApplication","operatingSystem":"Web",
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+ "description":"산재맵은 근로복지공단 산재보험 지정의료기관 6,742곳과 소음성 난청 청력 특진 의뢰 의료기관 220곳, 공단 지사를 한 지도에서 찾는 무료 검색지도입니다. 지역·기관명·종류로 산재보험 의료기관을 찾고 가까운 순 정렬과 길찾기를 제공합니다.",
+ "isBasedOn":[{"@type":"Dataset","name":"근로복지공단_산재보험 지정의료기관 현황정보","url":"https://www.data.go.kr/data/3044320/fileData.do","creator":{"@type":"GovernmentOrganization","name":"근로복지공단"}}]}
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
@@ -13,7 +40,7 @@
 <body>
 <header>
   <h1>산재맵 <small>산재보험 지정의료기관 검색지도</small></h1>
-  <p id="sub">자료를 불러오는 중…</p>
+  <p id="sub">산재보험 의료기관 찾기 — 전국 산재보험 지정의료기관·소음성 난청 청력 특진 의뢰기관·근로복지공단 지사 위치를 불러오는 중…</p>
 </header>
 <div class="wrap">
   <aside>
@@ -56,7 +83,8 @@
   </aside>
   <div id="map" role="region" aria-label="지도"></div>
 </div>
-<footer id="foot"></footer>
+<footer id="foot">산재맵은 공공데이터포털에 공개된 근로복지공단 「산재보험 지정의료기관 현황정보」와 소음성 난청 청력검사 특별진찰 의뢰 의료기관 현황을 지도로 보여 주는 산재보험 의료기관 찾기 서비스입니다. 배경지도 © 국토교통부 브이월드</footer>
+<noscript><p style="padding:16px">산재맵(산재보험 지정의료기관·산재 특진 의료기관 지도)은 자바스크립트가 필요합니다. 원자료는 <a href="https://www.data.go.kr/data/3044320/fileData.do">공공데이터포털 근로복지공단 산재보험 지정의료기관 현황정보</a>에서 받을 수 있습니다.</p></noscript>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
