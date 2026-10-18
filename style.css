@@ -5,7 +5,7 @@
   --k0:#c0392b; --k1:#1f6fb2; --k2:#7a6a3a; --k3:#2e8b57; --k4:#0e8a8a; --k5:#8e44ad; --k6:#8a8f99;
   --hear:#c8963e; --hearbg:#fbf4e8;
   /* 청력 특진 종류(특진 지도와 같은 색) · 공단 소속기관 */
-  --h0:#c8963e; --h1:#c0392b; --h2:#1f6fb2; --h3:#2e8b57;
+  --h0:#c8963e; --h1:#e8590c; --h2:#d63384; --h3:#1b2a4a;  /* 지정의료기관 종류 색(빨·파·초·청록·보라)과 겹치지 않게 */
   --o:#6d3fa6; --obg:#f4effa;
 }
 @media (prefers-color-scheme: dark){
@@ -13,14 +13,14 @@
     --bg:#11151c; --panel:#1a2029; --ink:#e7ebf2; --muted:#9aa4b5; --line:#2c3441;
     --accent:#e7ebf2; --gold:#d9a955; --warn:#e57368;
     --k0:#e0584a; --k1:#4f9be0; --k2:#b8a46a; --k3:#4fbf83; --k4:#3ec1c1; --k5:#b77ad6; --k6:#9aa0aa;
-  --hearbg:#2a2418; --o:#a98be0; --obg:#251f33;
+  --hearbg:#2a2418; --o:#a98be0; --obg:#251f33; --h3:#8fa8d8;
   }
 }
 :root[data-theme="dark"]{
   --bg:#11151c; --panel:#1a2029; --ink:#e7ebf2; --muted:#9aa4b5; --line:#2c3441;
   --accent:#e7ebf2; --gold:#d9a955; --warn:#e57368;
   --k0:#e0584a; --k1:#4f9be0; --k2:#b8a46a; --k3:#4fbf83; --k4:#3ec1c1; --k5:#b77ad6; --k6:#9aa0aa;
-  --hearbg:#2a2418; --o:#a98be0; --obg:#251f33;
+  --hearbg:#2a2418; --o:#a98be0; --obg:#251f33; --h3:#8fa8d8;
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -30,7 +30,7 @@ header h1{margin:0;font-size:18px;letter-spacing:-.3px}
 header p{margin:4px 0 0;color:var(--muted);font-size:12px}
 header p b{color:var(--warn);font-weight:600}
 .wrap{flex:1;display:flex;min-height:0}
-aside{width:380px;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);min-height:0;overflow-y:auto;overscroll-behavior:contain}
+aside{width:380px;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);min-height:0;overflow-y:scroll;overscroll-behavior:contain}  /* 패널 전체가 스크롤(스크롤바 항상 표시) */
 .filters{padding:12px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px}
 .filters input[type=search],.filters select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
 .filters select:disabled{opacity:.55}
@@ -54,13 +54,7 @@ aside{width:380px;display:flex;flex-direction:column;background:var(--panel);bor
 .hear-box .box-head{font-weight:400;font-size:12px}
 .hear-box .row label,.ofc-box .row label,.kind-box .row label{font-size:12px}
 label.sub{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12px}
-/* 청력 특진: 「특」 배지(색=특진 종류) — 동그라미(지정의료기관)·네모(공단 소속기관)와 모양으로 구분 */
-.hic{display:inline-flex;align-items:center;justify-content:center;flex:none;width:18px;height:18px;border-radius:50%;background:var(--hear);color:#fff;font:700 10px/1 "Malgun Gothic",sans-serif;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--hear)}
-.hic.sm{width:14px;height:14px;font-size:8px;border-width:1.5px}
-.hear-ic{width:22px;height:22px;border-radius:50%;color:#fff;font:700 11px/18px "Malgun Gothic",sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 0 0 2px #c8963e,0 1px 4px rgba(0,0,0,.45)}
-.hear-ic.only{box-shadow:0 0 0 2px #c8963e,0 0 0 4px #fff,0 1px 4px rgba(0,0,0,.45)}
 .hcl{width:36px;height:36px;border-radius:50%;background:#1b2a4a;color:#fff;font:700 12px/30px "Malgun Gothic",sans-serif;text-align:center;border:3px solid #c8963e;box-shadow:0 0 0 2px #fff,0 1px 5px rgba(0,0,0,.5)}
-.hcl::before{content:"특 "}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block;flex:none;background:var(--o)}
 .ofc-ic{position:relative;width:20px;height:20px;border-radius:3px;background:#6d3fa6;border:2px solid #fff;color:#fff;font:700 11px/16px "Malgun Gothic",sans-serif;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.45)}
 .ofc-ic.multi::after{content:"";position:absolute;right:-6px;top:-6px;width:7px;height:7px;border-radius:50%;background:#fff;border:2px solid #6d3fa6}
@@ -118,3 +112,5 @@ footer a{color:inherit}
 header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
 [hidden]{display:none!important}
 .hear-box summary .count{white-space:nowrap;font-weight:400}
+.dot.lg{width:12px;height:12px;box-shadow:0 0 0 1.5px #fff,0 0 0 2.5px rgba(0,0,0,.25)}
+.dot.ring{width:12px;height:12px;background:var(--hear);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--hear)}

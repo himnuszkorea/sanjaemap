@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20261018c">
 </head>
 <body>
 <header>
@@ -31,10 +31,10 @@
         <label class="box-head"><input type="checkbox" id="ofcOn"><span class="sq"></span>공단 소속기관(지사 등) 함께 보기 <span class="count" id="ofcN"></span></label>
         <div class="row" id="ofcKinds" hidden></div>
       </div>
-      <!-- 특진 기관 설정은 필요할 때 펼친다(접혀 있어도 「특」 표식은 지도에 보인다) -->
+      <!-- 특진 기관 설정은 필요할 때 펼친다(접혀 있어도 특진 기관 동그라미는 지도에 보인다) -->
       <details class="hear-box" id="hearBox">
-        <summary><span class="hic">특</span>소음성 난청 특진기관 <span class="count" id="hearN"></span><span class="count" id="hearState"></span></summary>
-        <label class="box-head"><input type="checkbox" id="hearOn" checked>지도에 「특」 표식으로 표시</label>
+        <summary><span class="dot ring"></span>소음성 난청 특진기관 <span class="count" id="hearN"></span><span class="count" id="hearState"></span></summary>
+        <label class="box-head"><input type="checkbox" id="hearOn" checked>지도에 표시</label>
         <div class="row" id="hKinds"></div>
         <label class="sub"><input type="checkbox" id="hearOnly">특진 기관만 보기</label>
       </details>
@@ -60,7 +60,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="config.js"></script>
-<script src="app.js"></script>
+<script src="config.js?v=20261018c"></script>
+<script src="app.js?v=20261018c"></script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 // 산재맵(산재보험 지정의료기관 검색지도) — data/hospitals.json(tools/build_data.py 생성)을 읽어 그린다.
-// 표식 세 가지: 동그라미 = 산재보험 지정의료기관 · 「특」 배지 = 소음성 난청 청력 특진 의뢰기관 · 보라 네모 = 공단 소속기관.
+// 표식: 작은 동그라미 = 산재보험 지정의료기관(색=종류) · 큰 동그라미 = 소음성 난청 청력 특진 의뢰기관(색=특진 종류, 지정 목록 밖은 점선 테두리) · 보라 네모 = 공단 소속기관.
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
+const VER = "20261018c";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
 const LIST_STEP = 200;  // 목록은 200곳씩 그린다(6천여 곳을 한 번에 그리면 느리다)
@@ -69,7 +70,7 @@ const OKINDS = [
 const OLABEL = {"공단 본부": "본부", "지역본부": "지역본부", "지사": "지사", "특수형태근로종사자센터": "특고센터", "업무상질병판정위원회": "질병판정위"};
 const OLETTER = {"공단 본부": "공", "지역본부": "본", "지사": "지", "특수형태근로종사자센터": "특", "업무상질병판정위원회": "질"};
 
-fetch("data/hospitals.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(init)
+fetch(`data/hospitals.json?v=${VER}`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(init)
   .catch(err => { $("sub").textContent = `자료를 불러오지 못했습니다(${err.message}).`; });
 
 function init(d){
@@ -86,10 +87,9 @@ function init(d){
     if (c.desig) c.marker = L.circleMarker([c.lat, c.lng], {
       radius: 7, weight: 1.5, color: "#fff", fillColor: css(`--k${c.kind}`), fillOpacity: .92
     }).bindPopup(() => popup(c)).bindTooltip(c.name);
-    if (c.hk >= 0) c.hmarker = L.marker([c.lat, c.lng], {
-      icon: L.divIcon({className: "", html: `<div class="hear-ic${c.desig ? "" : " only"}" style="background:${css(`--h${c.hk}`)}">특</div>`,
-                       iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -11]}),
-      alt: "청력 특진 " + c.name, zIndexOffset: 500
+    if (c.hk >= 0) c.hmarker = L.circleMarker([c.lat, c.lng], {
+      radius: 9, weight: 2.5, color: "#fff", dashArray: c.desig ? null : "3 2",
+      fillColor: css(`--h${c.hk}`), fillOpacity: .95
     }).bindPopup(() => popup(c)).bindTooltip("청력 특진 · " + c.name);
   });
   // 공단 소속기관 — 같은 건물에 있는 기관(예: 지역본부+특고센터)은 표식 하나로 묶는다
@@ -140,7 +140,7 @@ function buildFilters(){
   HKINDS.forEach((k, i) => {
     const n = H.filter(c => c.hk === i).length;
     if (n) hKindBox.insertAdjacentHTML("beforeend",
-      `<label><input type="checkbox" data-hk="${i}" checked><span class="hic sm" style="background:var(--h${i});box-shadow:0 0 0 1.5px var(--h${i})">특</span>${esc(HSHORT[k] || k)} ${n}</label>`);
+      `<label><input type="checkbox" data-hk="${i}" checked><span class="dot lg" style="background:var(--h${i})"></span>${esc(HSHORT[k] || k)} ${n}</label>`);
   });
   $("hearN").textContent = `${H.filter(c => c.hk >= 0).length}곳`;
   $("ofcN").textContent = `${offices.length}곳`;
@@ -207,7 +207,7 @@ function row(c){
   const li = document.createElement("li");
   li.tabIndex = 0;
   li.className = (c.asHear ? "hear" : "") + (c.lat == null ? " nogeo" : "");
-  const mark = c.asHear ? `<span class="hic sm" style="background:var(--h${c.hk});box-shadow:0 0 0 1.5px var(--h${c.hk})">특</span>`
+  const mark = c.asHear ? `<span class="dot lg" style="background:var(--h${c.hk})"></span>`
                         : `<span class="dot" style="background:var(--k${c.kind})"></span>`;
   li.innerHTML = `<div class="nm">${mark}${esc(c.name)}` +
     (c.hk >= 0 ? `<span class="tag h">청력 특진 · ${esc(HSHORT[c.hkName] || c.hkName)}</span>` : "") +
@@ -257,7 +257,7 @@ function apply(fit = true){
   const hk = new Set([...hKindBox.querySelectorAll("input:checked")].map(i => +i.dataset.hk));
   hits = H.filter(c => {
     if ((sido && (c.sido || "기타") !== sido) || (sgg && (c.sgg || "(미상)") !== sgg) || !q.every(w => c.text.includes(w))) return false;
-    // 특진 기관은 특진 표시가 켜져 있으면 「특」 배지로, 꺼져 있으면 일반 지정의료기관 동그라미로 보인다
+    // 특진 기관은 특진 표시가 켜져 있으면 특진 색 큰 동그라미로, 꺼져 있으면 일반 지정의료기관 동그라미로 보인다
     c.asHear = c.hk >= 0 && hearOn.checked && hk.has(c.hk);
     return c.asHear || (!hearOnly.checked && c.desig && kinds.has(c.kind));
   });
