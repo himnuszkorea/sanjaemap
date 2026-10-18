@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산재보험 지정의료기관 지도</title>
+<meta name="description" content="근로복지공단 산재보험 지정의료기관 전국 위치 검색 — 기관명·지역·종류 검색, 출발지 거리순, 길찾기">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>산재보험 지정의료기관 검색지도</h1>
+  <p id="sub">자료를 불러오는 중…</p>
+</header>
+<div class="wrap">
+  <aside>
+    <div class="filters">
+      <input id="q" type="search" placeholder="기관명·주소·전화번호 검색" aria-label="검색">
+      <div class="two">
+        <select id="sido" aria-label="시도"><option value="">전국</option></select>
+        <select id="sgg" aria-label="시군구" disabled><option value="">시·군·구 전체</option></select>
+      </div>
+      <div class="row" id="kinds"></div>
+      <label class="hear"><input type="checkbox" id="hearOnly"><span class="ring"></span>청력 특진 의뢰기관만 <span class="count" id="hearN"></span></label>
+      <form class="origin" id="orgForm" autocomplete="off">
+        <input id="orgQ" type="search" placeholder="출발지 주소·장소 (예: 광산구청)" aria-label="출발지 주소·장소">
+        <button class="btn" type="submit">찾기</button>
+        <button class="btn" type="button" id="gps" title="현재 위치를 출발지로">내 위치</button>
+      </form>
+      <div class="org-now" id="orgNow">지도를 우클릭(휴대폰은 길게 누르기)해도 출발지로 정할 수 있습니다.</div>
+      <div class="row">
+        <div class="sort" role="group" aria-label="정렬">
+          <button type="button" data-sort="name" aria-pressed="true">이름순</button>
+          <button type="button" data-sort="dist" aria-pressed="false" disabled title="출발지를 먼저 정하세요">거리순</button>
+        </div>
+        <div class="count" id="count"></div>
+      </div>
+    </div>
+    <ul id="list"></ul>
+  </aside>
+  <div id="map" role="region" aria-label="지도"></div>
+</div>
+<footer id="foot"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

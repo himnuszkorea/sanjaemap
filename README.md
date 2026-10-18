@@ -1,0 +1,44 @@
+# 산재보험 지정의료기관 검색지도
+
+근로복지공단 산재보험 지정의료기관(전국 6,742곳, 2025-12-31 기준)을 브이월드 지도 위에서
+기관명·지역·종류로 찾고, 출발지에서 가까운 순으로 보고, 카카오·네이버 길찾기로 넘어가는 정적 웹페이지.
+
+- 주소: https://himnuszkorea.github.io/sanjaemap/ (GitHub Pages)
+- 자료: 공공데이터포털 「근로복지공단_산재보험 지정의료기관 현황정보」 https://www.data.go.kr/data/3044320/fileData.do
+  (이용허락범위 제한 없음, 연 1회 갱신 — 차기 등록 예정 2027-06-30)
+- 배경지도·주소 검색: 국토교통부 브이월드
+
+## 구성
+
+| 파일 | 내용 |
+| --- | --- |
+| `index.html` · `style.css` · `app.js` | 화면. 빌드 단계 없이 그대로 서빙된다 |
+| `config.js` | 브이월드 키(`tools/write_config.py` 가 만든다) |
+| `data/hospitals.json` | 생성물 — 행 배열(`meta.fields` 순서), 좌표 포함 |
+| `raw/` | 내려받은 원본 CSV(CP949) |
+| `tools/build_data.py` | CSV → `data/hospitals.json` (브이월드 지오코더, 캐시 `tools/geocode_cache.json`) |
+
+## 자료의 한계(화면에도 적혀 있다)
+
+- 원본 칸은 **의료기관기호·의료기관명·우편번호·주소·전화번호** 뿐이다. **종류는 기관명으로 추정**한다
+  (`kind_of()` — 치과 → 한방 → 요양병원 → 대학병원·의료원 → 병원 → 의원 → 기타 순).
+- 지정·해지는 수시로 바뀌는데 공개 파일은 연 1회 갱신된다. 화면에 「방문 전 전화 확인」을 둔다.
+- 위치는 주소를 좌표로 바꾼 것이다. 못 찾은 곳은 목록에만 「위치 미확인」으로 나온다.
+- 「청력 특진」 표시는 [소음성 난청 특별진찰 의뢰 의료기관 지도](https://gj-hearing-clinic-map.vercel.app/)의
+  데이터(같은 작업 루트 `claude-code/gj-hearing-clinic-map/data/clinics.json`, 의뢰불가 등 비고 기관 제외)와 의료기관기호가 같은 곳이다.
+
+## 갱신 절차
+
+```bash
+# 1) 새 CSV 를 raw/ 에 둔다(파일 이름에 기준일 YYYYMMDD 를 넣는다 — 화면 기준일이 여기서 나온다)
+# 2) 좌표 생성(새 주소만 브이월드 호출, 중단돼도 다시 돌리면 이어받는다)
+py -3 tools/build_data.py raw/hospitals_YYYYMMDD.csv
+# 3) 확인 후 커밋·푸시 → Pages 가 자동 반영
+```
+
+키는 저장소 루트 `.env.local`(커밋 안 함)에 `VWORLD_KEY=...` 한 줄. 화면용 `config.js` 는
+`py -3 tools/write_config.py` 로 만든다 — 프런트엔드 키는 브라우저에 그대로 보이므로,
+브이월드에서 이 키의 서비스 URL 을 `https://himnuszkorea.github.io` 로만 등록해 다른 곳에서 못 쓰게 한다.
+
+키 없이 화면만 시험할 때: `py -3 tools/build_data.py raw/<csv> --no-geocode` (캐시에 있는 좌표만 쓴다),
+로컬 서버 `py -3 -m http.server 8765` (브이월드 타일은 키 도메인 제한으로 로컬에서 안 뜰 수 있다).
