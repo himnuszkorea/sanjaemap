@@ -12,12 +12,13 @@
 **청력 특진 의뢰기관 220곳(「특」 배지, 지정 목록과 합친 128 + 특진만 92)·공단 소속기관 78곳(보라 네모) 추가**(사용자 요청, 특진 지도 데이터 재사용). 로컬 미리보기에서 타일·마커 6,730·필터·거리순·길찾기 확인. **10-18 게시**: public `himnuszkorea/sanjaemap` 푸시 → GitHub Pages(main / root) https://himnuszkorea.github.io/sanjaemap/ — 이후 main 에 푸시하면 자동 반영.
 
 ## 3. 다음 작업
-0. **네이버 서치어드바이저 등록 미완** — 앱 내장 브라우저에서 searchadvisor.naver.com 이 안전 정책으로 막힘. 사이트 등록(`https://himnuszkorea.github.io/sanjaemap`) → HTML 태그(`naver-site-verification`)를 `index.html` 머리(구글 태그 옆)에 넣고 푸시 → 소유확인 → 사이트맵 `sitemap.xml` 제출·웹 페이지 수집 요청.
 1. (사용자) 운영 주소에서 실사용 확인 — 내 위치·휴대폰
 2. (선택) 위치 미확인 12곳 손보정(`OVERRIDE` 에 현행 도로명 주소) · 청력 특진 지도에서 이 지도로 링크 한 줄
 3. 2027-06-30 이후 새 CSV 로 갱신(README 절차)
 
 - **구글 서치콘솔(10-18)**: URL 접두어 속성 `https://himnuszkorea.github.io/sanjaemap/` · HTML 태그로 소유 확인 완료(`index.html` 의 `google-site-verification` — 지우면 확인이 풀린다) · `sitemap.xml` 제출 · 첫 페이지 색인 생성 요청.
+
+- **네이버 서치어드바이저(10-18, Aside 브라우저로 진행)**: 하위 경로 등록 불가(「URL을 호스트 단위로 입력해주세요」) → 루트 `https://himnuszkorea.github.io` 로 등록, 저장소 `himnuszkorea/himnuszkorea.github.io`(`C:\claudecode\himnuszkorea.github.io`) 첫 화면의 HTML 태그로 소유확인 완료(보안문자는 사용자 입력) · 사이트맵 `sitemap.xml`·`sanjaemap/sitemap.xml` 제출 · 웹 페이지 수집 요청 `/`·`/sanjaemap/`. 루트에 `robots.txt` 도 생겼다.
 
 ## 4. 결정
 - 공개 저장소이므로 커밋 전 `.env.local`·다른 키가 들어가지 않았는지 본다(`config.js` 의 브이월드 키만 의도된 공개 — 서비스 URL himnuszkorea.github.io 제한).
