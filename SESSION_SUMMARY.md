@@ -1,40 +1,58 @@
 # Session Summary
-최종 갱신: 2026-10-18 (노트북)
+최종 갱신: 2026-10-18 14:10 (노트북)
 
-## 1. 목적
-근로복지공단 산재보험 지정의료기관(공공데이터포털, 6,742곳, 2025-12-31 기준)을 청력 특진 지도
-(`claude-code/gj-hearing-clinic-map/`)처럼 검색되는 지도로 만들어 **GitHub Pages**(사용자 지시, 무료)로 공개한다.
+## 1. 프로젝트 목적
+**산재맵** — 근로복지공단 산재보험 지정의료기관(공공데이터포털 CSV, 6,742곳, 2025-12-31 기준)·소음성 난청 청력 특진 의뢰기관 220곳·공단 소속기관 78곳을
+브이월드 지도에서 찾는 무료 정적 웹페이지. GitHub Pages 공개 https://himnuszkorea.github.io/sanjaemap/ (public `himnuszkorea/sanjaemap`).
 
 ## 2. 현재 상태
-10-18: 브이월드 새 키(서비스 URL himnuszkorea.github.io, WMTS/TMS·검색·지오코더) 발급 → `.env.local`·`config.js`.
-**좌표 6,742곳 중 6,730곳**(주소 지오코딩 6,685 + 기관명 장소 검색 45), **위치 미확인 12곳**(옛 지번·리·반 주소, 목록에만 표시).
-원본·좌표 시도 불일치 0건.
-**청력 특진 의뢰기관 220곳(「특」 배지, 지정 목록과 합친 128 + 특진만 92)·공단 소속기관 78곳(보라 네모) 추가**(사용자 요청, 특진 지도 데이터 재사용). 로컬 미리보기에서 타일·마커 6,730·필터·거리순·길찾기 확인. **10-18 게시**: public `himnuszkorea/sanjaemap` 푸시 → GitHub Pages(main / root) https://himnuszkorea.github.io/sanjaemap/ — 이후 main 에 푸시하면 자동 반영.
+기능·게시·검색 등록까지 완료. 구글 서치콘솔(속성 `/sanjaemap/`)·네이버 서치어드바이저(루트 `himnuszkorea.github.io`) 모두 소유확인·사이트맵 제출·수집 요청을 마쳤다.
+미커밋 없음(두 저장소 모두 origin/main 푸시). 남은 것은 검색 노출 확인과 선택 보정뿐이다.
 
-## 3. 다음 작업
-1. (사용자) 운영 주소에서 실사용 확인 — 내 위치·휴대폰
-2. (선택) 위치 미확인 12곳 손보정(`OVERRIDE` 에 현행 도로명 주소) · 청력 특진 지도에서 이 지도로 링크 한 줄
-3. 2027-06-30 이후 새 CSV 로 갱신(README 절차)
+## 3. 완료된 작업
+- [10-18] CSV 수집·`tools/build_data.py`(브이월드 지오코딩 + 장소 검색 보완) → 좌표 6,730/6,742, 위치 미확인 12곳(옛 지번·리·반 주소)
+- [10-18] 화면 `index.html`·`style.css`·`app.js` — 검색·시도/시군구·종류(이름 추정)·거리순·카카오/네이버 길찾기, 좌측 패널 전체 스크롤
+- [10-18] 청력 특진 220곳(지정 목록과 같은 기관 128 합침 + 특진만 92)·공단 소속기관 78곳(보라 네모) — 특진 지도 데이터 재사용
+- [10-18] 사용자 요청 화면 조정: 이름 「산재맵」, 특진 박스 접이식(소속기관 박스 아래), 「특」 배지 → 특진 종류 색 큰 동그라미(지정 목록 밖은 점선)
+- [10-18] 검색 최적화: 제목·설명·키워드·canonical·OG/Twitter(`og-image.png`)·JSON-LD·`favicon.svg`·`sitemap.xml`
+- [10-18] 구글 서치콘솔: URL 접두어 속성, HTML 태그 확인, sitemap 제출, 색인 요청(내장 브라우저)
+- [10-18] 네이버: 하위 경로 거부 → 루트 저장소 `himnuszkorea/himnuszkorea.github.io`(첫 화면·robots.txt·sitemap.xml) 신설, 태그 확인(보안문자는 사용자), 사이트맵 2개·수집 요청 `/`·`/sanjaemap/`(Aside)
 
-- **구글 서치콘솔(10-18)**: URL 접두어 속성 `https://himnuszkorea.github.io/sanjaemap/` · HTML 태그로 소유 확인 완료(`index.html` 의 `google-site-verification` — 지우면 확인이 풀린다) · `sitemap.xml` 제출 · 첫 페이지 색인 생성 요청.
+## 4. 미완료 작업
+- 검색 노출 — 진행: 등록·요청 완료 / 남은 것: 며칠~몇 주 뒤 구글 서치콘솔 「페이지」·네이버 「리포트」에서 색인 여부 확인
+- (선택) 위치 미확인 12곳 — 남은 것: `tools/build_data.py` `OVERRIDE` 에 현행 도로명 주소 추가 후 재실행
 
-- **네이버 서치어드바이저(10-18, Aside 브라우저로 진행)**: 하위 경로 등록 불가(「URL을 호스트 단위로 입력해주세요」) → 루트 `https://himnuszkorea.github.io` 로 등록, 저장소 `himnuszkorea/himnuszkorea.github.io`(`C:\claudecode\himnuszkorea.github.io`) 첫 화면의 HTML 태그로 소유확인 완료(보안문자는 사용자 입력) · 사이트맵 `sitemap.xml`·`sanjaemap/sitemap.xml` 제출 · 웹 페이지 수집 요청 `/`·`/sanjaemap/`. 루트에 `robots.txt` 도 생겼다.
+## 5. 주요 파일
+- `index.html` — 머리 메타(검색·공유·구글 확인 태그), 필터 패널 마크업, `?v=` 판 번호
+- `app.js` — `init()`(행 → 객체·표식), `apply()`(필터·목록·묶음), `renderMore()`(200곳씩 + 소속기관 구역), 출발지 `setOrigin`·`findPlace`·`findOffice`, `VER`
+- `style.css` — 색 토큰 `--k0~k6`(지정 종류)·`--h0~h3`(특진 종류)·`--o`(소속기관)
+- `tools/build_data.py` — CSV → `data/hospitals.json`(행 배열 + offices), `kind_of()`·`region()`·`place_search()`; 특진·소속기관은 `../claude-code/gj-hearing-clinic-map/data/clinics.json` 에서 읽음
+- `tools/write_config.py`(.env.local → config.js) · `tools/og_image.py`(공유 그림) · `tools/geocode_cache.json`(좌표 캐시)
+- `C:\claudecode\himnuszkorea.github.io\` — 루트 사이트(첫 화면·robots.txt·sitemap.xml·네이버 태그)
 
-## 4. 결정
-- 공개 저장소이므로 커밋 전 `.env.local`·다른 키가 들어가지 않았는지 본다(`config.js` 의 브이월드 키만 의도된 공개 — 서비스 URL himnuszkorea.github.io 제한).
-- 호스팅: GitHub Pages(사용자 10-18) — 공개 저장소 필요라 private `claude-code` 와 분리한 별도 저장소. Vercel 하위경로안은 탈락.
-- 화면용 브이월드 키는 `config.js` 로 공개(프런트엔드 키는 어차피 노출) — 서비스 URL 제한으로 막는다. 좌표 생성용 `.env.local` 은 커밋 안 함.
-- 종류는 원자료에 없어 **이름으로 추정**(화면에 표기). 기타 30곳은 「의료법인 ○○의료재단」 등 이름만으론 모르는 곳.
-- 지오코딩 규칙은 특진 지도 `build_data.py` 에서 복사(저장소가 달라 import 안 함) — 고칠 땐 두 곳을 같이 본다.
-- 주소로 못 찾으면 브이월드 장소 검색(「시군구 기관명」)으로 보완 — **시도·시군구 전체가 같고, 원본에 도로명이 있으면 같은 도로일 때만** 쓴다(처음엔 시 단위만 봐서 경동한의원이 처인구→기흥구 동명 기관에 붙었다).
-- 좌측 패널은 통째로 스크롤(설정이 길어도 목록까지 내려간다). 특진 박스는 소속기관 박스 아래 접이식(10-18 사용자) — 접혀 있어도 특진 동그라미는 보이고 제목에 「표시 중/특진만 보기/숨김」 상태가 나온다.
-- 특진 기관: 「특」 배지는 10-18 사용자 요청으로 없앴다 — 특진 종류 색의 큰 동그라미(지정 목록 밖은 점선 테두리, 색은 지정의료기관 종류 색과 겹치지 않게 금·주황·분홍·남색), 묶음은 남색+금테로 따로. 특진 표시가 켜져 있으면 이 표식, 끄면 지정의료기관 동그라미로 돌아간다. 「특진 기관만 보기」. 소속기관은 목록 맨 아래 별도 구역(그린 목록 바로 아래, 「더 보기」 전에도 보이게).
-- 목록은 200곳씩 그리고 「더 보기」, 지도는 markercluster + canvas.
+## 6. 핵심 판단 및 결정사항
+- 호스팅 GitHub Pages(사용자 지시) / 탈락: 특진 지도 Vercel 하위경로(키 재사용은 되나 사용자가 Pages 선택)
+- 화면용 브이월드 키는 `config.js` 로 공개 — 서비스 URL `himnuszkorea.github.io` 로 제한된 키. 좌표 생성용 `.env.local` 은 커밋 안 함
+- 종류는 원자료에 없어 기관명으로 추정(화면에 표기). 기타 30곳은 「의료법인 ○○의료재단」 등
+- 장소 검색 보완은 시도·시군구 전체 일치 + 원본 도로명 일치일 때만 / 처음엔 시 단위만 봐서 경동한의원이 처인구→기흥구 동명 기관에 붙었다
+- 특진 표식: 「특」 배지 → 색 동그라미(사용자 10-18), 묶음은 남색+금테로 지정의료기관 묶음과 분리
+- 네이버는 루트 저장소 경유 / 이유: 서버가 하위 경로를 코드 101(「URL을 호스트 단위로 입력해주세요」)로 거부
+- 공유 그림·아이콘에 십자 모양 쓰지 않음(적십자 표장 유사 회피)
 
-## 5. 함정
-- GitHub Pages 는 파일을 10분 캐시한다 — 화면 파일을 고치면 `index.html` 의 `?v=` 와 `app.js` 의 `VER` 를 함께 올린다(사용자가 이전 판을 보고 「스크롤이 안 된다」고 한 일이 있다).
-- 2026.7. 광주·전남 통합으로 브이월드 정제 주소가 「전남광주통합특별시」로 나온다 — 시도는 원본 표기로, 소속기관은 구 이름(동·서·남·북·광산구 → 광주)으로 가른다.
-- 브이월드 지오코더가 수백 건마다 502·연결 끊김을 낸다 — 재시도 5회, 끝내 안 되면 건너뛰고 다음 실행에서 그것만 다시 찾는다(캐시 이어받기).
-- 원본 CSV 는 **CP949**. 시도 표기가 「서울/서울특별시」, 「세종/세종시」 등 섞여 있어 `SIDO_SHORT` 로 맞춘다.
-- 이름 앞 괄호(「(의료법인)…」)가 이름순 정렬을 흐려 정렬용 이름에서 뺀다.
-- 미리보기 설정은 루트 `C:\claudecode\.claude\launch.json` 의 `sanjaemap`(8765) — 하위 폴더 launch.json 은 안 읽힌다.
+## 7. 해결되지 않은 문제
+없음 (위치 미확인 12곳은 목록에만 「위치 미확인」으로 표시 — 의도된 처리)
+
+## 8. 다음 작업 순서
+1. 2026-10-25 무렵 구글 서치콘솔(속성 `https://himnuszkorea.github.io/sanjaemap/`) 「페이지」 보고서와 네이버 서치어드바이저(`https://himnuszkorea.github.io`) 리포트에서 색인 여부 확인
+2. (선택) `tools/build_data.py` `OVERRIDE` 에 위치 미확인 12곳 현행 주소 → `py -3 tools/build_data.py raw/hospitals_20251231.csv` → 커밋·푸시
+3. (선택) 청력 특진 지도(`claude-code/gj-hearing-clinic-map/index.html`)에 산재맵 링크 한 줄
+4. 2027-06-30 이후 새 CSV 로 갱신(README 「갱신 절차」) — 설명·공유 그림·루트 첫 화면의 숫자(6,742·220)도 같이 고친다
+
+## 9. 주의사항
+- `index.html` 의 `google-site-verification`, 루트 저장소 `index.html` 의 `naver-site-verification` 태그를 지우면 소유확인이 풀린다
+- 화면 파일을 고치면 `index.html` 의 `?v=` 와 `app.js` 의 `VER` 를 함께 올린다(Pages 10분 캐시 — 사용자가 이전 판을 보고 「스크롤이 안 된다」고 한 일이 있다)
+- 공개 저장소 — 커밋 전 `.env.local`·다른 키가 들어가지 않았는지 확인(`config.js` 의 브이월드 키만 의도된 공개)
+- 원본 CSV 는 CP949. 2026.7. 광주·전남 통합으로 정제 주소가 「전남광주통합특별시」로 나와 시도는 원본 표기·구 이름으로 가른다
+- 브이월드 지오코더는 수백 건마다 502·연결 끊김 — 재시도 5회, 실패분은 캐시에 넣지 않고 다음 실행에서 다시 찾는다
+- 앱 내장 브라우저는 searchadvisor.naver.com 을 막는다 → 네이버 작업은 Aside(로그인·보안문자는 사용자). Aside 는 REPL 이 연 탭이 사용자 화면에 안 보일 수 있다 — 보이는 탭에 `attachBrowserTab` 으로 띄운다
+- 미리보기는 루트 `C:\claudecode\.claude\launch.json` 의 `sanjaemap`(8765)
