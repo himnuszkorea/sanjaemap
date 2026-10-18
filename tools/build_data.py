@@ -43,8 +43,10 @@ SIDO_SHORT = {
     "충북": "충북", "충청북도": "충북", "충남": "충남", "충청남도": "충남",
     "전북": "전북", "전라북도": "전북", "전북특별자치도": "전북", "전남": "전남", "전라남도": "전남",
     "경북": "경북", "경상북도": "경북", "경남": "경남", "경상남도": "경남",
-    "제주": "제주", "제주도": "제주", "제주특별자치도": "제주",
+    "제주": "제주", "제주도": "제주", "제주특별자치도": "제주", "전남광주": "광주",  # 특진 현황의 광주 표기
 }
+# 청력 특진 의뢰기관 종류(특진 지도 원자료의 의료기관종류 + 공단 소속병원)
+HKINDS = ["공단 소속병원", "상급종합병원", "종합병원", "청력검사전문의료기관"]
 KINDS = ["대학병원·의료원", "병원", "요양병원", "의원", "치과", "한방", "기타"]
 
 
@@ -235,10 +237,6 @@ def main(src, no_geocode=False):
         for e in errors[:20]:
             print("  오류:", e)
 
-    hearing = set()
-    if HEARING.exists():
-        hearing = {c["code"] for c in json.loads(HEARING.read_text(encoding="utf-8"))["clinics"] if c.get("code") and not c.get("note")}
-
     # 주소로 못 찾은 곳은 기관명을 장소 검색으로 찾는다(주소가 옛 번지·오기인 경우가 많다). 지역·이름이 맞아야 쓴다.
     if not no_geocode:
         for r in rows:
@@ -253,8 +251,28 @@ def main(src, no_geocode=False):
                     print("  장소 검색 오류:", r["의료기관명"], e)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
 
+    # 청력 특진 의뢰기관(특진 지도와 같은 기준 — 비고 기재 기관 제외). 지정 목록과는 기호로, 기호가 없거나 다르면
+    # 같은 시도 안의 이름으로 맞춘다(공단 소속병원은 기호가 비어 있고, 충주의료원은 특진 현황의 기호가 한 자리 다르다).
+    hdata = json.loads(HEARING.read_text(encoding="utf-8")) if HEARING.exists() else {"clinics": [], "offices": [], "meta": {}}
+    hclin = [c for c in hdata["clinics"] if not c.get("note")]
+    by_code = {r["의료기관기호"].strip(): i for i, r in enumerate(rows)}
+    by_name = {(region(r["주소"])[0], name_core(r["의료기관명"])): i for i, r in enumerate(rows)}
+    hmatch, honly = {}, []
+    for c in hclin:
+        i = by_code.get(c["code"])
+        if i is None:
+            i = by_name.get((region(c["addr"])[0], name_core(c["name"])))
+        if i is None:
+            honly.append(c)
+        else:
+            hmatch[i] = c
+
+    def htel(c, tel):
+        t = c.get("tel", "").strip()
+        return t if t and t.replace(" ", "") != tel.replace(" ", "") else ""
+
     out, failed, by_place = [], [], 0
-    for r in rows:
+    for i, r in enumerate(rows):
         addr = re.sub(r"\s+", " ", r["주소"]).strip()
         pt = cache.get(r["주소"].strip())
         if not pt and cache.get(place_key(r)):
@@ -265,31 +283,49 @@ def main(src, no_geocode=False):
         if not sido:
             sido, sgg = region(addr)
         zipc = r["우편번호"].strip()
+        h = hmatch.get(i)
+        if h and h.get("lat") and not ok:  # 지정 목록 주소로 못 찾았으면 특진 지도 좌표를 쓴다
+            pt, ok = {"lat": h["lat"], "lng": h["lng"]}, True
+        tel = r["전화번호"].strip()
         out.append([
             r["의료기관기호"].strip(), r["의료기관명"].strip(), zipc.zfill(5) if zipc.isdigit() else zipc,
-            addr, r["전화번호"].strip(), KINDS.index(kind_of(r["의료기관명"])), sido, sgg,
+            addr, tel, KINDS.index(kind_of(r["의료기관명"])), sido, sgg,
             round(pt["lat"], 6) if ok else None, round(pt["lng"], 6) if ok else None,
-            1 if r["의료기관기호"].strip() in hearing else 0,
+            HKINDS.index(h["kind"]) if h else -1, 1, htel(h, tel) if h else "",
         ])
         if not ok:
             failed.append(f'{r["의료기관명"]} | {addr}')
+    for c in honly:  # 특진만 하는 곳(지정 목록에 없음) — 특진 지도의 주소·좌표를 그대로 쓴다
+        sido, sgg = region(c.get("addr_std") or c["addr"])
+        if not sido:  # 정제 주소가 '전남광주통합특별시'(2026.7. 통합)면 원본 표기로 광주·전남을 가른다
+            sido, sgg = region(c["addr"])
+        out.append([c["code"], c["name"], "", re.sub(r"\s+", " ", c["addr"]).strip(), c.get("tel", "").strip(),
+                    KINDS.index(kind_of(c["name"])), sido, sgg, c.get("lat"), c.get("lng"),
+                    HKINDS.index(c["kind"]), 0, ""])
+
+    okeep = ("name", "short", "kind", "addr", "area", "url", "lat", "lng")
+    offices = [{k: o.get(k, "") for k in okeep} for o in hdata.get("offices", []) if o.get("lat")]
 
     m = re.search(r"(\d{8})", Path(src).stem)
     asof = f"{m[1][:4]}-{m[1][4:6]}-{m[1][6:]}" if m else ""
+    hm = re.search(r"\((\d{4})(\d{2})(\d{2})", hdata["meta"].get("source", ""))
     meta = {"title": "근로복지공단 산재보험 지정의료기관 현황정보", "asof": asof,
             "source": "공공데이터포털 data.go.kr/data/3044320 (근로복지공단)",
-            "built": date.today().isoformat(), "count": len(out), "geocoded": len(out) - len(failed),
-            "fields": ["code", "name", "zip", "addr", "tel", "kind", "sido", "sgg", "lat", "lng", "hearing"],
-            "kinds": KINDS}
+            "hearing_asof": f"{hm[1]}-{hm[2]}-{hm[3]}" if hm else "",
+            "offices_fetched": hdata["meta"].get("offices_fetched", ""),
+            "built": date.today().isoformat(), "count": len(rows), "geocoded": len(rows) - len(failed),
+            "fields": ["code", "name", "zip", "addr", "tel", "kind", "sido", "sgg", "lat", "lng", "hk", "desig", "htel"],
+            "kinds": KINDS, "hkinds": HKINDS}
     OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text(json.dumps({"meta": meta, "rows": out}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"{OUT.name} {OUT.stat().st_size // 1024}KB · {len(out)}곳 · 좌표 {len(out) - len(failed)}(장소 검색 {by_place}) · 실패 {len(failed)} · 청력 특진 {sum(r[10] for r in out)}")
+    OUT.write_text(json.dumps({"meta": meta, "rows": out, "offices": offices}, ensure_ascii=False, separators=(",", ":")),
+                   encoding="utf-8")
+    print(f"{OUT.name} {OUT.stat().st_size // 1024}KB · 지정 {len(rows)}곳 · 좌표 {len(rows) - len(failed)}(장소 검색 {by_place}) · 실패 {len(failed)}")
+    print(f"청력 특진 {len(hclin)}곳 = 지정 목록과 같은 기관 {len(hmatch)} + 특진만 {len(honly)} · 공단 소속기관 {len(offices)}곳")
     from collections import Counter
-    print("종류:", dict(Counter(KINDS[r[5]] for r in out)))
+    print("종류:", dict(Counter(KINDS[r[5]] for r in out[:len(rows)])))
     print("시도:", dict(Counter(r[6] or "?" for r in out)))
     for f in failed:
         print("  실패:", f)
-
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
