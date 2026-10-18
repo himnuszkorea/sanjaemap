@@ -109,3 +109,4 @@ footer a{color:inherit}
   #list{overflow:visible}
   #map{order:1;flex:none;height:50vh}
 }
+header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}

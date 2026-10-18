@@ -1,4 +1,4 @@
-// 산재보험 지정의료기관 검색지도 — data/hospitals.json(tools/build_data.py 생성)을 읽어 그린다.
+// 산재맵(산재보험 지정의료기관 검색지도) — data/hospitals.json(tools/build_data.py 생성)을 읽어 그린다.
 // 표식 세 가지: 동그라미 = 산재보험 지정의료기관 · 「특」 배지 = 소음성 난청 청력 특진 의뢰기관 · 보라 네모 = 공단 소속기관.
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
