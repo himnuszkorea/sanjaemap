@@ -23,11 +23,6 @@
         <select id="sido" aria-label="시도"><option value="">전국</option></select>
         <select id="sgg" aria-label="시군구" disabled><option value="">시·군·구 전체</option></select>
       </div>
-      <div class="hear-box">
-        <label class="box-head"><input type="checkbox" id="hearOn" checked><span class="hic">특</span>소음성 난청 청력 특진 의뢰기관 <span class="count" id="hearN"></span></label>
-        <div class="row" id="hKinds"></div>
-        <label class="sub"><input type="checkbox" id="hearOnly">특진 기관만 보기</label>
-      </div>
       <div class="kind-box">
         <div class="box-title">산재보험 지정의료기관 종류 <span class="count">(기관명으로 추정)</span></div>
         <div class="row" id="kinds"></div>
@@ -36,6 +31,13 @@
         <label class="box-head"><input type="checkbox" id="ofcOn"><span class="sq"></span>공단 소속기관(지사 등) 함께 보기 <span class="count" id="ofcN"></span></label>
         <div class="row" id="ofcKinds" hidden></div>
       </div>
+      <!-- 특진 기관 설정은 필요할 때 펼친다(접혀 있어도 「특」 표식은 지도에 보인다) -->
+      <details class="hear-box" id="hearBox">
+        <summary><span class="hic">특</span>소음성 난청 특진기관 <span class="count" id="hearN"></span><span class="count" id="hearState"></span></summary>
+        <label class="box-head"><input type="checkbox" id="hearOn" checked>지도에 「특」 표식으로 표시</label>
+        <div class="row" id="hKinds"></div>
+        <label class="sub"><input type="checkbox" id="hearOnly">특진 기관만 보기</label>
+      </details>
       <form class="origin" id="orgForm" autocomplete="off">
         <input id="orgQ" type="search" placeholder="출발지 주소·장소·지사 (예: 광산지사)" aria-label="출발지 주소·장소">
         <button class="btn" type="submit">찾기</button>

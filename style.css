@@ -30,7 +30,7 @@ header h1{margin:0;font-size:18px;letter-spacing:-.3px}
 header p{margin:4px 0 0;color:var(--muted);font-size:12px}
 header p b{color:var(--warn);font-weight:600}
 .wrap{flex:1;display:flex;min-height:0}
-aside{width:380px;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);min-height:0}
+aside{width:380px;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .filters{padding:12px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px}
 .filters input[type=search],.filters select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
 .filters select:disabled{opacity:.55}
@@ -46,6 +46,12 @@ aside{width:380px;display:flex;flex-direction:column;background:var(--panel);bor
 .kind-box{border:1px solid var(--line)}
 .box-head{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600}
 .box-title{font-size:12px;font-weight:600}
+.hear-box summary{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600;list-style:none}
+.hear-box summary::-webkit-details-marker{display:none}
+.hear-box summary::after{content:"▾ 펼치기";margin-left:auto;font-size:11px;font-weight:400;color:var(--muted);white-space:nowrap}
+.hear-box[open] summary::after{content:"▴ 접기"}
+.hear-box:not([open]){gap:0}
+.hear-box .box-head{font-weight:400;font-size:12px}
 .hear-box .row label,.ofc-box .row label,.kind-box .row label{font-size:12px}
 label.sub{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12px}
 /* 청력 특진: 「특」 배지(색=특진 종류) — 동그라미(지정의료기관)·네모(공단 소속기관)와 모양으로 구분 */
@@ -64,7 +70,7 @@ label.sub{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-siz
 .tag.o{border-color:var(--o);color:var(--o)}
 .pop .ofc-head{font-size:11px;font-weight:600;color:#6d3fa6;margin-bottom:4px}
 .pop .ofc-item + .ofc-item{border-top:1px solid #dfe3ea;margin-top:6px;padding-top:6px}
-#list{flex:1;overflow:auto;margin:0;padding:0;list-style:none}
+#list{flex:none;margin:0;padding:0;list-style:none}
 #list li{padding:10px 16px;border-bottom:1px solid var(--line);cursor:pointer}
 #list li:hover,#list li:focus{background:var(--bg);outline:none}
 #list li.nogeo{cursor:default}
@@ -110,3 +116,5 @@ footer a{color:inherit}
   #map{order:1;flex:none;height:50vh}
 }
 header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
+[hidden]{display:none!important}
+.hear-box summary .count{white-space:nowrap;font-weight:400}

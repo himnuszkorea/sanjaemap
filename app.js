@@ -276,8 +276,8 @@ function apply(fit = true){
   new Set(ohit.map(o => o.site)).forEach(st => ofcLayer.addLayer(st.marker));
   list.innerHTML = ""; shown = 0;
   renderMore();
-  list.scrollTop = 0;
   const nh = hits.filter(c => c.asHear).length;
+  $("hearState").textContent = !hearOn.checked ? "· 숨김" : hearOnly.checked ? "· 특진만 보기" : "· 표시 중";
   $("count").textContent = `표시 ${hits.length.toLocaleString()}곳` + (nh ? `(특진 ${nh})` : "") + ` / 전체 ${H.length.toLocaleString()}곳` +
     (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "");
   const geo = [...hits.filter(c => c.lat != null), ...ohit];
