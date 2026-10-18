@@ -87,15 +87,15 @@ def geocode(addr, key):
                  "address": cand, "refine": "true", "simple": "false", "format": "json",
                  "type": typ, "key": key}
             url = "https://api.vworld.kr/req/address?" + urllib.parse.urlencode(q)
-            for attempt in range(3):
+            for attempt in range(5):  # 브이월드가 가끔 502 를 낸다(10-18, 700건쯤에서) — 쉬었다 다시
                 try:
                     with urllib.request.urlopen(url, timeout=20, context=ctx) as r:
                         resp = json.loads(r.read().decode("utf-8"))["response"]
                     break
                 except (OSError, ValueError):
-                    if attempt == 2:
+                    if attempt == 4:
                         raise
-                    time.sleep(2 * (attempt + 1))
+                    time.sleep(3 * 2 ** attempt)
             if resp.get("status") == "OK":
                 p = resp["result"]["point"]
                 return {"lng": float(p["x"]), "lat": float(p["y"]), "q": cand, "type": typ,
@@ -147,6 +147,44 @@ def region(addr):
     return sido, sgg
 
 
+def place_key(r):
+    return f'장소|{r["의료기관명"].strip()}|{r["주소"].strip()}'
+
+
+def name_core(n):
+    return re.sub(r"[(（][^)）]*[)）]|의료법인|재단법인|학교법인|\s", "", n)
+
+
+def place_search(name, addr, key):
+    """브이월드 검색 API(장소)로 '<시군구> <기관명>'을 찾는다. 결과 주소의 시도·시군구와 원본이 같고 이름이 겹칠 때만 쓴다."""
+    sido, sgg = region(clean(addr))
+    if not sido:
+        return None
+    core = name_core(name)
+    # 원본에 도로명이 있으면 결과도 같은 도로여야 한다(같은 시의 동명 기관 — 예: 경동한의원 처인구↔기흥구 — 을 막는다)
+    m = re.search(r"(\S+(?:로|길))\s?\d", re.sub(r"[·ㆍ]", "", clean(addr)))
+    road_name = m.group(1) if m and not re.search(r"\d+(?:리|동)$", m.group(1)) else None
+    q = {"service": "search", "request": "search", "version": "2.0", "size": "10", "type": "place",
+         "query": f"{sgg.split()[0] if sgg else sido} {core}", "format": "json", "errorformat": "json", "key": key}
+    url = "https://api.vworld.kr/req/search?" + urllib.parse.urlencode(q)
+    with urllib.request.urlopen(url, timeout=20, context=ctx) as r:
+        resp = json.loads(r.read().decode("utf-8"))["response"]
+    time.sleep(0.05)
+    for it in (resp.get("result") or {}).get("items", []):
+        ad = it.get("address") or {}
+        road = ad.get("road") or ad.get("parcel") or ""
+        s2, g2 = region(road)
+        title = name_core(it.get("title", "").split("/")[-1])
+        if s2 != sido or (sgg and g2 != sgg):
+            continue
+        if road_name and road_name not in re.sub(r"[·ㆍ]", "", road):
+            continue
+        if len(core) >= 3 and (core in title or (len(title) >= 3 and title in core)):
+            return {"lng": float(it["point"]["x"]), "lat": float(it["point"]["y"]), "q": q["query"], "type": "place",
+                    "refined": road}
+    return None
+
+
 def in_korea(pt):
     return pt and 33.0 <= pt["lat"] <= 38.7 and 124.5 <= pt["lng"] <= 131.0
 
@@ -171,10 +209,15 @@ def main(src, no_geocode=False):
         todo = []
     key = load_key() if todo else None
     print(f"{len(rows)}행, 좌표 캐시 있음 {len(rows) - sum(1 for r in rows if r['주소'].strip() not in cache)}행, 새로 찾을 주소 {len(todo)}개", flush=True)
-    lock, done = threading.Lock(), [0]
+    lock, done, errors = threading.Lock(), [0], []
 
     def work(addr):
-        pt = geocode(addr, key)
+        try:
+            pt = geocode(addr, key)
+        except Exception as e:  # 한 건이 끝내 안 되면 캐시에 넣지 않고 넘어간다(다음 실행 때 다시 찾는다)
+            with lock:
+                errors.append(f"{addr} ({e})")
+            return
         with lock:
             cache[addr] = pt
             done[0] += 1
@@ -187,15 +230,36 @@ def main(src, no_geocode=False):
             list(ex.map(work, todo))
     finally:
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
+    if errors:
+        print(f"호출 오류로 건너뜀 {len(errors)}건 — 다시 실행하면 이것만 다시 찾는다:")
+        for e in errors[:20]:
+            print("  오류:", e)
 
     hearing = set()
     if HEARING.exists():
         hearing = {c["code"] for c in json.loads(HEARING.read_text(encoding="utf-8"))["clinics"] if c.get("code") and not c.get("note")}
 
-    out, failed = [], []
+    # 주소로 못 찾은 곳은 기관명을 장소 검색으로 찾는다(주소가 옛 번지·오기인 경우가 많다). 지역·이름이 맞아야 쓴다.
+    if not no_geocode:
+        for r in rows:
+            if cache.get(r["주소"].strip()):
+                continue
+            pk = place_key(r)
+            if pk not in cache:
+                key = key or load_key()
+                try:
+                    cache[pk] = place_search(r["의료기관명"], r["주소"], key)
+                except Exception as e:
+                    print("  장소 검색 오류:", r["의료기관명"], e)
+        CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    out, failed, by_place = [], [], 0
     for r in rows:
         addr = re.sub(r"\s+", " ", r["주소"]).strip()
         pt = cache.get(r["주소"].strip())
+        if not pt and cache.get(place_key(r)):
+            pt = cache[place_key(r)]
+            by_place += 1
         ok = in_korea(pt)
         sido, sgg = region((pt or {}).get("refined") or addr)
         if not sido:
@@ -219,7 +283,7 @@ def main(src, no_geocode=False):
             "kinds": KINDS}
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps({"meta": meta, "rows": out}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"{OUT.name} {OUT.stat().st_size // 1024}KB · {len(out)}곳 · 좌표 {len(out) - len(failed)} · 실패 {len(failed)} · 청력 특진 {sum(r[10] for r in out)}")
+    print(f"{OUT.name} {OUT.stat().st_size // 1024}KB · {len(out)}곳 · 좌표 {len(out) - len(failed)}(장소 검색 {by_place}) · 실패 {len(failed)} · 청력 특진 {sum(r[10] for r in out)}")
     from collections import Counter
     print("종류:", dict(Counter(KINDS[r[5]] for r in out)))
     print("시도:", dict(Counter(r[6] or "?" for r in out)))

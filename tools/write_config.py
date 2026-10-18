@@ -4,9 +4,10 @@
 화면용 키는 브라우저에 그대로 보이므로 config.js 는 공개 저장소에 커밋된다.
 대신 브이월드에서 이 키의 서비스 URL 을 Pages 주소(https://himnuszkorea.github.io)로만 등록해 다른 사이트에서 못 쓰게 한다.
 """
-import re
+import re, sys
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parent.parent
 key = re.search(r"^VWORLD_KEY=(\S+)", (ROOT / ".env.local").read_text(encoding="utf-8-sig"), re.M).group(1)
 (ROOT / "config.js").write_text(
