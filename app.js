@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261018e";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261019a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
 const LIST_STEP = 200;  // 목록은 200곳씩 그린다(6천여 곳을 한 번에 그리면 느리다)
@@ -114,6 +114,7 @@ function init(d){
   $("sub").innerHTML = `산재보험 지정의료기관 ${desig.length.toLocaleString()}곳(${esc(META.asof.replace(/-/g, "."))}. 기준) · ` +
     `청력 특진 의뢰기관 ${hear.length}곳 · 공단 소속기관 ${offices.length}곳 · <b>지정·해지가 수시로 있으니 방문 전 전화로 확인하세요</b>`;
   $("foot").innerHTML =
+    `개인이 공공데이터로 만든 비공식 참고용 지도(근로복지공단 공식 서비스 아님) · ` +
     `「근로복지공단 산재보험 지정의료기관 현황정보」(${esc(META.asof)} 기준, <a href="https://www.data.go.kr/data/3044320/fileData.do" target="_blank" rel="noopener">공공데이터포털</a>), ` +
     `거리는 출발지에서의 직선거리입니다 · 배경지도 © 국토교통부 브이월드`;
   buildFilters();
