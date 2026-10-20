@@ -36,13 +36,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
-<link rel="stylesheet" href="style.css?v=20261020a">
+<link rel="stylesheet" href="style.css?v=20261020b">
 </head>
 <body>
 <header>
   <h1>산재맵 <small>산재보험 지정의료기관 검색지도</small></h1>
-  <p id="sub">산재보험 의료기관 찾기 — 전국 산재보험 지정의료기관·소음성 난청 청력 특진 의뢰기관·근로복지공단 지사 위치를 불러오는 중…</p>
-  <p class="unofficial">개인이 공공데이터로 만든 참고용 지도입니다. <b>근로복지공단 공식 서비스가 아닙니다.</b> 지정 여부·진료 가능 여부는 병원이나 근로복지공단(1588-0075)에 확인하세요.</p>
+  <!-- 머리글 안내 2줄(숫자 요약·비공식 안내)은 하단 출처 줄로 충분해 뺐다(2026-10-20 사용자 요청). #sub 는 자료를 못 읽었을 때만 보인다. -->
+  <p id="sub" hidden></p>
 </header>
 <div class="wrap">
   <aside>
@@ -91,7 +91,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="config.js?v=20261020a"></script>
-<script src="app.js?v=20261020a"></script>
+<script src="config.js?v=20261020b"></script>
+<script src="app.js?v=20261020b"></script>
 </body>
 </html>
