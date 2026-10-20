@@ -107,10 +107,17 @@ footer a{color:inherit}
   /* 휴대폰: 지도 아래에 검색·목록을 잇고 페이지 전체를 스크롤한다 */
   html,body{height:auto}
   .wrap{flex-direction:column}
-  aside{width:auto;border-right:0;border-bottom:1px solid var(--line);order:2}
+  aside{width:auto;border-right:0;border-bottom:1px solid var(--line);order:2;overflow:visible;overscroll-behavior:auto}
   #list{overflow:visible}
-  #map{order:1;flex:none;height:50vh}
+  #map{order:1;flex:none;height:50vh;height:50svh}  /* 한 손가락은 페이지 스크롤, 지도는 두 손가락(app.js) */
+  footer{padding-bottom:64px}  /* 떠 있는 버튼이 출처 줄을 가리지 않게 */
+  #jump:not([hidden]){display:block}
 }
+/* 휴대폰: 지도 위 안내 · 떠 있는 「지도·검색 / 목록으로」 버튼 */
+#map{position:relative}
+#mapHint{position:absolute;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-size:15px;font-weight:600;text-align:center;padding:16px;pointer-events:none;opacity:0;transition:opacity .25s}
+#mapHint.on{opacity:1}
+#jump{display:none;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:2000;padding:10px 14px;border:0;border-radius:22px;background:var(--accent);color:var(--panel);font:inherit;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:pointer}
 header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
 [hidden]{display:none!important}
 .hear-box summary .count{white-space:nowrap;font-weight:400}

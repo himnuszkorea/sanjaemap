@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261019a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261020a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
 const LIST_STEP = 200;  // 목록은 200곳씩 그린다(6천여 곳을 한 번에 그리면 느리다)
@@ -28,6 +28,37 @@ const hcluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRad
   iconCreateFunction: g => L.divIcon({className: "", html: `<div class="hcl">${g.getChildCount()}</div>`, iconSize: [34, 34]})});
 const ofcLayer = L.layerGroup();  // 78곳이라 묶지 않는다
 map.addLayer(cluster); map.addLayer(hcluster); map.addLayer(ofcLayer);
+
+// ── 휴대폰: 한 손가락은 페이지 스크롤, 지도는 두 손가락 ─────────
+// 지도가 화면 폭 전체라 한 손가락 끌기를 지도가 가져가면 페이지를 내릴 곳이 없다.
+// 끌기를 끄면 Leaflet 이 touch-action 을 pan-x pan-y 로 풀어 브라우저가 스크롤하고, 두 손가락 손모음(touchZoom)으로 이동·확대한다.
+const mobile = matchMedia("(max-width:760px)");
+const hint = document.createElement("div");
+hint.id = "mapHint"; hint.textContent = "지도는 두 손가락으로 움직이세요";
+$("map").appendChild(hint);
+let hintTimer = 0;
+$("map").addEventListener("touchstart", e => {
+  if (!mobile.matches || e.touches.length !== 1 || e.target.closest(".leaflet-control, .leaflet-popup")) return;
+  hint.classList.add("on");
+  clearTimeout(hintTimer); hintTimer = setTimeout(() => hint.classList.remove("on"), 1500);
+}, {passive: true});
+$("map").addEventListener("touchmove", e => { if (e.touches.length > 1) hint.classList.remove("on"); }, {passive: true});
+const setDrag = () => mobile.matches ? map.dragging.disable() : map.dragging.enable();
+setDrag(); mobile.addEventListener("change", setDrag);
+
+// 떠 있는 버튼: 지도가 화면 밖이면 「▲ 지도·검색」, 목록에서 기관을 눌러 지도로 올라왔으면 「▼ 목록으로」
+const jump = $("jump");
+let backY = null, mapSeen = true;
+function setJump(){
+  jump.textContent = backY != null ? "▼ 목록으로" : "▲ 지도·검색";
+  jump.hidden = backY == null && mapSeen;
+}
+new IntersectionObserver(([e]) => { mapSeen = e.isIntersecting; if (!mapSeen) backY = null; setJump(); }).observe($("map"));
+jump.onclick = () => {
+  if (backY != null) { scrollTo(0, backY); backY = null; }
+  else scrollTo(0, 0);
+  setJump();
+};
 
 // ── 출발지와 직선거리 ───────────────────────────────
 let origin = null, sortBy = "name";
@@ -189,7 +220,7 @@ function ofcPopup(st){
 const list = $("list");
 let hits = [], ohit = [], shown = 0;
 function focus(c){
-  if (matchMedia("(max-width:760px)").matches) $("map").scrollIntoView({block: "start"});
+  if (mobile.matches) { backY = scrollY; $("map").scrollIntoView({block: "start"}); setJump(); }
   if (c.site) {  // 소속기관: 묶음이 없어 바로 연다
     map.setView([c.lat, c.lng], Math.max(map.getZoom(), 15), {animate: false});
     return c.site.marker.openPopup();
