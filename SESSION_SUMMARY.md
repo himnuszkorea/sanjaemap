@@ -31,7 +31,7 @@
 - `style.css` — 색 토큰 `--k0~k6`(지정 종류)·`--h0~h3`(특진 종류)·`--o`(소속기관)
 - `tools/build_data.py` — CSV → `data/hospitals.json`(행 배열 + offices), `kind_of()`·`region()`·`place_search()`; 특진·소속기관은 `../claude-code/gj-hearing-clinic-map/data/clinics.json` 에서 읽음
 - `tools/write_config.py`(.env.local → config.js) · `tools/og_image.py`(공유 그림) · `tools/geocode_cache.json`(좌표 캐시)
-- `C:\claudecode\himnuszkorea.github.io\` — 루트 사이트(첫 화면·robots.txt·sitemap.xml·네이버 태그)
+- `C:\claudecode\himnuszkorea.github.io\` — 루트 사이트(robots.txt·sitemap.xml·네이버 태그). 10-20부터 첫 화면은 `/sanjaemap/` 로 바로 넘긴다(「산재맵 열기」 안내 화면 생략, 사용자 요청 · 커밋 0f36a05 · 사이트맵에서 루트 제외)
 
 ## 6. 핵심 판단 및 결정사항
 - 호스팅 GitHub Pages(사용자 지시) / 탈락: 특진 지도 Vercel 하위경로(키 재사용은 되나 사용자가 Pages 선택)
