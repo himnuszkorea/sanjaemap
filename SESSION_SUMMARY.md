@@ -50,14 +50,14 @@
 없음 (위치 미확인 12곳은 목록에만 「위치 미확인」으로 표시 — 의도된 처리)
 
 ## 8. 다음 작업 순서
-1. (사용자) A02 블로그 원고 44줄 「화면 맨 위에 … 적었습니다」를 「화면 맨 아래에」로 고칠지 결정 — 10-20 머리글 문구를 뺐다
-2. 2026-10-25 무렵 구글 서치콘솔(속성 `https://himnuszkorea.github.io/sanjaemap/`) 「페이지」 보고서와 네이버 서치어드바이저(`https://himnuszkorea.github.io`) 리포트에서 색인 여부와 **넘김 적용 뒤에도 네이버 소유확인이 유지되는지** 확인
-3. (선택) `tools/build_data.py` `OVERRIDE` 에 위치 미확인 12곳 현행 주소 → `py -3 tools/build_data.py raw/hospitals_20251231.csv` → 커밋·푸시
-4. (선택) 청력 특진 지도(`claude-code/gj-hearing-clinic-map/index.html`)에 산재맵 링크 한 줄
-5. 2027-06-30 이후 새 CSV 로 갱신(README 「갱신 절차」) — 설명·공유 그림·루트 첫 화면의 숫자(6,742·220)도 같이 고친다
+1. 2026-10-25 무렵 구글 서치콘솔(속성 `https://himnuszkorea.github.io/sanjaemap/`) 「페이지」 보고서와 네이버 서치어드바이저(`https://himnuszkorea.github.io`) 리포트에서 색인 여부와 **넘김 적용 뒤에도 네이버 소유확인이 유지되는지** 확인
+2. (선택) `tools/build_data.py` `OVERRIDE` 에 위치 미확인 12곳 현행 주소 → `py -3 tools/build_data.py raw/hospitals_20251231.csv` → 커밋·푸시
+3. (선택) 청력 특진 지도(`claude-code/gj-hearing-clinic-map/index.html`)에 산재맵 링크 한 줄
+4. 2027-06-30 이후 새 CSV 로 갱신(README 「갱신 절차」) — 설명·공유 그림·루트 첫 화면의 숫자(6,742·220)도 같이 고친다
 
 ## 9. 주의사항
 - **주소 `himnuszkorea.github.io/sanjaemap` 를 바꾸지 말 것** — 사외 공모전 A03 카드뉴스 5장(그림 속 글자)과 A02 블로그 원고에 이 주소가 박혀 있다(10-19)
+- A02 는 제출 완료 — 블로그 원고의 「화면 맨 위에」 문구(10-20 머리글 문구 삭제로 실제와 어긋남)는 고치지 않고 더 다루지 않는다(10-20 사용자 결정)
 - 비공식 안내 문구(하단 `app.js` `$("foot")`)를 지우지 말 것 — 머리글 문구는 10-20 사용자 요청으로 뺐고 이제 하단이 유일하다 — 사외 공모전(전국민 AI활용 사례, `사외공모전/계획/A02_*`) 원고가 이 문구를 인용한다
 - `index.html` 의 `google-site-verification`, 루트 저장소 `index.html` 의 `naver-site-verification` 태그를 지우면 소유확인이 풀린다
 - 화면 파일을 고치면 `index.html` 의 `?v=` 와 `app.js` 의 `VER` 를 함께 올린다(Pages 10분 캐시 — 사용자가 이전 판을 보고 「스크롤이 안 된다」고 한 일이 있다)
