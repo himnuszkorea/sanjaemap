@@ -99,6 +99,15 @@ label.sub{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-siz
 .pop td:first-child{color:#5b6578;white-space:nowrap}
 .pop .hear-note{font-size:12px;color:#8a6420;margin:4px 0}
 .pop .go a.tel{color:#191919;border-color:#dfe3ea}
+/* 안내·자주 묻는 질문(접이식) — 접혀 있으면 한 줄. 검색엔진이 읽는 글이라 display:none 으로 숨기지 말 것 */
+#about{padding:6px 16px;background:var(--panel);border-top:1px solid var(--line);font-size:13px;line-height:1.6;max-height:35vh;overflow:auto;flex:none}
+#about summary{cursor:pointer;font-weight:600;color:var(--ink)}
+#about section{max-width:860px}
+#about h2{font-size:15px;margin:12px 0 4px}
+#about h3{font-size:13px;margin:10px 0 2px}
+#about p,#about ul{margin:4px 0}
+#about ul{padding-left:20px}
+#about .regions a{color:inherit;white-space:nowrap}
 footer{padding:6px 16px;font-size:11px;color:var(--muted);background:var(--panel);border-top:1px solid var(--line)}
 footer a{color:inherit}
 @media (max-width:760px){
@@ -108,6 +117,7 @@ footer a{color:inherit}
   aside{width:auto;border-right:0;border-bottom:1px solid var(--line);order:2;overflow:visible;overscroll-behavior:auto}
   #list{overflow:visible}
   #map{order:1;flex:none;height:50vh;height:50svh}  /* 한 손가락은 페이지 스크롤, 지도는 두 손가락(app.js) */
+  #about{max-height:none;overflow:visible}
   footer{padding-bottom:64px}  /* 떠 있는 버튼이 출처 줄을 가리지 않게 */
   #jump:not([hidden]){display:block}
 }

@@ -50,7 +50,10 @@
 # 1) 새 CSV 를 raw/ 에 둔다(파일 이름에 기준일 YYYYMMDD 를 넣는다 — 화면 기준일이 여기서 나온다)
 # 2) 좌표 생성(새 주소만 브이월드 호출, 중단돼도 다시 돌리면 이어받는다)
 py -3 tools/build_data.py raw/hospitals_YYYYMMDD.csv
-# 3) 확인 후 커밋·푸시 → Pages 가 자동 반영
+# 3) 시도별 목록 페이지 r/<slug>/ 17개 + sitemap.xml 재생성(끝에 건수 검산을 찍는다 — 「일치」 확인)
+py -3 tools/build_pages.py
+# 4) index.html 의 안내(#about)·설명 문구와 루트 첫 화면의 숫자(6,742·220·78)는 손으로 고친다
+# 5) 확인 후 커밋·푸시 → Pages 가 자동 반영
 ```
 
 키는 저장소 루트 `.env.local`(커밋 안 함)에 `VWORLD_KEY=...` 한 줄. 화면용 `config.js` 는

@@ -1,13 +1,14 @@
 # Session Summary
-최종 갱신: 2026-10-20 21:56 (노트북)
+최종 갱신: 2026-10-21 (노트북)
 
 ## 1. 프로젝트 목적
 **산재맵** — 근로복지공단 산재보험 지정의료기관(공공데이터포털 CSV, 6,742곳, 2025-12-31 기준)·소음성 난청 청력 특진 의뢰기관 220곳·공단 소속기관 78곳을
 브이월드 지도에서 찾는 무료 정적 웹페이지. GitHub Pages 공개 https://himnuszkorea.github.io/sanjaemap/ (public `himnuszkorea/sanjaemap`).
 
 ## 2. 현재 상태
-기능·게시·검색 등록까지 완료. 10-20 휴대폰 스크롤 개선(판 20261020a)과 루트 첫 화면 바로 넘김을 게시했다(두 저장소 모두 미커밋 없음·푸시).
-휴대폰 실기기 확인도 끝났고(10-20 「잘된다」), 남은 것은 검색 노출 확인(10-25 무렵)과 선택 보정뿐이다. A02 원고 문구 건은 제출 완료로 닫았다.
+10-21 구글 「산재맵」 검색 1쪽에서 빠진 것(색인은 유지)에 대응해 **검색 노출 개선 3건을 게시**했다 — 사무실 PC 세션 인계 메모(`claude-code/산재맵_검색개선_인계메모.md`, 커밋 e95cb97)대로.
+① `/sanjaemap/` 하단 접이식 안내·FAQ(`#about`) ② 루트 첫 화면을 넘기지 않는 안내 화면 + `WebSite` 구조화 데이터(A안, 사용자 결정) ③ 시도별 목록 페이지 17개(`r/<slug>/`).
+남은 것은 서치콘솔·네이버 쪽 계정 작업(색인 요청·사이트맵 재제출·루트 속성 추가)과 1~3주 관찰이다.
 
 ## 3. 완료된 작업
 - [10-18] CSV 수집·`tools/build_data.py`(브이월드 지오코딩 + 장소 검색 보완) → 좌표 6,730/6,742, 위치 미확인 12곳(옛 지번·리·반 주소)
@@ -24,8 +25,10 @@
 - [10-18] 구글 서치콘솔: URL 접두어 속성, HTML 태그 확인, sitemap 제출, 색인 요청(내장 브라우저)
 - [10-18] 네이버: 하위 경로 거부 → 루트 저장소 `himnuszkorea/himnuszkorea.github.io`(첫 화면·robots.txt·sitemap.xml) 신설, 태그 확인(보안문자는 사용자), 사이트맵 2개·수집 요청 `/`·`/sanjaemap/`(Aside)
 
+- [10-21] **검색 노출 개선**(판 20261021a): `index.html` `<footer>` 앞 `<details id="about">`(산재맵이란·FAQ 4개·지역별 목록 링크 17) · `app.js` `?sido=서울` 로 열면 그 시도 필터+확대 · `tools/build_pages.py` 신설 → `r/<slug>/index.html` 17개(시군구별 표, 숫자·기준일은 hospitals.json 에서 셈, 검산 6,834 = 지정 6,742 + 특진만 92) + `sitemap.xml` 18개 주소 · 루트 저장소 첫 화면 넘김 제거·canonical 자기 자신·`WebSite` JSON-LD(name 산재맵)·사이트맵에 루트 복원
+
 ## 4. 미완료 작업
-- 검색 노출 — 진행: 등록·요청 완료 / 남은 것: 며칠~몇 주 뒤 구글 서치콘솔 「페이지」·네이버 「리포트」에서 색인 여부 확인
+- 검색 노출 — 진행: 10-21 개선 3건 게시 / 남은 것(사용자 계정 작업): 서치콘솔 URL 검사로 `/sanjaemap/`·시도 페이지 두어 개 색인 요청 · 사이트맵 재제출 · **루트 `https://himnuszkorea.github.io/` URL 접두어 속성 추가**(사이트 이름 확인용, 구글 확인 태그를 루트 `index.html` 에도 넣어야 함) · 리치 결과 테스트 · 네이버 소유확인 유지·새 페이지 수집 확인 → 1~3주 「실적」에서 「산재맵」 평균 게재순위 관찰
 - (선택) 위치 미확인 12곳 — 남은 것: `tools/build_data.py` `OVERRIDE` 에 현행 도로명 주소 추가 후 재실행
 
 ## 5. 주요 파일
@@ -34,7 +37,8 @@
 - `style.css` — 색 토큰 `--k0~k6`(지정 종류)·`--h0~h3`(특진 종류)·`--o`(소속기관)
 - `tools/build_data.py` — CSV → `data/hospitals.json`(행 배열 + offices), `kind_of()`·`region()`·`place_search()`; 특진·소속기관은 `../claude-code/gj-hearing-clinic-map/data/clinics.json` 에서 읽음
 - `tools/write_config.py`(.env.local → config.js) · `tools/og_image.py`(공유 그림) · `tools/geocode_cache.json`(좌표 캐시)
-- `C:\claudecode\himnuszkorea.github.io\` — 루트 사이트(robots.txt·sitemap.xml·네이버 태그). 10-20부터 첫 화면은 `/sanjaemap/` 로 바로 넘긴다(「산재맵 열기」 안내 화면 생략, 사용자 요청 · 커밋 0f36a05 · 사이트맵에서 루트 제외)
+- `tools/build_pages.py` — hospitals.json → 시도별 목록 `r/<slug>/index.html` 17개 + `sitemap.xml`(생성물도 커밋 — Pages 는 빌드 없음)
+- `C:\claudecode\himnuszkorea.github.io\` — 루트 사이트(robots.txt·sitemap.xml·네이버 태그·`WebSite` JSON-LD). 10-21부터 **넘기지 않는 짧은 안내 화면**(「산재맵 열기」 큰 버튼 하나)
 
 ## 6. 핵심 판단 및 결정사항
 - 호스팅 GitHub Pages(사용자 지시) / 탈락: 특진 지도 Vercel 하위경로(키 재사용은 되나 사용자가 Pages 선택)
@@ -44,17 +48,21 @@
 - 특진 표식: 「특」 배지 → 색 동그라미(사용자 10-18), 묶음은 남색+금테로 지정의료기관 묶음과 분리
 - 네이버는 루트 저장소 경유 / 이유: 서버가 하위 경로를 코드 101(「URL을 호스트 단위로 입력해주세요」)로 거부
 - 휴대폰 지도 조작은 「두 손가락」 방식(구글 지도 방식, 플러그인 없이 `map.dragging.disable()`) / 탈락: 지도 높이 축소만(여전히 지도에서 스크롤이 막힘), leaflet-gesture-handling 플러그인(외부 의존 추가)
-- 루트 첫 화면은 지우지 않고 넘김 페이지로 / 이유: 네이버 소유확인 태그가 그 페이지에 있어야 한다. 탈락: 첫 화면 삭제(소유확인 풀림)
+- 루트 첫 화면은 지우지 않는다 / 이유: 네이버 소유확인 태그가 그 페이지에 있어야 한다. 탈락: 첫 화면 삭제(소유확인 풀림)
+- **루트는 넘기지 않는 안내 화면(A안, 10-21 사용자 결정)** — 10-20 「바로 넘김」을 대체. 구글이 사이트 이름을 호스트 첫 화면에서 읽는데 넘김 페이지라 「GitHub Pages documentation」이 붙고 「산재맵」 검색 순위가 빠졌다(추정). 탈락: B안(넘김 유지·사이트 이름 포기)
+- 소개 글은 머리글이 아니라 하단 접이식 `details`(10-20 머리글 문구 삭제 요청 존중) — `display:none` 금지(숨긴 글 취급 위험)
+- 시도 페이지 h1·title 숫자는 **지정의료기관 수**(특진만 기관은 표에 「지정 목록 밖」으로 따로) — 메모 초안의 1,308(특진만 포함)보다 정확하게
 - 공유 그림·아이콘에 십자 모양 쓰지 않음(적십자 표장 유사 회피)
 
 ## 7. 해결되지 않은 문제
 없음 (위치 미확인 12곳은 목록에만 「위치 미확인」으로 표시 — 의도된 처리)
 
 ## 8. 다음 작업 순서
+0. (사용자 계정) 4절 「검색 노출」의 서치콘솔·네이버 작업 — 하루 순위만 보고 되돌리지 말 것(새 사이트라 1~3주 오르내림)
 1. 2026-10-25 무렵 구글 서치콘솔(속성 `https://himnuszkorea.github.io/sanjaemap/`) 「페이지」 보고서와 네이버 서치어드바이저(`https://himnuszkorea.github.io`) 리포트에서 색인 여부와 **넘김 적용 뒤에도 네이버 소유확인이 유지되는지** 확인
 2. (선택) `tools/build_data.py` `OVERRIDE` 에 위치 미확인 12곳 현행 주소 → `py -3 tools/build_data.py raw/hospitals_20251231.csv` → 커밋·푸시
 3. (선택) 청력 특진 지도(`claude-code/gj-hearing-clinic-map/index.html`)에 산재맵 링크 한 줄
-4. 2027-06-30 이후 새 CSV 로 갱신(README 「갱신 절차」) — 설명·공유 그림·루트 첫 화면의 숫자(6,742·220)도 같이 고친다
+4. 2027-06-30 이후 새 CSV 로 갱신(README 「갱신 절차」 — `build_pages.py` 포함) — 설명·`#about`·공유 그림·루트 첫 화면의 숫자(6,742·220·78)도 같이 고친다
 
 ## 9. 주의사항
 - **주소 `himnuszkorea.github.io/sanjaemap` 를 바꾸지 말 것** — 사외 공모전 A03 카드뉴스 5장(그림 속 글자)과 A02 블로그 원고에 이 주소가 박혀 있다(10-19)
@@ -67,4 +75,6 @@
 - 브이월드 지오코더는 수백 건마다 502·연결 끊김 — 재시도 5회, 실패분은 캐시에 넣지 않고 다음 실행에서 다시 찾는다
 - 앱 내장 브라우저는 searchadvisor.naver.com 을 막는다 → 네이버 작업은 Aside(로그인·보안문자는 사용자). Aside 는 REPL 이 연 탭이 사용자 화면에 안 보일 수 있다 — 보이는 탭에 `attachBrowserTab` 으로 띄운다
 - 내장 브라우저 창이 숨겨져 있으면 IntersectionObserver 가 안 불려 `#jump` 가 안 뜬 것처럼 보인다 — 스크린샷을 찍어 그리게 한 뒤 확인한다(10-20 오진할 뻔함)
+- 루트 첫 화면에 자동 넘김(location.replace·meta refresh·타이머)을 다시 넣지 말 것 — A안 효과가 사라진다(10-21)
+- 시도 페이지 주소 slug(seoul…jeju)는 공개 주소 — 바꾸지 말 것
 - 미리보기는 루트 `C:\claudecode\.claude\launch.json` 의 `sanjaemap`(8765)
