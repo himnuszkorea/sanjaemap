@@ -8,11 +8,13 @@
 숫자·기준일은 hospitals.json 에서 센다 — 페이지에 손으로 박지 않는다. slug 는 주소라 바꾸지 말 것.
 """
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import date
 from html import escape
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "hospitals.json"
@@ -52,10 +54,20 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertic
 th{background:var(--bg);white-space:nowrap}
 td.tel,td.kind,td.hear{white-space:nowrap}
 td.hear{color:var(--hear)}
+td.tel a{color:inherit}
+a.pin{font-size:12px;color:var(--muted);white-space:nowrap}
 .out{color:var(--muted);font-size:12px}
 footer{margin:32px 0 16px;font-size:12px;color:var(--muted)}
 @media (max-width:640px){table{min-width:640px}h1{font-size:19px}}
 """
+
+
+def tel_link(t):
+    """휴대폰에서 바로 걸리게 — 화면의 app.js telHref 와 같은 규칙(내선 등 넷째 토막은 뺀다)."""
+    if not t:
+        return ""
+    digits = re.sub(r"[^0-9]", "", "".join(t.split("-")[:3]))
+    return f'<a href="tel:{digits}">{escape(t)}</a>' if digits else escape(t)
 
 
 def page(sido, slug, full, rows, meta, kinds, hkinds):
@@ -108,9 +120,12 @@ def page(sido, slug, full, rows, meta, kinds, hkinds):
         for r in lst:
             kind = escape(kinds[r["kind"]]) if r["desig"] else '<span class="out">지정 목록 밖</span>'
             hear = "특진(" + escape(HSHORT.get(hkinds[r["hk"]], hkinds[r["hk"]])) + ")" if r["hk"] >= 0 else ""
-            tel = r["tel"] + (f" · 특진 {r['htel']}" if r["htel"] else "")
-            out.append(f'<tr><td>{escape(r["name"])}</td><td class="kind">{kind}</td><td>{escape(r["addr"])}</td>'
-                       f'<td class="tel">{escape(tel)}</td><td class="hear">{hear}</td></tr>')
+            tel = tel_link(r["tel"]) + (f" · 특진 {tel_link(r['htel'])}" if r["htel"] else "")
+            # 기관별 「지도」 — 산재맵이 ?id=기호 로 그 기관 팝업을 연다(위치 미확인은 목록으로)
+            name = (f'{escape(r["name"])} <a class="pin" href="../../?id={quote(r["code"])}">지도</a>' if r["lat"] is not None
+                    else f'{escape(r["name"])} <span class="out">위치 미확인</span>')
+            out.append(f'<tr><td>{name}</td><td class="kind">{kind}</td><td>{escape(r["addr"])}</td>'
+                       f'<td class="tel">{tel}</td><td class="hear">{hear}</td></tr>')
         out.append("</tbody></table></div>")
     out.append('<nav aria-label="다른 지역">다른 지역: ' + " · ".join(
         (f"<strong>{k}</strong>" if s == slug else f'<a href="../{s}/">{k}</a>') for k, s, _ in SIDO) + "</nav>")

@@ -131,3 +131,14 @@ header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6p
 .hear-box summary .count{white-space:nowrap;font-weight:400}
 .dot.lg{width:12px;height:12px;box-shadow:0 0 0 1.5px #fff,0 0 0 2.5px rgba(0,0,0,.25)}
 .dot.ring{width:12px;height:12px;background:var(--hear);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--hear)}
+/* 2026-10-22: 같은 좌표 묶음 표식·팝업 아래 공유/제보 줄·필터 초기화·기준일 */
+.grp-ic{width:22px;height:22px;border-radius:50%;border:2px solid #fff;color:#fff;font:700 11px/18px "Malgun Gothic",sans-serif;text-align:center;box-shadow:0 0 0 1.5px #1b2a4a,0 1px 4px rgba(0,0,0,.45)}
+.grp-ic.hear{box-shadow:0 0 0 2.5px #c8963e,0 1px 4px rgba(0,0,0,.45)}
+.pop .grp-head{font-size:11px;font-weight:600;color:#5b6578;margin-bottom:4px}
+.pop .grp-item + .grp-item{border-top:1px solid #dfe3ea;margin-top:8px;padding-top:8px}
+.pop .grp-item.on{background:#fff7e6;box-shadow:0 0 0 4px #fff7e6;border-radius:2px}
+.pop-sub{margin-top:6px;font-size:11px;color:#8a8f99}
+.pop-sub a,.pop-sub button{color:#5b6578;font:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.reset{border:1px solid var(--line);background:var(--panel);color:var(--muted);font:inherit;font-size:12px;padding:3px 8px;border-radius:4px;cursor:pointer}
+.reset:hover{border-color:var(--gold)}
+.asof{white-space:nowrap}

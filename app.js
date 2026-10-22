@@ -3,8 +3,9 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261021a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261022a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
+const REPORT = "https://github.com/himnuszkorea/sanjaemap/issues/new";  // 오류 제보 창구
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
 const LIST_STEP = 200;  // 목록은 200곳씩 그린다(6천여 곳을 한 번에 그리면 느리다)
 const HSHORT = {"공단 소속병원": "공단 소속병원", "상급종합병원": "상급종합", "종합병원": "종합병원", "청력검사전문의료기관": "청력검사 전문"};
@@ -12,20 +13,45 @@ const HSHORT = {"공단 소속병원": "공단 소속병원", "상급종합병�
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const $ = id => document.getElementById(id);
+// 검색 비교용: 전각 괄호·전각 공백을 반각으로(NFKC), 빈칸은 뺀다 — '인제대학교상계백병원'으로도 '인제대학교 상계백병원'이 찾힌다
+const norm = s => String(s ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, "");
 const SIDO_SHORT = {"서울특별시":"서울","부산광역시":"부산","대구광역시":"대구","인천광역시":"인천","광주광역시":"광주","대전광역시":"대전",
   "울산광역시":"울산","세종특별자치시":"세종","경기도":"경기","강원특별자치도":"강원","충청북도":"충북","충청남도":"충남",
   "전북특별자치도":"전북","전라남도":"전남","경상북도":"경북","경상남도":"경남","제주특별자치도":"제주"};
 
 // ── 지도 ───────────────────────────────────────────
 const map = L.map("map", {minZoom: 6, maxZoom: 19, zoomSnap: 0.5, preferCanvas: true}).setView([36.3, 127.8], 7);
-L.tileLayer(`https://api.vworld.kr/req/wmts/1.0.0/${VWORLD_KEY}/Base/{z}/{y}/{x}.png`, {
+const vworld = L.tileLayer(`https://api.vworld.kr/req/wmts/1.0.0/${VWORLD_KEY}/Base/{z}/{y}/{x}.png`, {
   minZoom: 6, maxZoom: 19, attribution: "© 국토교통부 브이월드"
 }).addTo(map);
+// 브이월드 타일이 연달아 실패하면(장애·키 문제) 빈 화면 대신 OpenStreetMap 으로 바꾼다
+let tileOk = 0, tileErr = 0;
+vworld.on("tileload", () => tileOk++);
+vworld.on("tileerror", () => {
+  if (++tileErr < 4 || tileErr <= tileOk) return;
+  map.removeLayer(vworld); vworld.off();
+  map.attributionControl.removeAttribution(vworld.getAttribution());
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    minZoom: 6, maxZoom: 19, attribution: "© OpenStreetMap contributors (브이월드 장애 대체)"
+  }).addTo(map);
+});
+// 같은 좌표 기관을 묶은 표식(options.n)은 그 수만큼 센다 — 아니면 묶음 숫자가 실제 기관 수보다 작게 나온다
+const childN = g => g.getAllChildMarkers().reduce((s, m) => s + (m.options.n || 1), 0);
+let pendingFocus = null;  // ?id= 로 열 때: 묶음에 표식이 다 들어간 뒤 그 기관을 연다(chunkedLoading 은 나눠서 넣는다)
 const cluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, chunkedLoading: true,
-                                      disableClusteringAtZoom: 17});
+  disableClusteringAtZoom: 17,
+  iconCreateFunction: g => {
+    const n = childN(g);
+    return L.divIcon({html: `<div><span>${n}</span></div>`, className: `marker-cluster marker-cluster-${n < 10 ? "small" : n < 100 ? "medium" : "large"}`,
+                      iconSize: L.point(40, 40)});
+  },
+  chunkProgress: (done, total) => {
+    // 바로 열지 않고 한 박자 미룬다 — 특진 묶음(hcluster)은 이 묶음 다음에 채워진다
+    if (done === total && pendingFocus) { const c = pendingFocus; pendingFocus = null; setTimeout(() => focus(c)); }
+  }});
 // 특진 기관은 지정의료기관 묶음과 섞이지 않게 따로 묶고, 묶음 표식도 금색으로 구분한다
 const hcluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 40, disableClusteringAtZoom: 14,
-  iconCreateFunction: g => L.divIcon({className: "", html: `<div class="hcl">${g.getChildCount()}</div>`, iconSize: [34, 34]})});
+  iconCreateFunction: g => L.divIcon({className: "", html: `<div class="hcl">${childN(g)}</div>`, iconSize: [34, 34]})});
 const ofcLayer = L.layerGroup();  // 78곳이라 묶지 않는다
 map.addLayer(cluster); map.addLayer(hcluster); map.addLayer(ofcLayer);
 
@@ -91,8 +117,28 @@ const routeLinks = c => c.lat == null ? "" :
 const goLinks = c =>
   `<div class="go">${c.tel ? `<a class="tel" href="${esc(telHref(c.tel))}">전화 ${esc(c.tel)}</a>` : ""}${routeLinks(c)}</div>`;
 
+// 기관 링크(?id=기호) 공유와 오류 제보 — 팝업 아래 작은 줄
+const shareUrl = c => `${location.origin}${location.pathname}?id=${encodeURIComponent(c.code)}`;
+const reportUrl = c => `${REPORT}?` + new URLSearchParams({
+  title: `[정보 오류] ${c.name} (${c.code})`,
+  body: `기관: ${c.name}\n기호: ${c.code}\n주소: ${c.addr}\n전화: ${c.tel}\n\n무엇이 다른지 적어 주세요(지정 해지·전화번호·위치 등):\n`
+});
+const subLinks = c => `<div class="pop-sub"><button type="button" class="share" data-code="${esc(c.code)}">링크 공유</button>` +
+  ` · <a href="${esc(reportUrl(c))}" target="_blank" rel="noopener">정보가 다르면 제보</a></div>`;
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button.share");
+  if (!b) return;
+  const c = H.find(x => x.code === b.dataset.code), url = shareUrl(c);
+  try {
+    if (navigator.share && mobile.matches) await navigator.share({title: `${c.name} — 산재맵`, url});
+    else { await navigator.clipboard.writeText(url); b.textContent = "주소 복사됨"; }
+  } catch (err) {
+    if (err.name !== "AbortError") prompt("이 주소를 복사하세요", url);
+  }
+});
+
 // ── 자료 읽기 ──────────────────────────────────────
-let H = [], KINDS = [], HKINDS = [], META = {}, offices = [], sites = [];
+let H = [], KINDS = [], HKINDS = [], META = {}, offices = [], sites = [], allBounds = null;
 const OKINDS = [
   {k: "지역본부·지사", m: ["공단 본부", "지역본부", "지사"]},
   {k: "질병판정위원회", m: ["업무상질병판정위원회"]},
@@ -112,7 +158,7 @@ function init(d){
     c.kindName = KINDS[c.kind];
     c.hkName = c.hk >= 0 ? HKINDS[c.hk] : "";
     c.sortName = c.name.replace(/^\s*([(（][^)）]*[)）]\s*)+/, "");  // '(의료법인)…' 같은 머리 괄호는 정렬에서 뺀다
-    c.text = [c.name, c.addr, c.tel, c.tel.replace(/-/g, ""), c.htel, c.code, c.hk >= 0 ? "특진 청력" : ""].join(" ").toLowerCase();
+    c.text = norm([c.name, c.addr, c.tel, c.tel.replace(/-/g, ""), c.htel, c.code, c.hk >= 0 ? "특진 청력" : ""].join("|"));
     if (c.lat == null) return;
     // 팝업은 열 때마다 만든다(출발지에 따라 거리·링크가 바뀐다)
     if (c.desig) c.marker = L.circleMarker([c.lat, c.lng], {
@@ -144,16 +190,25 @@ function init(d){
   $("foot").innerHTML =
     `개인이 공공데이터로 만든 비공식 참고용 지도(근로복지공단 공식 서비스 아님) · ` +
     `「근로복지공단 산재보험 지정의료기관 현황정보」(${esc(META.asof)} 기준, <a href="https://www.data.go.kr/data/3044320/fileData.do" target="_blank" rel="noopener">공공데이터포털</a>), ` +
-    `거리는 출발지에서의 직선거리입니다 · 배경지도 © 국토교통부 브이월드`;
+    `거리는 출발지에서의 직선거리입니다 · 배경지도 © 국토교통부 브이월드 · ` +
+    `<a href="${REPORT}" target="_blank" rel="noopener">오류 제보</a>`;
   buildFilters();
-  // ?sido=서울 — 시도별 목록 페이지(r/<slug>/)의 「지도에서 보기」가 그 시도로 연다
-  const qSido = new URLSearchParams(location.search).get("sido");
-  if (qSido && [...sidoSel.options].some(o => o.value === qSido)) {
-    sidoSel.value = qSido; fillSgg(); apply();
-  } else {
-    apply(false);
-    map.fitBounds(L.latLngBounds(H.filter(c => c.lat != null).map(c => [c.lat, c.lng])).pad(.03));
+  allBounds = L.latLngBounds(H.filter(c => c.lat != null).map(c => [c.lat, c.lng])).pad(.03);
+  // 주소로 상태 열기: ?sido=서울(시도별 목록 페이지의 「지도에서 보기」) · &sgg=강남구 · &q=검색어 · ?id=기관 기호
+  const P = new URLSearchParams(location.search);
+  const has = (sel, v) => v && [...sel.options].some(o => o.value === v);
+  if (has(sidoSel, P.get("sido"))) {
+    sidoSel.value = P.get("sido"); fillSgg();
+    if (has(sggSel, P.get("sgg"))) sggSel.value = P.get("sgg");
   }
+  if (P.get("q")) $("q").value = P.get("q");
+  const target = P.get("id") && H.find(c => c.code === P.get("id"));
+  if (target && target.lat == null) $("q").value = target.code;  // 위치 미확인 기관은 목록으로 보여 준다
+  else if (target) pendingFocus = target;
+  // ?id= 로 열 때는 전국 맞춤을 하지 않는다 — 맞춤 애니메이션이 끝나며 기관으로 옮긴 화면을 되돌린다
+  if ((sidoSel.value || $("q").value) && !pendingFocus) apply();
+  else { apply(false); if (!pendingFocus) map.fitBounds(allBounds); }
+  if (target) history.replaceState(null, "", `?id=${encodeURIComponent(target.code)}`);  // apply 가 지운 id 를 되살린다
 }
 
 // ── 필터 ───────────────────────────────────────────
@@ -192,11 +247,15 @@ function fillSgg(){
     sggSel.insertAdjacentHTML("beforeend", `<option value="${esc(g)}">${esc(g)} (${cnt[g]})</option>`));
 }
 
-function popup(c){
+const popup = c => `<div class="pop">${popBody(c)}</div>`;
+// 같은 좌표(같은 건물)의 기관들 — 표식 하나에 모아 차례로 보인다
+const grpPopup = cs => `<div class="pop"><div class="grp-head">● 같은 위치 ${cs.length}곳</div>` +
+  cs.map(c => `<div class="grp-item" data-code="${esc(c.code)}">${popBody(c)}</div>`).join("") + `</div>`;
+function popBody(c){
   const d = kmFrom(c);
   const hearHead = c.hk >= 0
     ? `<div class="hear-note">◎ 소음성 난청 청력검사 특별진찰 의뢰기관 · ${esc(c.hkName)} · <a href="${HEARING_MAP}" target="_blank" rel="noopener">특진 지도</a></div>` : "";
-  return `<div class="pop"><h3>${esc(c.name)}</h3>${hearHead}
+  return `<h3>${esc(c.name)}</h3>${hearHead}
   <table>
    <tr><td>산재 지정</td><td>${c.desig ? `지정의료기관 · ${esc(c.kindName)} <span style="color:#8a8f99">(이름 기준 추정)</span>`
                                           : `<span style="color:#8a8f99">지정의료기관 목록(${esc(META.asof)})에는 없음</span>`}</td></tr>
@@ -205,7 +264,27 @@ function popup(c){
    ${c.htel ? `<tr><td>특진 연락처</td><td><a href="${esc(telHref(c.htel))}">${esc(c.htel)}</a></td></tr>` : ""}
    ${c.code ? `<tr><td>기호</td><td>${esc(c.code)}</td></tr>` : ""}
    ${d != null ? `<tr><td>거리</td><td>출발지에서 직선 ${fmtKm(d)}</td></tr>` : ""}
-  </table>${goLinks(c)}</div>`;
+  </table>${goLinks(c)}${subLinks(c)}`;
+}
+// 같은 좌표 기관 묶음 표식. 표식이 겹치면 맨 위 하나만 눌려서(2026-10-22 확인: 329곳, 360개 가려짐) 하나로 합친다.
+// 특진으로 보이는 기관이 끼어 있으면 특진 묶음(hcluster)에 넣고 금색 테두리로 표시한다. 같은 구성은 표식을 다시 쓴다.
+const grpCache = new Map();
+function groupMarker(cs){
+  cs.sort((a, b) => a.code.localeCompare(b.code));
+  const key = cs.map(c => c.code + (c.asHear ? "h" : "")).join(",");
+  let m = grpCache.get(key);
+  if (!m) {
+    const h = cs.find(c => c.asHear);
+    m = L.marker([cs[0].lat, cs[0].lng], {
+      n: cs.length, alt: cs.map(c => c.name).join(" · "),
+      icon: L.divIcon({className: "", iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -11],
+        html: `<div class="grp-ic${h ? " hear" : ""}" style="background:var(${h ? `--h${h.hk}` : `--k${cs[0].kind}`})">${cs.length}</div>`})
+    }).bindPopup(() => grpPopup(cs), {maxHeight: mobile.matches ? 220 : 360})  // 휴대폰은 지도 높이가 낮다.bindTooltip(`같은 위치 ${cs.length}곳 · ` + cs.map(c => c.name).join(" · "));
+    m.isHear = !!h;
+    grpCache.set(key, m);
+  }
+  cs.forEach(c => c.gmarker = m);
+  return m;
 }
 function ofcPopup(st){
   const d = kmFrom(st);
@@ -228,11 +307,19 @@ function focus(c){
     map.setView([c.lat, c.lng], Math.max(map.getZoom(), 15), {animate: false});
     return c.site.marker.openPopup();
   }
-  const m = c.asHear ? c.hmarker : c.marker;
+  const m = c.gmarker || (c.asHear ? c.hmarker : c.marker);
   if (!m) return;
-  (c.asHear ? hcluster : cluster).zoomToShowLayer(m, () => {
+  ((c.gmarker ? m.isHear : c.asHear) ? hcluster : cluster).zoomToShowLayer(m, () => {
     map.setView([c.lat, c.lng], Math.max(map.getZoom(), 16), {animate: false});
     m.openPopup();
+    // 묶음 팝업이면 고른 기관을 표시하고 그 자리로 내린다
+    const box = c.gmarker && m.getPopup().getElement()?.querySelector(".leaflet-popup-content");
+    const it = box?.querySelector(`.grp-item[data-code="${CSS.escape(c.code)}"]`);
+    if (it) { it.classList.add("on"); box.scrollTop += it.getBoundingClientRect().top - box.getBoundingClientRect().top - 4; }
+    // 팝업 윗부분이 지도 밖으로 나가면 내려 준다(묶음 확대 직후에는 Leaflet 자동 이동이 안 될 때가 있다)
+    const pe = m.getPopup().getElement();
+    const over = pe ? pe.getBoundingClientRect().top - $("map").getBoundingClientRect().top - 10 : 0;
+    if (over < 0) map.panBy([0, over], {animate: false});
   });
 }
 function row(c){
@@ -283,7 +370,7 @@ function renderMore(){
   list.appendChild(frag);
 }
 function apply(fit = true){
-  const q = $("q").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const q = $("q").value.trim().split(/\s+/).map(norm).filter(Boolean);
   const sido = sidoSel.value, sgg = sggSel.value;
   const kinds = new Set([...kindBox.querySelectorAll("input:checked")].map(i => +i.dataset.kind));
   const hk = new Set([...hKindBox.querySelectorAll("input:checked")].map(i => +i.dataset.hk));
@@ -296,22 +383,33 @@ function apply(fit = true){
   const okinds = new Set(OKINDS.filter(x => ofcKinds.querySelector(`[data-okind="${x.k}"]`).checked).flatMap(x => x.m));
   // 소속기관은 꺼져 있어도 검색어가 있으면 찾아 보여 준다
   ohit = !ofcOn.checked && !q.length ? [] : offices.filter(o => okinds.has(o.kind) && (!sido || o.sido === sido) &&
-    (!sgg || o.addr.includes(sgg)) && q.every(w => [o.name, o.addr, o.area].join(" ").toLowerCase().includes(w)));
+    (!sgg || o.addr.includes(sgg)) && q.every(w => norm([o.name, o.addr, o.area].join("|")).includes(w)));
   [...hits, ...ohit].forEach(c => c.km = kmFrom(c));
   const order = sortBy === "dist" && origin
     ? (a, b) => (a.km ?? 1e9) - (b.km ?? 1e9)
     : (a, b) => (a.sortName || a.short).localeCompare(b.sortName || b.short, "ko");
   hits.sort(order); ohit.sort(order);
   cluster.clearLayers(); hcluster.clearLayers(); ofcLayer.clearLayers();
-  cluster.addLayers(hits.filter(c => !c.asHear && c.marker).map(c => c.marker));
-  hcluster.addLayers(hits.filter(c => c.asHear && c.hmarker).map(c => c.hmarker));
+  const at = new Map(), mk = [], hmk = [];
+  hits.forEach(c => {
+    c.gmarker = null;
+    if (c.asHear ? c.hmarker : c.marker) { const k = c.lat + "," + c.lng; at.has(k) ? at.get(k).push(c) : at.set(k, [c]); }
+  });
+  at.forEach(cs => {
+    if (cs.length === 1) return (cs[0].asHear ? hmk : mk).push(cs[0].asHear ? cs[0].hmarker : cs[0].marker);
+    const g = groupMarker(cs);
+    (g.isHear ? hmk : mk).push(g);
+  });
+  cluster.addLayers(mk);
+  hcluster.addLayers(hmk);
   new Set(ohit.map(o => o.site)).forEach(st => ofcLayer.addLayer(st.marker));
   list.innerHTML = ""; shown = 0;
   renderMore();
   const nh = hits.filter(c => c.asHear).length;
   $("hearState").textContent = !hearOn.checked ? "· 숨김" : hearOnly.checked ? "· 특진만 보기" : "· 표시 중";
-  $("count").textContent = `표시 ${hits.length.toLocaleString()}곳` + (nh ? `(특진 ${nh})` : "") + ` / 전체 ${H.length.toLocaleString()}곳` +
-    (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "");
+  $("count").innerHTML = `표시 ${hits.length.toLocaleString()}곳` + (nh ? `(특진 ${nh})` : "") + ` / 전체 ${H.length.toLocaleString()}곳` +
+    (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "") + ` <span class="asof">· 지정 자료 ${esc(META.asof)} 기준</span>`;
+  syncUrl();
   const geo = [...hits.filter(c => c.lat != null), ...ohit];
   if (!fit || !geo.length) return;
   if (sortBy === "dist" && origin) {  // 출발지와 가까운 5곳이 한 화면에
@@ -320,6 +418,23 @@ function apply(fit = true){
     map.fitBounds(L.latLngBounds(geo.map(c => [c.lat, c.lng])).pad(.1), {maxZoom: 16});
   }
 }
+// 검색어·시도·시군구를 주소에 담는다(그대로 복사해 보내면 같은 화면이 열린다). 기록은 쌓지 않는다.
+function syncUrl(){
+  const p = new URLSearchParams();
+  if ($("q").value.trim()) p.set("q", $("q").value.trim());
+  if (sidoSel.value) p.set("sido", sidoSel.value);
+  if (sggSel.value) p.set("sgg", sggSel.value);
+  const s = p.toString();
+  history.replaceState(null, "", (s ? "?" + s : location.pathname) + location.hash);
+}
+// 필터 초기화 — 출발지는 필터가 아니라 그대로 둔다
+$("reset").onclick = () => {
+  $("q").value = ""; sidoSel.value = ""; fillSgg();
+  document.querySelectorAll("#kinds input, #hKinds input, #ofcKinds input").forEach(i => i.checked = true);
+  hearOn.checked = true; hearOnly.checked = false; ofcOn.checked = false; ofcKinds.hidden = true;
+  apply(false);
+  if (allBounds) map.fitBounds(allBounds);
+};
 let qTimer;
 $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 200); });
 sidoSel.addEventListener("change", () => { fillSgg(); apply(); });
