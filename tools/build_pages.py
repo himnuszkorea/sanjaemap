@@ -79,9 +79,9 @@ def page(sido, slug, full, rows, meta, kinds, hkinds):
     for r in rows:
         by_sgg[r["sgg"] or "(시·군·구 미상)"].append(r)
     sggs = sorted(by_sgg)
-    title = f"{sido} 산재 지정병원 목록 {n_des:,}곳 — 산재보험 지정의료기관 | 산재맵"
+    title = f"{sido} 산재병원·산재 지정의료기관 목록 {n_des:,}곳 | 산재맵(산재지도)"
     desc = (f"{full} 산재보험 지정의료기관 {n_des:,}곳(근로복지공단 자료, {asof} 기준)을 시·군·구별로 정리했습니다. "
-            f"기관명·주소·전화번호와 소음성 난청 특진 여부를 확인하고 산재맵 지도에서 가까운 병원을 찾으세요.")
+            f"기관명·주소·전화번호와 소음성 난청 특진 여부를 확인하고 산재맵(산재지도)에서 가까운 산재병원을 찾으세요.")
     url = f"{BASE}r/{slug}/"
     out = [f"""<!doctype html>
 <html lang="ko">
@@ -105,7 +105,7 @@ def page(sido, slug, full, rows, meta, kinds, hkinds):
 <main>
 <header>
   <a class="brand" href="../../">산재맵</a>
-  <h1>{escape(sido)} 산재보험 지정의료기관(산재 지정병원) {n_des:,}곳</h1>
+  <h1>{escape(sido)} 산재보험 지정의료기관(산재병원) {n_des:,}곳</h1>
   <p class="lead">근로복지공단 「산재보험 지정의료기관 현황정보」(공공데이터포털, {asof} 기준)와 소음성 난청 특진 의뢰기관 현황({hasof})을
      시·군·구별로 정리한 목록입니다. 특진 의뢰기관은 {n_hear:,}곳{f"이고, 그중 {n_only:,}곳은 지정의료기관 목록에는 없어 따로 표시했습니다" if n_only else "입니다"}.
      지정·해지가 수시로 있으니 방문 전에 병원이나 근로복지공단(1588-0075)에 확인하세요.</p>

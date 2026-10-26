@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261022b";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261027a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const REPORT = "https://github.com/himnuszkorea/sanjaemap/issues/new";  // 오류 제보 창구
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
