@@ -6,9 +6,9 @@
 브이월드 지도에서 찾는 무료 정적 웹페이지. GitHub Pages 공개 https://himnuszkorea.github.io/sanjaemap/ (public `himnuszkorea/sanjaemap`).
 
 ## 2. 현재 상태
-11-18 **휴대폰 첫 화면 개편**(판 20261118a, 커밋 b221e2c, 푸시 완료) — 사용자가 준 제안표 5건 중 ★1·2·3 반영.
-4(약국·재활인증)는 API 는 찾았으나 **활용신청 필요**(사용자), 5(방문 통계)는 서비스 가입 필요(사용자)로 대기.
-실제 휴대폰 확인은 아직 — 내장 브라우저 375px 에뮬레이션으로만 봤다.
+11-18 휴대폰 첫 화면 개편(20261118a, b221e2c) 뒤 **재활인증 의료기관 표시 게시**(20261118b, 21bcfbb — 게시본 확인).
+**산재 지정약국 25,203곳은 좌표 작업 중**(`tools/build_extra.py`, 백그라운드 — 11-18 15:55 기준 약 10%, 약 1,100건/10분).
+화면 코드는 들어가 있고 `index.html` `#pharmRow` 를 `hidden` 으로 숨겨 두었다. `data/pharm.json`·`raw/api_*`·`tools/geocode_cache.json` 은 미커밋.
 
 ## 3. 완료된 작업
 - [10-18~20] 데이터·화면 구축(`build_data.py` 지오코딩·검색·필터·거리순·길찾기) · 검색 등록(메타·JSON-LD·sitemap·서치콘솔 `…/sanjaemap/`·네이버는 루트 저장소 경유) · 하단 비공식 문구 · 휴대폰 두 손가락 지도
@@ -38,8 +38,10 @@
   - 「산재 처음이세요?」 `dialog#first` 3단계(지정의료기관 치료 → 요양급여 신청·의료기관 대행 → 공단 결정·휴업급여 70%) + 3일·시효 3/5년 주석. 근거 산재보험법(시행 2026.7.1.) 제36·38·40·41·52·112조 원문 조회(MCP law-go-kr). 그림은 인라인 SVG(십자 없음)
 - [11-18] 약국·재활인증 조사: 공공데이터포털 「근로복지공단_산재병원 의료 현황정보」(15058644, 오픈API, 이용허락 제한 없음) `https://apis.data.go.kr/B490001/sjHptMcalPstateInfoService` — 오퍼레이션 「산재지정 약국 찾기」·「산재지정 재활인증의료기관 현황」·「산재지정 의료기관 찾기」(필드 `jhHospital` 재활인증 여부). 페이지에 경로는 `getYearHwanjaJinryoPstateList` 하나만 보임. 기존 `SANJAE_SERVICE_KEY` 로 호출하면 `SERVICE_KEY_IS_NOT_REGISTERED_ERROR`(활용신청 안 됨)
 
+- [11-18] **재활인증 게시**(21bcfbb): 활용신청 승인(사용자) · 경로 `getSjJijeongyakgukChakgiList`(약국)·`getSjBoheomJhCftHptPstateList`(재활인증) · **포털 계정 키(앞 90dd)는 SANJAE_SERVICE_KEY(앞 bed9)와 다른 키** — `.env.local` `DATA_GO_KR_KEY` 로 둠(Aside 로 옮김, 출력 안 함). 재활인증 203곳 중 202곳 지정 기호 일치(라이프재활의학과병원 제외) → 팝업 「재활인증」 행·목록 태그·`#rehabOnly` 필터·FAQ·출처 줄. 약국은 `phLayer`(별도 묶음)·`pharm.json` 지연 로드·목록 50곳까지 구현됨, 토글만 숨김
+
 ## 4. 미완료 작업
-- **약국·재활인증 표시(제안 4)** — 사용자가 공공데이터포털에서 15058644 활용신청 → 승인 뒤 오퍼레이션 경로 확인(마이페이지 상세의 요청 주소) → `tools/` 에 빌드 때 받아 `data/` 정적 저장(화면은 API 를 직접 부르지 않음, 키 노출 금지) → 주소 지오코딩(`geocode_cache.json` 재사용) → 레이어 추가
+- **약국 게시** — 좌표 작업 끝나면 `PYTHONUTF8=1 py -3 tools/build_extra.py --no-geocode`(캐시로 pharm.json 재생성 · 실행 중인 옛 코드는 extra.json 을 쓰므로 지운다) → 실패 건수 확인 → `#pharmRow` 의 `hidden` 제거 · `#about` 목록/FAQ 에 약국 문구 다시 넣기 · 출처 줄 「재활인증·지정약국」 · 판 올리기 → `data/pharm.json`·`tools/geocode_cache.json` 커밋·푸시
 - **쿠키 없는 방문 통계(제안 5)** — 서비스 선택·가입은 사용자(예: GoatCounter·Cloudflare Web Analytics). 정해지면 스크립트 한 줄
 - 실제 휴대폰 확인: 목적 버튼 → GPS 권한 창 → 거리순 · 목록 탭 ↔ 지도 탭 · 한 손가락 끌기와 페이지 스크롤 충돌 여부 · 「산재 처음이세요?」 창 높이
 - 검색 노출 관찰 — 진행: 게시·구글 요청 완료(10-27) / 남은 것: ① `sitemap.xml?v=1` 상태 재확인 ② 색인·순위·사이트 이름 관찰 ③ (선택) 구글 리치 결과 테스트
