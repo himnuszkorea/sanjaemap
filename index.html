@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
-<link rel="stylesheet" href="style.css?v=20261118d">
+<link rel="stylesheet" href="style.css?v=20261118e">
 </head>
 <body>
 <header>
@@ -57,6 +57,11 @@
     <input id="orgQ" type="search" placeholder="또는 출발지 주소·장소 (예: 광산지사)" aria-label="출발지 주소·장소">
     <button class="btn" type="submit">찾기</button>
   </form>
+  <!-- 재활인증 의료기관 · 산재 지정약국(공공데이터포털 15058644, 2026-11-18) — 휴대폰 지도 탭에서도 보이게 빠른 찾기 칸에 둔다(11-18) -->
+  <div class="ext-row">
+    <label><input type="checkbox" id="rehabOnly"><span class="tag r">재활인증</span>의료기관만 <span class="count" id="rehabN"></span></label>
+    <label id="pharmRow"><input type="checkbox" id="pharmOn"><span class="ph-dot"></span>산재 지정약국 함께 보기 <span class="count" id="pharmN"></span></label>
+  </div>
   <div class="org-now" id="orgNow">목적을 누르면 내 위치에서 가까운 순으로 보여 줍니다. 지도를 우클릭(휴대폰은 길게 누르기)해도 출발지가 됩니다.</div>
 </section>
 <!-- 휴대폰에서만 보이는 지도/목록 전환 -->
@@ -68,11 +73,6 @@
   <aside id="side">
     <div class="filters">
       <input id="q" type="search" placeholder="기관명·주소·전화번호 검색 (공단 지사 포함)" aria-label="검색">
-      <!-- 재활인증 의료기관 · 산재 지정약국(공공데이터포털 15058644, 2026-11-18) -->
-      <div class="ext-row">
-        <label><input type="checkbox" id="rehabOnly"><span class="tag r">재활인증</span>의료기관만 <span class="count" id="rehabN"></span></label>
-        <label id="pharmRow"><input type="checkbox" id="pharmOn"><span class="ph-dot"></span>산재 지정약국 함께 보기 <span class="count" id="pharmN"></span></label>
-      </div>
       <!-- 세부 필터는 접어 둔다(PC 는 처음부터 펼침 — app.js). 접어도 지도·목록은 이 설정대로 걸러진다 -->
       <details class="more" id="more">
         <summary>지역·종류 세부 필터 <span class="count" id="moreState"></span></summary>
@@ -172,7 +172,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="config.js?v=20261118d"></script>
-<script src="app.js?v=20261118d"></script>
+<script src="config.js?v=20261118e"></script>
+<script src="app.js?v=20261118e"></script>
 </body>
 </html>
