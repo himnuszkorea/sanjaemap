@@ -7,7 +7,7 @@
 
 ## 2. 현재 상태
 11-18 휴대폰 첫 화면 개편(20261118a, b221e2c) 뒤 **재활인증 의료기관 표시 게시**(20261118b, 21bcfbb — 게시본 확인).
-**산재 지정약국 25,203곳은 좌표 작업 중**(`tools/build_extra.py`, 백그라운드 — 11-18 15:55 기준 약 10%, 약 1,100건/10분).
+**산재 지정약국 25,203곳 게시 완료**(6e2ee33, 판 20261118c — 「산재 지정약국 함께 보기」 토글, 켤 때만 `data/pharm.json` 3.3MB 지연 로드). 좌표 24,498곳 · **실패 705곳(2.8%)은 목록에 「위치 미확인」**(두 번 재시도 — 브이월드가 못 읽는 주소).
 화면 코드는 들어가 있고 `index.html` `#pharmRow` 를 `hidden` 으로 숨겨 두었다. `data/pharm.json`·`raw/api_*`·`tools/geocode_cache.json` 은 미커밋.
 
 ## 3. 완료된 작업
@@ -41,7 +41,7 @@
 - [11-18] **재활인증 게시**(21bcfbb): 활용신청 승인(사용자) · 경로 `getSjJijeongyakgukChakgiList`(약국)·`getSjBoheomJhCftHptPstateList`(재활인증) · **포털 계정 키(앞 90dd)는 SANJAE_SERVICE_KEY(앞 bed9)와 다른 키** — `.env.local` `DATA_GO_KR_KEY` 로 둠(Aside 로 옮김, 출력 안 함). 재활인증 203곳 중 202곳 지정 기호 일치(라이프재활의학과병원 제외) → 팝업 「재활인증」 행·목록 태그·`#rehabOnly` 필터·FAQ·출처 줄. 약국은 `phLayer`(별도 묶음)·`pharm.json` 지연 로드·목록 50곳까지 구현됨, 토글만 숨김
 
 ## 4. 미완료 작업
-- **약국 게시** — 좌표 작업 끝나면 `PYTHONUTF8=1 py -3 tools/build_extra.py --no-geocode`(캐시로 pharm.json 재생성 · 실행 중인 옛 코드는 extra.json 을 쓰므로 지운다) → 실패 건수 확인 → `#pharmRow` 의 `hidden` 제거 · `#about` 목록/FAQ 에 약국 문구 다시 넣기 · 출처 줄 「재활인증·지정약국」 · 판 올리기 → `data/pharm.json`·`tools/geocode_cache.json` 커밋·푸시
+- ~~약국 게시~~ — 11-18 완료(6e2ee33). 남은 개선: 약국 전화번호에 하이픈 없음(원자료 그대로 · 0617826965), 좌표 실패 705곳 주소 정리 여부
 - **쿠키 없는 방문 통계(제안 5)** — 서비스 선택·가입은 사용자(예: GoatCounter·Cloudflare Web Analytics). 정해지면 스크립트 한 줄
 - 실제 휴대폰 확인: 목적 버튼 → GPS 권한 창 → 거리순 · 목록 탭 ↔ 지도 탭 · 한 손가락 끌기와 페이지 스크롤 충돌 여부 · 「산재 처음이세요?」 창 높이
 - 검색 노출 관찰 — 진행: 게시·구글 요청 완료(10-27) / 남은 것: ① `sitemap.xml?v=1` 상태 재확인 ② 색인·순위·사이트 이름 관찰 ③ (선택) 구글 리치 결과 테스트
