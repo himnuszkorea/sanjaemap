@@ -27,6 +27,19 @@ OUT_P = ROOT / "data" / "pharm.json"   # 크다(약 3MB) — 「지정약국 함
 HOSP = ROOT / "data" / "hospitals.json"
 
 
+def fmt_tel(t):
+    """원자료 전화번호는 숫자만이다(11-18) — 지정의료기관 목록처럼 하이픈을 넣는다.
+    걸 수 없는 값(자리 모자람·0000 채움)은 빈칸으로 둔다(화면은 「자료 없음」). 내선·대표번호 범위(-1 등)는 원문 그대로."""
+    t = (t or "").strip()
+    if not re.fullmatch(r"\d+", t):
+        return t if re.search(r"\d{9}", t) else ""
+    m = (re.fullmatch(r"(02)(\d{3,4})(\d{4})", t) or re.fullmatch(r"(050\d)(\d{4})(\d{4})", t)
+         or re.fullmatch(r"(0[3-6][1-5]|070|010)(\d{3,4})(\d{4})", t) or re.fullmatch(r"(1[568]\d\d)(\d{4})", t))
+    if not m or len(set("".join(m.groups()[1:]))) == 1:
+        return ""
+    return "-".join(m.groups())
+
+
 def api_key():
     k = os.environ.get("DATA_GO_KR_KEY")
     if not k:
@@ -120,7 +133,7 @@ def main(no_geocode=False):
     for it in data["pharm"]:
         a, sido, sgg, lat, lng = place(it)
         pfail += lat is None
-        pharm.append([it.get("hospitalNm", ""), a, it.get("tel", ""), sido, sgg, lat, lng])
+        pharm.append([it.get("hospitalNm", ""), a, fmt_tel(it.get("tel")), sido, sgg, lat, lng])
     # 재활인증: 지정의료기관 목록과 기호(hospitalNo ↔ 의료기관기호)로 맞춘다. 맞으면 화면은 그 기관에 표시만 붙인다.
     hcodes = set()
     if HOSP.exists():
@@ -133,7 +146,7 @@ def main(no_geocode=False):
         code = it.get("hospitalNo", "")
         rmatch += code in hcodes
         rfail += lat is None
-        rehab.append([code, it.get("hospitalNm", ""), it.get("gtCdNm1", ""), a, it.get("tel", ""), sido, sgg, lat, lng])
+        rehab.append([code, it.get("hospitalNm", ""), it.get("gtCdNm1", ""), a, fmt_tel(it.get("tel")), sido, sgg, lat, lng])
     src = "공공데이터포털 data.go.kr/data/15058644 (근로복지공단_산재병원 의료 현황정보)"
     dump = lambda p, o: p.write_text(json.dumps(o, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     dump(OUT_R, {"meta": {"source": src, "fetched": today, "count": len(rehab), "matched": rmatch,
