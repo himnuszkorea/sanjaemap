@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261027a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261118a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const REPORT = "https://github.com/himnuszkorea/sanjaemap/issues/new";  // 오류 제보 창구
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
@@ -55,36 +55,30 @@ const hcluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRad
 const ofcLayer = L.layerGroup();  // 78곳이라 묶지 않는다
 map.addLayer(cluster); map.addLayer(hcluster); map.addLayer(ofcLayer);
 
-// ── 휴대폰: 한 손가락은 페이지 스크롤, 지도는 두 손가락 ─────────
-// 지도가 화면 폭 전체라 한 손가락 끌기를 지도가 가져가면 페이지를 내릴 곳이 없다.
-// 끌기를 끄면 Leaflet 이 touch-action 을 pan-x pan-y 로 풀어 브라우저가 스크롤하고, 두 손가락 손모음(touchZoom)으로 이동·확대한다.
+// ── 휴대폰: 지도/목록 탭(2026-11-18) ───────────────
+// 전에는 지도 아래로 필터·목록이 길게 이어져 지도는 두 손가락으로만 움직였다. 이제 한 화면에 지도 또는 목록 하나만 보이므로
+// 지도는 한 손가락으로 끈다. 숨은 지도에서는 fitBounds 가 크기 0으로 계산되므로 맞춤은 지도 탭으로 돌아올 때 한다(fitTo).
 const mobile = matchMedia("(max-width:760px)");
-const hint = document.createElement("div");
-hint.id = "mapHint"; hint.textContent = "지도는 두 손가락으로 움직이세요";
-$("map").appendChild(hint);
-let hintTimer = 0;
-$("map").addEventListener("touchstart", e => {
-  if (!mobile.matches || e.touches.length !== 1 || e.target.closest(".leaflet-control, .leaflet-popup")) return;
-  hint.classList.add("on");
-  clearTimeout(hintTimer); hintTimer = setTimeout(() => hint.classList.remove("on"), 1500);
-}, {passive: true});
-$("map").addEventListener("touchmove", e => { if (e.touches.length > 1) hint.classList.remove("on"); }, {passive: true});
-const setDrag = () => mobile.matches ? map.dragging.disable() : map.dragging.enable();
-setDrag(); mobile.addEventListener("change", setDrag);
-
-// 떠 있는 버튼: 지도가 화면 밖이면 「▲ 지도·검색」, 목록에서 기관을 눌러 지도로 올라왔으면 「▼ 목록으로」
-const jump = $("jump");
-let backY = null, mapSeen = true;
-function setJump(){
-  jump.textContent = backY != null ? "▼ 목록으로" : "▲ 지도·검색";
-  jump.hidden = backY == null && mapSeen;
+let tab = "map", pendingFit = null;
+const mapHidden = () => mobile.matches && tab !== "map";
+function fitTo(b, opt){ if (mapHidden()) pendingFit = [b, opt]; else map.fitBounds(b, opt); }
+function setTab(t){
+  tab = t;
+  document.documentElement.dataset.tab = t;
+  document.querySelectorAll("#tabs [data-tab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === t)));
+  if (t === "map") {
+    map.invalidateSize();
+    if (pendingFit) { const [b, o] = pendingFit; pendingFit = null; map.fitBounds(b, o); }
+  } else scrollTo(0, 0);
 }
-new IntersectionObserver(([e]) => { mapSeen = e.isIntersecting; if (!mapSeen) backY = null; setJump(); }).observe($("map"));
-jump.onclick = () => {
-  if (backY != null) { scrollTo(0, backY); backY = null; }
-  else scrollTo(0, 0);
-  setJump();
-};
+document.querySelectorAll("#tabs [data-tab]").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+// 빠른 찾기 막대: 휴대폰은 지도 위(탭 위), PC 는 왼쪽 패널 맨 위
+function placeQuick(){
+  if (mobile.matches) $("tabs").before($("quick")); else $("side").prepend($("quick"));
+  map.invalidateSize();
+}
+placeQuick(); setTab("map");
+mobile.addEventListener("change", () => { placeQuick(); setTab(tab); });
 
 // ── 출발지와 직선거리 ───────────────────────────────
 let origin = null, sortBy = "name";
@@ -202,7 +196,9 @@ function init(d){
   else if (target) pendingFocus = target;
   // ?id= 로 열 때는 전국 맞춤을 하지 않는다 — 맞춤 애니메이션이 끝나며 기관으로 옮긴 화면을 되돌린다
   if ((sidoSel.value || $("q").value) && !pendingFocus) apply();
-  else { apply(false); if (!pendingFocus) map.fitBounds(allBounds); }
+  else { apply(false); if (!pendingFocus) fitTo(allBounds); }
+  // 세부 필터: PC 는 펼쳐 두고, 휴대폰은 접는다(주소로 지역을 받았으면 펼친다)
+  $("more").open = !mobile.matches || !!sidoSel.value;
   if (target) history.replaceState(null, "", `?id=${encodeURIComponent(target.code)}`);  // apply 가 지운 id 를 되살린다
 }
 
@@ -297,7 +293,7 @@ function ofcPopup(st){
 const list = $("list");
 let hits = [], ohit = [], shown = 0;
 function focus(c){
-  if (mobile.matches) { backY = scrollY; $("map").scrollIntoView({block: "start"}); setJump(); }
+  if (mobile.matches) { setTab("map"); scrollTo(0, 0); }
   if (c.site) {  // 소속기관: 묶음이 없어 바로 연다
     map.setView([c.lat, c.lng], Math.max(map.getZoom(), 15), {animate: false});
     return c.site.marker.openPopup();
@@ -404,13 +400,18 @@ function apply(fit = true){
   $("hearState").textContent = !hearOn.checked ? "· 숨김" : hearOnly.checked ? "· 특진만 보기" : "· 표시 중";
   $("count").innerHTML = `표시 ${hits.length.toLocaleString()}곳` + (nh ? `(특진 ${nh})` : "") + ` / 전체 ${H.length.toLocaleString()}곳` +
     (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "") + ` <span class="asof">· 지정 자료 ${esc(META.asof)} 기준</span>`;
+  if (!hits.length && ohit.length) $("count").innerHTML = `공단 소속기관 ${ohit.length}곳 <span class="asof">· 의료기관은 숨김(필터 초기화로 다시 보기)</span>`;
+  $("tabN").textContent = (hits.length + ohit.length).toLocaleString();
+  const off = kindBox.querySelectorAll("input:not(:checked)").length;
+  $("moreState").textContent = [sido && (sgg ? `${sido} ${sgg}` : sido), off && `종류 ${off}개 뺌`, hearOnly.checked ? "특진만" : !hearOn.checked && "특진 숨김",
+    ofcOn.checked && "소속기관"].filter(Boolean).map(t => "· " + t).join(" ");
   syncUrl();
   const geo = [...hits.filter(c => c.lat != null), ...ohit];
   if (!fit || !geo.length) return;
   if (sortBy === "dist" && origin) {  // 출발지와 가까운 5곳이 한 화면에
-    map.fitBounds(L.latLngBounds([[origin.lat, origin.lng], ...geo.slice(0, 5).map(c => [c.lat, c.lng])]).pad(.2), {maxZoom: 15});
-  } else if (q.length || sido || hearOnly.checked) {
-    map.fitBounds(L.latLngBounds(geo.map(c => [c.lat, c.lng])).pad(.1), {maxZoom: 16});
+    fitTo(L.latLngBounds([[origin.lat, origin.lng], ...geo.slice(0, 5).map(c => [c.lat, c.lng])]).pad(.2), {maxZoom: 15});
+  } else if (q.length || sido || hearOnly.checked || !hits.length) {
+    fitTo(L.latLngBounds(geo.map(c => [c.lat, c.lng])).pad(.1), {maxZoom: 16});
   }
 }
 // 검색어·시도·시군구를 주소에 담는다(그대로 복사해 보내면 같은 화면이 열린다). 기록은 쌓지 않는다.
@@ -428,10 +429,13 @@ $("reset").onclick = () => {
   document.querySelectorAll("#kinds input, #hKinds input, #ofcKinds input").forEach(i => i.checked = true);
   hearOn.checked = true; hearOnly.checked = false; ofcOn.checked = false; ofcKinds.hidden = true;
   apply(false);
-  if (allBounds) map.fitBounds(allBounds);
+  setPurpose(null);
+  if (allBounds) fitTo(allBounds);
 };
 let qTimer;
-$("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 200); });
+// 세부 필터를 손으로 바꾸면 목적 버튼 강조를 푼다(그 목적 그대로가 아니다)
+document.querySelector(".filters").addEventListener("change", e => { if (e.isTrusted) setPurpose(null); });
+$("q").addEventListener("input", () => { setPurpose(null); clearTimeout(qTimer); qTimer = setTimeout(apply, 200); });
 sidoSel.addEventListener("change", () => { fillSgg(); apply(); });
 sggSel.addEventListener("change", () => apply());
 kindBox.addEventListener("change", () => apply(false));
@@ -528,16 +532,49 @@ $("orgForm").addEventListener("submit", async e => {
     orgMsg(`주소 검색에 실패했습니다(${err.message}). 지도를 우클릭해 출발지를 정할 수 있습니다.`);
   }
 });
-$("gps").onclick = () => {
-  if (!navigator.geolocation) return orgMsg("이 브라우저는 위치 확인을 지원하지 않습니다.");
+function locate(){
+  if (!navigator.geolocation) return orgMsg("이 브라우저는 위치 확인을 지원하지 않습니다. 출발지 주소를 입력하세요.");
   orgMsg("현재 위치 확인 중…");
+  const fail = t => { orgMsg(t); if (!mobile.matches) orgQ.focus(); };
   navigator.geolocation.getCurrentPosition(
     p => setOrigin({name: "내 위치", lat: p.coords.latitude, lng: p.coords.longitude}),
-    err => orgMsg(err.code === 1 ? "위치 권한이 거부되었습니다. 주소를 입력하거나 지도를 우클릭하세요."
-                                 : "현재 위치를 확인하지 못했습니다. 주소를 입력하거나 지도를 우클릭하세요."),
+    err => fail(err.code === 1 ? "위치 권한이 꺼져 있습니다. 출발지 주소를 입력하거나 지도를 길게 누르세요."
+                               : "현재 위치를 확인하지 못했습니다. 출발지 주소를 입력하거나 지도를 길게 누르세요."),
     {enableHighAccuracy: false, timeout: 10000, maximumAge: 60000});
-};
+}
+$("gps").onclick = locate;
+
+// ── 빠른 찾기: 목적 버튼(2026-11-18) ────────────────
+// 누르면 세부 필터를 그 목적에 맞춰 놓고, 출발지가 있으면 가까운 순, 없으면 내 위치를 묻는다(거부하면 주소 입력 안내).
+const PURPOSE_NAME = {hosp: "산재 지정의료기관", hear: "소음성 난청 특진 의뢰기관", ofc: "근로복지공단 지역본부·지사"};
+function setPurpose(p){
+  document.querySelectorAll("[data-purpose]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.purpose === p)));
+}
+function presetFilters(p){
+  $("q").value = ""; sidoSel.value = ""; fillSgg();
+  kindBox.querySelectorAll("input").forEach(i => i.checked = p !== "ofc");
+  hKindBox.querySelectorAll("input").forEach(i => i.checked = true);
+  hearOn.checked = p !== "ofc"; hearOnly.checked = p === "hear";
+  ofcOn.checked = p === "ofc"; ofcKinds.hidden = !ofcOn.checked;
+  ofcKinds.querySelectorAll("input").forEach(i => i.checked = p !== "ofc" || i.dataset.okind === "지역본부·지사");
+}
+document.querySelectorAll("[data-purpose]").forEach(b => b.onclick = () => {
+  if (!H.length) return;  // 자료를 아직 못 읽었다
+  const p = b.dataset.purpose;
+  presetFilters(p); setPurpose(p);
+  if (mobile.matches) setTab("map");
+  if (origin) { setSort("dist"); orgMsg(`${PURPOSE_NAME[p]} — 출발지에서 가까운 순`); }
+  else { apply(p !== "hosp"); locate(); }
+});
 map.on("contextmenu", e => {
   orgQ.value = "";
   setOrigin({name: "지도에서 지정한 곳", lat: +e.latlng.lat.toFixed(6), lng: +e.latlng.lng.toFixed(6)});
 });
+
+// ── 「산재 처음이세요?」 3단계 창 ─────────────────────
+$("firstBtn").onclick = () => $("first").showModal();
+$("first").addEventListener("click", e => {  // 바깥(배경)을 누르면 닫힌다 — 창 안 여백 클릭은 그대로
+  const r = $("first").getBoundingClientRect();
+  if (e.target === $("first") && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) $("first").close();
+});
+$("firstGo").onclick = () => { $("first").close(); document.querySelector('[data-purpose="hosp"]').click(); };

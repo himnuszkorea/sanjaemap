@@ -36,43 +36,63 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
-<link rel="stylesheet" href="style.css?v=20261027a">
+<link rel="stylesheet" href="style.css?v=20261118a">
 </head>
 <body>
 <header>
   <h1>산재맵 <small>산재지도 · 산재보험 지정의료기관 검색</small></h1>
+  <button type="button" class="first-btn" id="firstBtn" aria-haspopup="dialog">산재 처음이세요?</button>
   <!-- 머리글 안내 2줄(숫자 요약·비공식 안내)은 하단 출처 줄로 충분해 뺐다(2026-10-20 사용자 요청). #sub 는 자료를 못 읽었을 때만 보인다. -->
   <p id="sub" hidden></p>
 </header>
+<!-- 빠른 찾기(2026-11-18): 목적 버튼 3개 + 내 위치. 휴대폰은 지도 위, PC 는 왼쪽 패널 맨 위(app.js placeQuick) -->
+<section class="quick" id="quick" aria-label="빠른 찾기">
+  <div class="purpose" role="group" aria-label="무엇을 찾으세요">
+    <button type="button" data-purpose="hosp" aria-pressed="false"><b>가까운 산재병원</b><small>지정의료기관</small></button>
+    <button type="button" data-purpose="hear" aria-pressed="false"><b>난청 특진</b><small>청력 특별진찰</small></button>
+    <button type="button" data-purpose="ofc" aria-pressed="false"><b>공단 지사</b><small>근로복지공단</small></button>
+  </div>
+  <form class="origin" id="orgForm" autocomplete="off">
+    <button class="btn gps" type="button" id="gps" title="현재 위치를 출발지로">내 위치</button>
+    <input id="orgQ" type="search" placeholder="또는 출발지 주소·장소 (예: 광산지사)" aria-label="출발지 주소·장소">
+    <button class="btn" type="submit">찾기</button>
+  </form>
+  <div class="org-now" id="orgNow">목적을 누르면 내 위치에서 가까운 순으로 보여 줍니다. 지도를 우클릭(휴대폰은 길게 누르기)해도 출발지가 됩니다.</div>
+</section>
+<!-- 휴대폰에서만 보이는 지도/목록 전환 -->
+<nav class="tabs" id="tabs" role="tablist" aria-label="보기 전환">
+  <button type="button" role="tab" data-tab="map" aria-selected="true" aria-controls="map">지도</button>
+  <button type="button" role="tab" data-tab="list" aria-selected="false" aria-controls="side">목록 <span id="tabN"></span></button>
+</nav>
 <div class="wrap">
-  <aside>
+  <aside id="side">
     <div class="filters">
       <input id="q" type="search" placeholder="기관명·주소·전화번호 검색 (공단 지사 포함)" aria-label="검색">
-      <div class="two">
-        <select id="sido" aria-label="시도"><option value="">전국</option></select>
-        <select id="sgg" aria-label="시군구" disabled><option value="">시·군·구 전체</option></select>
-      </div>
-      <div class="kind-box">
-        <div class="box-title">산재보험 지정의료기관 종류 <span class="count">(기관명으로 추정)</span></div>
-        <div class="row" id="kinds"></div>
-      </div>
-      <div class="ofc-box">
-        <label class="box-head"><input type="checkbox" id="ofcOn"><span class="sq"></span>공단 소속기관(지사 등) 함께 보기 <span class="count" id="ofcN"></span></label>
-        <div class="row" id="ofcKinds" hidden></div>
-      </div>
-      <!-- 특진 기관 설정은 필요할 때 펼친다(접혀 있어도 특진 기관 동그라미는 지도에 보인다) -->
-      <details class="hear-box" id="hearBox">
-        <summary><span class="dot ring"></span>소음성 난청 특진기관 <span class="count" id="hearN"></span><span class="count" id="hearState"></span></summary>
-        <label class="box-head"><input type="checkbox" id="hearOn" checked>지도에 표시</label>
-        <div class="row" id="hKinds"></div>
-        <label class="sub"><input type="checkbox" id="hearOnly">특진 기관만 보기</label>
+      <!-- 세부 필터는 접어 둔다(PC 는 처음부터 펼침 — app.js). 접어도 지도·목록은 이 설정대로 걸러진다 -->
+      <details class="more" id="more">
+        <summary>지역·종류 세부 필터 <span class="count" id="moreState"></span></summary>
+        <div class="more-body">
+          <div class="two">
+            <select id="sido" aria-label="시도"><option value="">전국</option></select>
+            <select id="sgg" aria-label="시군구" disabled><option value="">시·군·구 전체</option></select>
+          </div>
+          <div class="kind-box">
+            <div class="box-title">산재보험 지정의료기관 종류 <span class="count">(기관명으로 추정)</span></div>
+            <div class="row" id="kinds"></div>
+          </div>
+          <div class="ofc-box">
+            <label class="box-head"><input type="checkbox" id="ofcOn"><span class="sq"></span>공단 소속기관(지사 등) 함께 보기 <span class="count" id="ofcN"></span></label>
+            <div class="row" id="ofcKinds" hidden></div>
+          </div>
+          <!-- 특진 기관 설정은 필요할 때 펼친다(접혀 있어도 특진 기관 동그라미는 지도에 보인다) -->
+          <details class="hear-box" id="hearBox">
+            <summary><span class="dot ring"></span>소음성 난청 특진기관 <span class="count" id="hearN"></span><span class="count" id="hearState"></span></summary>
+            <label class="box-head"><input type="checkbox" id="hearOn" checked>지도에 표시</label>
+            <div class="row" id="hKinds"></div>
+            <label class="sub"><input type="checkbox" id="hearOnly">특진 기관만 보기</label>
+          </details>
+        </div>
       </details>
-      <form class="origin" id="orgForm" autocomplete="off">
-        <input id="orgQ" type="search" placeholder="출발지 주소·장소·지사 (예: 광산지사)" aria-label="출발지 주소·장소">
-        <button class="btn" type="submit">찾기</button>
-        <button class="btn" type="button" id="gps" title="현재 위치를 출발지로">내 위치</button>
-      </form>
-      <div class="org-now" id="orgNow">지도를 우클릭(휴대폰은 길게 누르기)해도 출발지로 정할 수 있습니다.</div>
       <div class="row">
         <div class="sort" role="group" aria-label="정렬">
           <button type="button" data-sort="name" aria-pressed="true">이름순</button>
@@ -86,7 +106,6 @@
   </aside>
   <div id="map" role="region" aria-label="지도"></div>
 </div>
-<button id="jump" type="button" hidden>▲ 지도·검색</button>
 <details id="about">
   <summary>산재맵 안내 · 자주 묻는 질문 · 지역별 목록</summary>
   <section>
@@ -118,11 +137,34 @@
   </section>
 </details>
 <footer id="foot">근로복지공단 공식 서비스가 아닌 개인 제작 참고용 지도입니다. 산재맵은 공공데이터포털에 공개된 근로복지공단 「산재보험 지정의료기관 현황정보」와 소음성 난청 청력검사 특별진찰 의뢰 의료기관 현황을 지도로 보여 주는 산재보험 의료기관 찾기 서비스입니다. 배경지도 © 국토교통부 브이월드</footer>
+<!-- 「산재 처음이세요?」 3단계(2026-11-18) — 문구는 산업재해보상보험법(시행 2026.7.1.) 원문으로 확인한 것만 쓴다 -->
+<dialog id="first" aria-labelledby="firstT">
+  <form method="dialog" class="first-x"><button aria-label="닫기">✕</button></form>
+  <h2 id="firstT">산재 처음이세요? 세 단계면 됩니다</h2>
+  <ol class="steps">
+    <li><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="25" rx="2"/><path d="M15 15v10M25 15v10M15 20h10M17 34v-5h6v5"/></svg>
+      <div><b>산재 지정의료기관에서 치료</b>
+      <p>일하다 다치거나 병이 났다면 산재보험 의료기관(산재 지정의료기관)에서 치료받습니다. 접수할 때 일하다 다쳤다고 알리세요.</p></div></li>
+    <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M11 6h13l6 6v22H11z"/><path d="M24 6v6h6M15 18h11M15 23h11M15 28h7"/></svg>
+      <div><b>근로복지공단에 요양급여 신청</b>
+      <p>치료비(요양급여)는 공단에 신청해야 받습니다. 진료한 산재 지정의료기관이 업무상 재해로 판단하면 본인 동의를 받아 신청을 대신 해 줄 수 있습니다.</p></div></li>
+    <li><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14"/><path d="M13 20.5l5 5 9-10"/></svg>
+      <div><b>공단 결정 · 보상</b>
+      <p>공단이 업무상 재해인지 결정합니다(질병은 업무상질병판정위원회가 심의). 치료 때문에 일하지 못한 기간은 휴업급여(하루 평균임금의 70%)를 따로 청구합니다.</p></div></li>
+  </ol>
+  <p class="first-note">치료가 3일 이내로 끝나면 요양급여, 일하지 못한 기간이 3일 이내면 휴업급여가 지급되지 않습니다. 보험급여는 대부분 3년(장해·유족급여 등은 5년) 안에 청구하지 않으면 받을 권리가 사라집니다.</p>
+  <div class="first-go">
+    <button type="button" class="btn gps" id="firstGo">가까운 산재병원 찾기</button>
+    <a class="btn" href="tel:15880075">근로복지공단 1588-0075</a>
+  </div>
+  <p class="first-src">근거: 산업재해보상보험법(시행 2026.7.1.) 제36조·제38조·제40조·제41조·제52조·제112조 ·
+    <a href="https://www.law.go.kr/법령/산업재해보상보험법" target="_blank" rel="noopener">국가법령정보센터 원문</a> · 개인이 만든 참고 안내이며 구체적인 처리는 근로복지공단에 확인하세요.</p>
+</dialog>
 <noscript><p style="padding:16px">산재맵(산재지도 — 산재보험 지정의료기관·산재 특진 의료기관 지도)은 자바스크립트가 필요합니다. 원자료는 <a href="https://www.data.go.kr/data/3044320/fileData.do">공공데이터포털 근로복지공단 산재보험 지정의료기관 현황정보</a>에서 받을 수 있습니다.</p></noscript>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="config.js?v=20261027a"></script>
-<script src="app.js?v=20261027a"></script>
+<script src="config.js?v=20261118a"></script>
+<script src="app.js?v=20261118a"></script>
 </body>
 </html>

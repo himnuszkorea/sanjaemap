@@ -110,22 +110,43 @@ label.sub{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-siz
 #about .regions a{color:inherit;white-space:nowrap}
 footer{padding:6px 16px;font-size:11px;color:var(--muted);background:var(--panel);border-top:1px solid var(--line)}
 footer a{color:inherit}
+/* 빠른 찾기(목적 버튼 3개 + 내 위치) · 세부 필터 접기 · 휴대폰 지도/목록 탭 — 2026-11-18 */
+header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.first-btn{margin-left:auto;border:1px solid var(--gold);background:var(--hearbg);color:var(--ink);font:inherit;font-size:12px;font-weight:600;padding:5px 10px;border-radius:14px;cursor:pointer;white-space:nowrap}
+.quick{padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);display:grid;gap:8px;flex:none}
+.purpose{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.purpose button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:52px;padding:6px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;text-align:center;line-height:1.25}
+.purpose b{font-size:14px;font-weight:700;word-break:keep-all}
+.purpose small{font-size:11px;color:var(--muted)}
+.purpose button:hover{border-color:var(--gold)}
+.purpose button[aria-pressed=true]{border-color:var(--gold);background:var(--hearbg);box-shadow:inset 0 0 0 1px var(--gold)}
+.btn.gps{background:var(--accent);border-color:var(--accent);color:var(--panel);font-weight:700}
+.more{border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+.more summary{cursor:pointer;font-size:13px;font-weight:600}
+.more summary .count{font-weight:400}
+.more-body{display:grid;gap:8px;margin-top:8px}
+.tabs{display:none}
 @media (max-width:760px){
-  /* 휴대폰: 지도 아래에 검색·목록을 잇고 페이지 전체를 스크롤한다 */
-  html,body{height:auto}
-  .wrap{flex-direction:column}
-  aside{width:auto;border-right:0;border-bottom:1px solid var(--line);order:2;overflow:visible;overscroll-behavior:auto}
-  #list{overflow:visible}
-  #map{order:1;flex:none;height:50vh;height:50svh}  /* 한 손가락은 페이지 스크롤, 지도는 두 손가락(app.js) */
-  #about{max-height:none;overflow:visible}
-  footer{padding-bottom:64px}  /* 떠 있는 버튼이 출처 줄을 가리지 않게 */
-  #jump:not([hidden]){display:block}
+  header{padding:8px 12px}
+  header h1 small{display:block;margin:2px 0 0}
+  .quick{padding:8px 12px}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--panel);border-bottom:1px solid var(--line);flex:none}
+  .tabs button{border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:9px 0;cursor:pointer}
+  .tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--gold)}
+  #tabN{font-weight:400;font-size:12px}
+  aside{width:auto;border-right:0}
+  /* 지도 탭: 한 화면에 지도만(한 손가락으로 끈다). 출처 줄은 두 줄까지 — 전문은 목록 탭에서 */
+  :root[data-tab=map] aside{display:none}
+  :root[data-tab=map] #map{min-height:240px}
+  :root[data-tab=map] footer{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  /* 목록 탭: 지도를 숨기고 페이지 전체를 스크롤한다 */
+  :root[data-tab=list],:root[data-tab=list] body{height:auto}
+  :root[data-tab=list] .wrap{display:block}
+  :root[data-tab=list] #map{display:none}
+  :root[data-tab=list] aside{overflow:visible;overscroll-behavior:auto}
+  :root[data-tab=list] #about{max-height:none;overflow:visible}
 }
-/* 휴대폰: 지도 위 안내 · 떠 있는 「지도·검색 / 목록으로」 버튼 */
 #map{position:relative}
-#mapHint{position:absolute;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-size:15px;font-weight:600;text-align:center;padding:16px;pointer-events:none;opacity:0;transition:opacity .25s}
-#mapHint.on{opacity:1}
-#jump{display:none;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:2000;padding:10px 14px;border:0;border-radius:22px;background:var(--accent);color:var(--panel);font:inherit;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:pointer}
 header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
 [hidden]{display:none!important}
 .hear-box summary .count{white-space:nowrap;font-weight:400}
@@ -142,3 +163,20 @@ header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6p
 .reset{border:1px solid var(--line);background:var(--panel);color:var(--muted);font:inherit;font-size:12px;padding:3px 8px;border-radius:4px;cursor:pointer}
 .reset:hover{border-color:var(--gold)}
 .asof{white-space:nowrap}
+/* 「산재 처음이세요?」 3단계 창 */
+#first{max-width:520px;width:calc(100% - 32px);border:0;border-radius:12px;padding:20px 20px 14px;background:var(--panel);color:var(--ink);box-shadow:0 8px 32px rgba(0,0,0,.35);max-height:calc(100svh - 32px);overflow:auto}
+#first::backdrop{background:rgba(0,0,0,.45)}
+#first h2{margin:0 28px 12px 0;font-size:17px}
+.first-x{position:absolute;right:10px;top:10px;margin:0}
+.first-x button{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:st}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:st}
+.steps svg{flex:none;width:44px;height:44px;padding:4px;border-radius:10px;background:var(--hearbg);fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.steps b{font-size:14px}
+.steps b::before{content:counter(st) ". "}
+.steps p{margin:3px 0 0;font-size:13px;line-height:1.55;color:var(--ink)}
+.first-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+.first-go{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.first-go .btn{text-decoration:none;padding:9px 12px}
+.first-src{font-size:11px;color:var(--muted);margin:10px 0 0;line-height:1.5}
+.first-src a{color:inherit}
