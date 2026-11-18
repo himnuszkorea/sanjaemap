@@ -180,3 +180,17 @@ header h1 small{font-size:13px;font-weight:500;color:var(--muted);margin-left:6p
 .first-go .btn{text-decoration:none;padding:9px 12px}
 .first-src{font-size:11px;color:var(--muted);margin:10px 0 0;line-height:1.5}
 .first-src a{color:inherit}
+/* 재활인증 표시 · 산재 지정약국(2026-11-18) */
+:root{--ph:#0f7b6c;--rh:#2b6cb0}
+.ext-row{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px}
+.ext-row label{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.tag.r{border-color:var(--rh);color:var(--rh);font-weight:600}
+.tag.p{border-color:var(--ph);color:var(--ph)}
+.ph-dot{width:10px;height:10px;border-radius:2px;transform:rotate(45deg);background:var(--ph);display:inline-block;flex:none}
+.ph-ic{width:10px;height:10px;margin:1px;border-radius:2px;transform:rotate(45deg);background:#0f7b6c;border:1.5px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.45)}
+.phcl{width:30px;height:30px;border-radius:50%;background:rgba(15,123,108,.85);color:#fff;font:700 11px/30px "Malgun Gothic",sans-serif;text-align:center;box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.4)}
+#list li.sec.ph-sec{background:#e8f4f1;color:#0f7b6c}
+#list li.ph{border-left:3px solid var(--ph)}
+.pop .ph-head{font-size:11px;font-weight:600;color:#0f7b6c;margin-bottom:4px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ph:#3cc0ab;--rh:#7fb0e8}:root:not([data-theme="light"]) #list li.sec.ph-sec{background:#15302b;color:#3cc0ab}}
+:root[data-theme="dark"]{--ph:#3cc0ab;--rh:#7fb0e8}

@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261118a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261118b";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const REPORT = "https://github.com/himnuszkorea/sanjaemap/issues/new";  // 오류 제보 창구
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
@@ -53,7 +53,10 @@ const cluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadi
 const hcluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 40, disableClusteringAtZoom: 14,
   iconCreateFunction: g => L.divIcon({className: "", html: `<div class="hcl">${childN(g)}</div>`, iconSize: [34, 34]})});
 const ofcLayer = L.layerGroup();  // 78곳이라 묶지 않는다
-map.addLayer(cluster); map.addLayer(hcluster); map.addLayer(ofcLayer);
+// 산재 지정약국(2만 5천여 곳, 2026-11-18) — 「지정약국 함께 보기」를 켤 때만 data/pharm.json 을 읽고 따로 묶는다
+const phLayer = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, chunkedLoading: true, disableClusteringAtZoom: 17,
+  iconCreateFunction: g => L.divIcon({className: "", html: `<div class="phcl">${g.getChildCount()}</div>`, iconSize: [30, 30]})});
+map.addLayer(phLayer); map.addLayer(cluster); map.addLayer(hcluster); map.addLayer(ofcLayer);
 
 // ── 휴대폰: 지도/목록 탭(2026-11-18) ───────────────
 // 전에는 지도 아래로 필터·목록이 길게 이어져 지도는 두 손가락으로만 움직였다. 이제 한 화면에 지도 또는 목록 하나만 보이므로
@@ -127,6 +130,7 @@ document.addEventListener("click", async e => {
 });
 
 // ── 자료 읽기 ──────────────────────────────────────
+let PH = null, phLoad = null, RMETA = null, phit = [];  // 약국 · 재활인증 자료(build_extra.py)
 let H = [], KINDS = [], HKINDS = [], META = {}, offices = [], sites = [], allBounds = null;
 const OKINDS = [
   {k: "지역본부·지사", m: ["공단 본부", "지역본부", "지사"]},
@@ -136,18 +140,27 @@ const OKINDS = [
 const OLABEL = {"공단 본부": "본부", "지역본부": "지역본부", "지사": "지사", "특수형태근로종사자센터": "특고센터", "업무상질병판정위원회": "질병판정위"};
 const OLETTER = {"공단 본부": "공", "지역본부": "본", "지사": "지", "특수형태근로종사자센터": "특", "업무상질병판정위원회": "질"};
 
-fetch(`data/hospitals.json?v=${VER}`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(init)
+const getJson = u => fetch(`${u}?v=${VER}`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+// 재활인증 목록은 작아서 함께 읽는다(없거나 실패해도 지도는 뜬다)
+Promise.all([getJson("data/hospitals.json"), getJson("data/rehab.json").catch(() => null)]).then(([d, r]) => init(d, r))
   .catch(err => { $("sub").hidden = false; $("sub").textContent = `자료를 불러오지 못했습니다(${err.message}).`; });
 
-function init(d){
+function init(d, rh){
   META = d.meta; KINDS = d.meta.kinds; HKINDS = d.meta.hkinds;
   const F = d.meta.fields;
   H = d.rows.map(r => Object.fromEntries(F.map((f, i) => [f, r[i]])));
+  // 산재보험 재활인증 의료기관 — 지정의료기관 기호(hospitalNo)로 맞춰 표시만 붙인다(203곳 중 202곳 일치, 11-18)
+  if (rh) {
+    RMETA = rh.meta;
+    const byCode = new Map(H.map(c => [c.code, c]));
+    rh.rows.forEach(r => { const c = byCode.get(r[0]); if (c) c.rehab = r[2] || "재활인증"; });
+    $("rehabN").textContent = `${H.filter(c => c.rehab).length}곳`;
+  }
   H.forEach(c => {
     c.kindName = KINDS[c.kind];
     c.hkName = c.hk >= 0 ? HKINDS[c.hk] : "";
     c.sortName = c.name.replace(/^\s*([(（][^)）]*[)）]\s*)+/, "");  // '(의료법인)…' 같은 머리 괄호는 정렬에서 뺀다
-    c.text = norm([c.name, c.addr, c.tel, c.tel.replace(/-/g, ""), c.htel, c.code, c.hk >= 0 ? "특진 청력" : ""].join("|"));
+    c.text = norm([c.name, c.addr, c.tel, c.tel.replace(/-/g, ""), c.htel, c.code, c.hk >= 0 ? "특진 청력" : "", c.rehab ? "재활인증" : ""].join("|"));
     if (c.lat == null) return;
     // 팝업은 열 때마다 만든다(출발지에 따라 거리·링크가 바뀐다)
     if (c.desig) c.marker = L.circleMarker([c.lat, c.lng], {
@@ -179,6 +192,7 @@ function init(d){
   $("foot").innerHTML =
     `개인이 공공데이터로 만든 비공식 참고용 지도(근로복지공단 공식 서비스 아님) · ` +
     `「근로복지공단 산재보험 지정의료기관 현황정보」(${esc(META.asof)} 기준, <a href="https://www.data.go.kr/data/3044320/fileData.do" target="_blank" rel="noopener">공공데이터포털</a>), ` +
+    `재활인증은 같은 포털 「근로복지공단_산재병원 의료 현황정보」${RMETA ? `(${esc(RMETA.fetched)} 받음)` : ""} · ` +
     `거리는 출발지에서의 직선거리입니다 · 배경지도 © 국토교통부 브이월드 · ` +
     `<a href="${REPORT}" target="_blank" rel="noopener">오류 제보</a>`;
   buildFilters();
@@ -204,6 +218,7 @@ function init(d){
 
 // ── 필터 ───────────────────────────────────────────
 const sidoSel = $("sido"), sggSel = $("sgg"), kindBox = $("kinds"), hKindBox = $("hKinds");
+const rehabOnly = $("rehabOnly"), pharmOn = $("pharmOn");
 const hearOn = $("hearOn"), hearOnly = $("hearOnly"), ofcOn = $("ofcOn"), ofcKinds = $("ofcKinds");
 function buildFilters(){
   const bySido = {};
@@ -253,6 +268,7 @@ function popBody(c){
    <tr><td>주소</td><td>${c.zip ? `(${esc(c.zip)}) ` : ""}${esc(c.addr)}</td></tr>
    <tr><td>전화</td><td>${c.tel ? esc(c.tel) : "자료 없음"}</td></tr>
    ${c.htel ? `<tr><td>특진 연락처</td><td><a href="${esc(telHref(c.htel))}">${esc(c.htel)}</a></td></tr>` : ""}
+   ${c.rehab ? `<tr><td>재활인증</td><td>산재보험 재활인증 의료기관 <span style="color:#8a8f99">(${esc(c.rehab)})</span></td></tr>` : ""}
    ${c.code ? `<tr><td>기호</td><td>${esc(c.code)}</td></tr>` : ""}
    ${d != null ? `<tr><td>거리</td><td>출발지에서 직선 ${fmtKm(d)}</td></tr>` : ""}
   </table>${goLinks(c)}${subLinks(c)}`;
@@ -298,6 +314,10 @@ function focus(c){
     map.setView([c.lat, c.lng], Math.max(map.getZoom(), 15), {animate: false});
     return c.site.marker.openPopup();
   }
+  if (c.isPh) {
+    if (c.lat == null) return;
+    return phLayer.zoomToShowLayer(phMarker(c), () => { map.setView([c.lat, c.lng], Math.max(map.getZoom(), 17), {animate: false}); c.marker.openPopup(); });
+  }
   const m = c.gmarker || (c.asHear ? c.hmarker : c.marker);
   if (!m) return;
   ((c.gmarker ? m.isHear : c.asHear) ? hcluster : cluster).zoomToShowLayer(m, () => {
@@ -321,6 +341,7 @@ function row(c){
                         : `<span class="dot" style="background:var(--k${c.kind})"></span>`;
   li.innerHTML = `<div class="nm">${mark}${esc(c.name)}` +
     (c.hk >= 0 ? `<span class="tag h">청력 특진 · ${esc(HSHORT[c.hkName] || c.hkName)}</span>` : "") +
+    (c.rehab ? `<span class="tag r">재활인증</span>` : "") +
     (c.desig ? `<span class="tag">${esc(c.kindName)}</span>` : `<span class="tag">산재 지정 목록 외</span>`) +
     `${c.lat == null ? `<span class="tag w">위치 미확인</span>` : ""}${c.km != null ? `<span class="km">${fmtKm(c.km)}</span>` : ""}</div>
     <div class="ad">${esc(c.addr)}</div>${goLinks(c)}`;
@@ -337,8 +358,30 @@ function ofcRow(o){
   li.onkeydown = e => { if (e.key === "Enter" && e.target === li) focus(o); };
   return li;
 }
+const PH_LIST = 50;
+function phRow(p){
+  const li = document.createElement("li");
+  li.className = "ph"; li.tabIndex = 0;
+  li.innerHTML = `<div class="nm"><span class="ph-dot"></span>${esc(p.name)} <span class="tag p">지정약국</span>` +
+    `${p.lat == null ? `<span class="tag w">위치 미확인</span>` : ""}${p.km != null ? `<span class="km">${fmtKm(p.km)}</span>` : ""}</div>
+    <div class="ad">${esc(p.addr)}</div>${goLinks(p)}`;
+  li.onclick = e => { if (!e.target.closest("a")) focus(p); };
+  li.onkeydown = e => { if (e.key === "Enter" && e.target === li) focus(p); };
+  return li;
+}
+const phPopup = p => `<div class="pop"><div class="ph-head">◆ 산재 지정약국</div><h3>${esc(p.name)}</h3><table>
+   <tr><td>주소</td><td>${esc(p.addr)}</td></tr>
+   <tr><td>전화</td><td>${p.tel ? esc(p.tel) : "자료 없음"}</td></tr>
+   ${kmFrom(p) != null ? `<tr><td>거리</td><td>출발지에서 직선 ${fmtKm(kmFrom(p))}</td></tr>` : ""}
+  </table>${goLinks(p)}<div class="pop-sub">근로복지공단 「산재지정 약국 찾기」(${esc(PH.meta.fetched)} 받음)</div></div>`;
+function phMarker(p){
+  return p.marker ||= L.marker([p.lat, p.lng], {
+    icon: L.divIcon({className: "", html: `<div class="ph-ic"></div>`, iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -6]}),
+    alt: "약국 " + p.name
+  }).bindPopup(() => phPopup(p)).bindTooltip("약국 · " + p.name);
+}
 function renderMore(){
-  list.querySelectorAll("li.more, li.sec, li.ofc").forEach(li => li.remove());
+  list.querySelectorAll("li.more, li.sec, li.ofc, li.ph").forEach(li => li.remove());
   const frag = document.createDocumentFragment();
   hits.slice(shown, shown + LIST_STEP).forEach(c => frag.appendChild(row(c)));
   shown = Math.min(hits.length, shown + LIST_STEP);
@@ -349,6 +392,14 @@ function renderMore(){
     h.textContent = `■ 공단 소속기관 ${ohit.length}곳 — 의료기관이 아닙니다`;
     frag.appendChild(h);
     ohit.forEach(o => frag.appendChild(ofcRow(o)));
+  }
+  if (phit.length) {  // 약국도 따로 — 목록에는 앞의 PH_LIST 곳만(지도에는 모두)
+    const h = document.createElement("li");
+    h.className = "sec ph-sec";
+    h.textContent = `◆ 산재 지정약국 ${phit.length.toLocaleString()}곳` +
+      (phit.length > PH_LIST ? ` — 목록은 ${sortBy === "dist" && origin ? "가까운" : "이름"} 순 ${PH_LIST}곳까지, 지도에는 모두` : "");
+    frag.appendChild(h);
+    phit.slice(0, PH_LIST).forEach(p => frag.appendChild(phRow(p)));
   }
   if (shown < hits.length) {
     const li = document.createElement("li");
@@ -367,6 +418,7 @@ function apply(fit = true){
   const hk = new Set([...hKindBox.querySelectorAll("input:checked")].map(i => +i.dataset.hk));
   hits = H.filter(c => {
     if ((sido && (c.sido || "기타") !== sido) || (sgg && (c.sgg || "(미상)") !== sgg) || !q.every(w => c.text.includes(w))) return false;
+    if (rehabOnly.checked && !c.rehab) return false;
     // 특진 기관은 특진 표시가 켜져 있으면 특진 색 큰 동그라미로, 꺼져 있으면 일반 지정의료기관 동그라미로 보인다
     c.asHear = c.hk >= 0 && hearOn.checked && hk.has(c.hk);
     return c.asHear || (!hearOnly.checked && c.desig && kinds.has(c.kind));
@@ -375,11 +427,12 @@ function apply(fit = true){
   // 소속기관은 꺼져 있어도 검색어가 있으면 찾아 보여 준다
   ohit = !ofcOn.checked && !q.length ? [] : offices.filter(o => okinds.has(o.kind) && (!sido || o.sido === sido) &&
     (!sgg || o.addr.includes(sgg)) && q.every(w => norm([o.name, o.addr, o.area].join("|")).includes(w)));
-  [...hits, ...ohit].forEach(c => c.km = kmFrom(c));
+  phit = !pharmOn.checked || !PH ? [] : PH.rows.filter(p => (!sido || p.sido === sido) && (!sgg || p.sgg === sgg) && q.every(w => p.text.includes(w)));
+  [...hits, ...ohit, ...phit].forEach(c => c.km = kmFrom(c));
   const order = sortBy === "dist" && origin
     ? (a, b) => (a.km ?? 1e9) - (b.km ?? 1e9)
-    : (a, b) => (a.sortName || a.short).localeCompare(b.sortName || b.short, "ko");
-  hits.sort(order); ohit.sort(order);
+    : (a, b) => (a.sortName || a.short || a.name).localeCompare(b.sortName || b.short || b.name, "ko");
+  hits.sort(order); ohit.sort(order); phit.sort(order);
   cluster.clearLayers(); hcluster.clearLayers(); ofcLayer.clearLayers();
   const at = new Map(), mk = [], hmk = [];
   hits.forEach(c => {
@@ -394,19 +447,22 @@ function apply(fit = true){
   cluster.addLayers(mk);
   hcluster.addLayers(hmk);
   new Set(ohit.map(o => o.site)).forEach(st => ofcLayer.addLayer(st.marker));
+  phLayer.clearLayers();
+  phLayer.addLayers(phit.filter(p => p.lat != null).map(phMarker));
   list.innerHTML = ""; shown = 0;
   renderMore();
   const nh = hits.filter(c => c.asHear).length;
   $("hearState").textContent = !hearOn.checked ? "· 숨김" : hearOnly.checked ? "· 특진만 보기" : "· 표시 중";
   $("count").innerHTML = `표시 ${hits.length.toLocaleString()}곳` + (nh ? `(특진 ${nh})` : "") + ` / 전체 ${H.length.toLocaleString()}곳` +
-    (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "") + ` <span class="asof">· 지정 자료 ${esc(META.asof)} 기준</span>`;
+    (ohit.length ? ` · 소속기관 ${ohit.length}곳` : "") + (phit.length ? ` · 약국 ${phit.length.toLocaleString()}곳` : "") + ` <span class="asof">· 지정 자료 ${esc(META.asof)} 기준</span>`;
   if (!hits.length && ohit.length) $("count").innerHTML = `공단 소속기관 ${ohit.length}곳 <span class="asof">· 의료기관은 숨김(필터 초기화로 다시 보기)</span>`;
-  $("tabN").textContent = (hits.length + ohit.length).toLocaleString();
+  $("tabN").textContent = (hits.length + ohit.length + phit.length).toLocaleString();
   const off = kindBox.querySelectorAll("input:not(:checked)").length;
   $("moreState").textContent = [sido && (sgg ? `${sido} ${sgg}` : sido), off && `종류 ${off}개 뺌`, hearOnly.checked ? "특진만" : !hearOn.checked && "특진 숨김",
     ofcOn.checked && "소속기관"].filter(Boolean).map(t => "· " + t).join(" ");
   syncUrl();
-  const geo = [...hits.filter(c => c.lat != null), ...ohit];
+  let geo = [...hits.filter(c => c.lat != null), ...ohit];
+  if (!geo.length) geo = phit.filter(p => p.lat != null);
   if (!fit || !geo.length) return;
   if (sortBy === "dist" && origin) {  // 출발지와 가까운 5곳이 한 화면에
     fitTo(L.latLngBounds([[origin.lat, origin.lng], ...geo.slice(0, 5).map(c => [c.lat, c.lng])]).pad(.2), {maxZoom: 15});
@@ -428,6 +484,7 @@ $("reset").onclick = () => {
   $("q").value = ""; sidoSel.value = ""; fillSgg();
   document.querySelectorAll("#kinds input, #hKinds input, #ofcKinds input").forEach(i => i.checked = true);
   hearOn.checked = true; hearOnly.checked = false; ofcOn.checked = false; ofcKinds.hidden = true;
+  rehabOnly.checked = false; pharmOn.checked = false;
   apply(false);
   setPurpose(null);
   if (allBounds) fitTo(allBounds);
@@ -444,6 +501,25 @@ hearOn.addEventListener("change", () => { if (!hearOn.checked) hearOnly.checked 
 hearOnly.addEventListener("change", () => { if (hearOnly.checked) hearOn.checked = true; apply(); });
 ofcOn.addEventListener("change", () => { ofcKinds.hidden = !ofcOn.checked; apply(false); });
 ofcKinds.addEventListener("change", () => apply(false));
+rehabOnly.addEventListener("change", () => apply(rehabOnly.checked));
+pharmOn.addEventListener("change", async () => {
+  if (pharmOn.checked && !PH) {
+    $("pharmN").textContent = "불러오는 중…";
+    try {
+      const raw = await (phLoad ||= getJson("data/pharm.json"));
+      const PF = raw.meta.fields;
+      const rows = raw.rows.map(r => Object.fromEntries(PF.map((f, i) => [f, r[i]])));
+      rows.forEach(p => { p.isPh = true; p.text = norm([p.name, p.addr, p.tel, p.tel.replace(/-/g, ""), "약국"].join("|")); });
+      PH = {meta: raw.meta, rows};
+      $("pharmN").textContent = `${rows.length.toLocaleString()}곳`;
+    } catch (err) {
+      phLoad = null; pharmOn.checked = false;
+      $("pharmN").textContent = `불러오지 못함(${err.message})`;
+      return;
+    }
+  }
+  apply(false);
+});
 
 // ── 정렬 ───────────────────────────────────────────
 const sortBtns = [...document.querySelectorAll(".sort button")];
@@ -556,6 +632,7 @@ function presetFilters(p){
   hKindBox.querySelectorAll("input").forEach(i => i.checked = true);
   hearOn.checked = p !== "ofc"; hearOnly.checked = p === "hear";
   ofcOn.checked = p === "ofc"; ofcKinds.hidden = !ofcOn.checked;
+  rehabOnly.checked = false; if (p === "ofc") pharmOn.checked = false;
   ofcKinds.querySelectorAll("input").forEach(i => i.checked = p !== "ofc" || i.dataset.okind === "지역본부·지사");
 }
 document.querySelectorAll("[data-purpose]").forEach(b => b.onclick = () => {
