@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
-<link rel="stylesheet" href="style.css?v=20261118b">
+<link rel="stylesheet" href="style.css?v=20261118c">
 </head>
 <body>
 <header>
@@ -71,7 +71,7 @@
       <!-- 재활인증 의료기관 · 산재 지정약국(공공데이터포털 15058644, 2026-11-18) -->
       <div class="ext-row">
         <label><input type="checkbox" id="rehabOnly"><span class="tag r">재활인증</span>의료기관만 <span class="count" id="rehabN"></span></label>
-        <!-- 약국은 좌표 작업이 끝나면 연다(11-18 재활인증 먼저 게시) --><label hidden id="pharmRow"><input type="checkbox" id="pharmOn"><span class="ph-dot"></span>산재 지정약국 함께 보기 <span class="count" id="pharmN"></span></label>
+        <label id="pharmRow"><input type="checkbox" id="pharmOn"><span class="ph-dot"></span>산재 지정약국 함께 보기 <span class="count" id="pharmN"></span></label>
       </div>
       <!-- 세부 필터는 접어 둔다(PC 는 처음부터 펼침 — app.js). 접어도 지도·목록은 이 설정대로 걸러진다 -->
       <details class="more" id="more">
@@ -122,7 +122,7 @@
       <li>산재보험 지정의료기관 6,742곳 — 공공데이터포털 「근로복지공단 산재보험 지정의료기관 현황정보」(2025년 12월 31일 기준)</li>
       <li>소음성 난청 특진 의뢰 의료기관 220곳 — 상급종합병원 33, 종합병원 82, 청력검사 전문의료기관 97, 공단 소속병원 8 (2026년 10월 7일 현황)</li>
       <li>근로복지공단 소속기관 78곳 — 지역본부·지사 65, 질병판정위원회 9, 특고센터 4</li>
-      <li>산재보험 재활인증 의료기관 203곳 — 공공데이터포털 「근로복지공단_산재병원 의료 현황정보」 오픈API(2026년 11월 18일 받음)</li>
+      <li>산재보험 재활인증 의료기관 203곳·산재 지정약국 25,203곳 — 공공데이터포털 「근로복지공단_산재병원 의료 현황정보」 오픈API(2026년 11월 18일 받음)</li>
     </ul>
     <h2>자주 묻는 질문</h2>
     <h3>산재 지정병원은 어떻게 찾나요?</h3>
@@ -136,8 +136,8 @@
     <h3>소음성 난청 특진 기관은 무엇인가요?</h3>
     <p>소음성 난청 산재 신청 때 청력검사 특별진찰을 의뢰하는 의료기관입니다. 지도에 색 동그라미로 표시되며,
        「소음성 난청 특진기관」을 펼쳐 「특진 기관만 보기」를 고르면 그 기관만 보입니다.</p>
-    <h3>재활인증 의료기관도 볼 수 있나요?</h3>
-    <p>「재활인증 의료기관만」을 고르면 근로복지공단이 산재보험 재활인증을 한 의료기관만 보입니다. 팝업과 목록에 「재활인증」 표시가 붙습니다.</p>
+    <h3>재활인증 의료기관과 산재 지정약국도 볼 수 있나요?</h3>
+    <p>「재활인증 의료기관만」을 고르면 근로복지공단이 산재보험 재활인증을 한 의료기관만 보입니다. 팝업과 목록에 「재활인증」 표시가 붙습니다. 「산재 지정약국 함께 보기」를 켜면 산재 지정약국이 마름모(◆)로 함께 나옵니다. 약국은 수가 많아 목록에는 50곳까지만 보이고 지도에는 모두 표시됩니다.</p>
     <h3>병원 종류는 어떻게 나눴나요?</h3>
     <p>원자료에 종류가 없어 기관명으로 추정했습니다(대학병원·의료원, 병원, 요양병원, 의원, 치과, 한방, 기타). 기타는 이름이 「의료법인 ○○의료재단」뿐이라 종류를 알 수 없는 곳과 연구소 등입니다.</p>
     <h2>지역별 산재 지정병원 목록</h2>
@@ -172,7 +172,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="config.js?v=20261118b"></script>
-<script src="app.js?v=20261118b"></script>
+<script src="config.js?v=20261118c"></script>
+<script src="app.js?v=20261118c"></script>
 </body>
 </html>

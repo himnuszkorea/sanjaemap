@@ -1,0 +1,2030 @@
+[
+ {
+  "addr": "충북 청주시 서원구 1순환로 776 (개신동, 충북대학교병원)",
+  "faxTel": "050383795272",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "7110",
+  "hospitalNm": "충북대학교병원",
+  "hospitalNo": "1004712",
+  "jisaNm": "청주지사",
+  "tel": "0432696585"
+ },
+ {
+  "addr": "인천 제물포구 인항로 27 (신흥동3가, 인하대학병원)",
+  "faxTel": "0328903334",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "인하대학교의과대학부속병원",
+  "hospitalNo": "1002256",
+  "jisaNm": "경인지역본부",
+  "tel": "0328902335"
+ },
+ {
+  "addr": "인천 부평구 무네미로 446 (구산동)",
+  "faxTel": "0325129932",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5010",
+  "hospitalNm": "근로복지공단 인천병원",
+  "hospitalNo": "1014904",
+  "jisaNm": "인천북부지사",
+  "tel": "0325000112"
+ },
+ {
+  "addr": "부산 서구 감천로 262 (암남동, 고신대학교복음병원)",
+  "faxTel": "0519903282",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "고신대학교복음병원",
+  "hospitalNo": "1001544",
+  "jisaNm": "부산지역본부",
+  "tel": "0519906034"
+ },
+ {
+  "addr": "인천 남동구 남동대로774번길 21 (구월동, 가천대학교 길병원)",
+  "faxTel": "0324603006",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "가천대 길병원(중앙길병원)",
+  "hospitalNo": "1002255",
+  "jisaNm": "경인지역본부",
+  "tel": "0324603151"
+ },
+ {
+  "addr": "서울 종로구 새문안로 29 (평동, 강북삼성병원)",
+  "faxTel": "027366008",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2000",
+  "hospitalNm": "(의)삼성의료재단 강북삼성병원",
+  "hospitalNo": "1001454",
+  "jisaNm": "서울지역본부",
+  "tel": "0220012866"
+ },
+ {
+  "addr": "경남 창원시 마산회원구 팔용로 158 (합성동)",
+  "faxTel": "0552338314",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3110",
+  "hospitalNm": "(학)성균관대학 삼성창원병원",
+  "hospitalNo": "1015060",
+  "jisaNm": "창원지사",
+  "tel": "0552338310"
+ },
+ {
+  "addr": "전북 전주시 덕진구 건지로 20 (금암동, 전북대학교병원)",
+  "faxTel": "0632501843",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "전북대학교병원",
+  "hospitalNo": "1005595",
+  "jisaNm": "전주지사",
+  "tel": "0632501044"
+ },
+ {
+  "addr": "서울 서대문구 연세로 50-1 원무팀 (신촌동)",
+  "faxTel": "0222278343",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2030",
+  "hospitalNm": "연세대의대세브란스병원",
+  "hospitalNo": "1013471",
+  "jisaNm": "서울서부지사",
+  "tel": "0222287212"
+ },
+ {
+  "addr": "인천 부평구 동수로 56 (부평동)",
+  "faxTel": "0322806390",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5010",
+  "hospitalNm": "가톨릭대학교 인천성모병원",
+  "hospitalNo": "1004134",
+  "jisaNm": "인천북부지사",
+  "tel": "0322806363"
+ },
+ {
+  "addr": "경기 안양시 동안구 관평로170번길 22 (평촌동)",
+  "faxTel": "0313804111",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5130",
+  "hospitalNm": "한림대학교 성심병원",
+  "hospitalNo": "1003786",
+  "jisaNm": "안양지사",
+  "tel": "0313804043"
+ },
+ {
+  "addr": "경기 성남시 분당구 구미로173번길 82 (구미동)",
+  "faxTel": "0317874026",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "분당서울대학교병원",
+  "hospitalNo": "1013914",
+  "jisaNm": "성남지사",
+  "tel": "0317871068"
+ },
+ {
+  "addr": "대구 달서구 달구벌대로 1035 (신당동, 계명대학교동산병원)",
+  "faxTel": "0532586868",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "4020",
+  "hospitalNm": "계명대학교동산의료원",
+  "hospitalNo": "1020069",
+  "jisaNm": "대구서부지사",
+  "tel": "0532586863"
+ },
+ {
+  "addr": "대구 북구 호국로 807 (학정동)",
+  "faxTel": "0532002079",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "칠곡경북대학교병원",
+  "hospitalNo": "1019386",
+  "jisaNm": "대구북부지사",
+  "tel": "0532002064"
+ },
+ {
+  "addr": "전남광주 동구 제봉로 42 (학동, 전남대학교병원)",
+  "faxTel": "0622220713",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "전남대학교병원",
+  "hospitalNo": "1006010",
+  "jisaNm": "광주지역본부",
+  "tel": "0622205548"
+ },
+ {
+  "addr": "대전 대덕구 계족로 637 (법동)",
+  "faxTel": "0426318260",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "근로복지공단 대전병원",
+  "hospitalNo": "1014903",
+  "jisaNm": "대전지역본부",
+  "tel": "0426705421"
+ },
+ {
+  "addr": "서울 영등포구 국회대로 612 20층 (당산동3가, 코레일유통 사옥)",
+  "faxTel": "0226700219",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2040",
+  "hospitalNm": "근로복지공단 서울의원",
+  "hospitalNo": "1020067",
+  "jisaNm": "서울남부지사",
+  "tel": "0226700204"
+ },
+ {
+  "addr": "부산 부산진구 자유평화로 11 16층 (범천동, 누리엔)",
+  "faxTel": "0517903399",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3001",
+  "hospitalNm": "근로복지공단 부산의원",
+  "hospitalNo": "1021776",
+  "jisaNm": "부산중부지사",
+  "tel": "0517903303"
+ },
+ {
+  "addr": "전북 익산시 무왕로 895 (신동)",
+  "faxTel": "0638592128",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "6120",
+  "hospitalNm": "원광대학교병원",
+  "hospitalNo": "1005918",
+  "jisaNm": "익산지사",
+  "tel": "0638592103"
+ },
+ {
+  "addr": "전남광주 순천시 조례1길 24 (조례동)",
+  "faxTel": "0617207102",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "6230",
+  "hospitalNm": "근로복지공단 순천병원",
+  "hospitalNo": "1014926",
+  "jisaNm": "순천지사",
+  "tel": "0617207122"
+ },
+ {
+  "addr": "경기 안산시 상록구 구룡로 87 (일동)",
+  "faxTel": "0315068002",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5140",
+  "hospitalNm": "근로복지공단 안산병원",
+  "hospitalNo": "1014916",
+  "jisaNm": "안산지사",
+  "tel": "0315001130"
+ },
+ {
+  "addr": "경남 양산시 물금읍 금오로 20 (양산부산대학교병원)",
+  "faxTel": "0553601209",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3130",
+  "hospitalNm": "양산부산대학교병원",
+  "hospitalNo": "1013819",
+  "jisaNm": "양산지사",
+  "tel": "0553601205"
+ },
+ {
+  "addr": "부산 서구 대신공원로 26 (동대신동3가, 동아대학교병원)",
+  "faxTel": "0512402042",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "동아대학교병원",
+  "hospitalNo": "1001546",
+  "jisaNm": "부산지역본부",
+  "tel": "0512402312"
+ },
+ {
+  "addr": "서울 강남구 언주로 211 (도곡동)",
+  "faxTel": "0220194811",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2010",
+  "hospitalNm": "연세대학교의과대학강남세브란스병원",
+  "hospitalNo": "1000001",
+  "jisaNm": "서울강남지사",
+  "tel": "0220192178"
+ },
+ {
+  "addr": "강원 원주시 일산로 20 (일산동)",
+  "faxTel": "0337411144",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2140",
+  "hospitalNm": "연세대학교원주세브란스기독병원",
+  "hospitalNo": "1004670",
+  "jisaNm": "강원지역본부",
+  "tel": "0337411147"
+ },
+ {
+  "addr": "경기 부천시 원미구 조마루로 170 (중동)",
+  "faxTel": "0326216460",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "순천향대학교 부천병원",
+  "hospitalNo": "1002586",
+  "jisaNm": "부천지사",
+  "tel": "0326215559"
+ },
+ {
+  "addr": "대전 중구 문화로 282 (대사동)",
+  "faxTel": "0422807021",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "충남대학교병원",
+  "hospitalNo": "1004949",
+  "jisaNm": "대전지역본부",
+  "tel": "0422807053"
+ },
+ {
+  "addr": "강원 동해시 하평로 11 (평릉동, 근로복지공단동해병원)",
+  "faxTel": "0335323150",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2130",
+  "hospitalNm": "근로복지공단 동해병원",
+  "hospitalNo": "1014912",
+  "jisaNm": "강릉지사",
+  "tel": "0335303112"
+ },
+ {
+  "addr": "전남광주 광산구 무진대로 272-8 1층 (우산동)",
+  "faxTel": "0627135114",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "6001",
+  "hospitalNm": "근로복지공단 광주의원",
+  "hospitalNo": "1021049",
+  "jisaNm": "광산지사",
+  "tel": "0627135100"
+ },
+ {
+  "addr": "부산광역시 서구  구덕로 179 (아미동1가)",
+  "faxTel": "0512407583",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "부산대학교병원",
+  "hospitalNo": "1001543",
+  "jisaNm": "부산지역본부",
+  "tel": "0512407153"
+ },
+ {
+  "addr": "강원 태백시 보드미길 8 (장성동, 근로복지공단태백병원)",
+  "faxTel": "0335818548",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2120",
+  "hospitalNm": "근로복지공단 태백병원",
+  "hospitalNo": "1014936",
+  "jisaNm": "태백지사",
+  "tel": "0335803114"
+ },
+ {
+  "addr": "경남 창원시 성산구 창원대로 721 (중앙동, 창원병원)",
+  "faxTel": "0552825578",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "3110",
+  "hospitalNm": "근로복지공단 창원병원",
+  "hospitalNo": "1014909",
+  "jisaNm": "창원지사",
+  "tel": "0552807777"
+ },
+ {
+  "addr": "서울 동작구 흑석로 102 (흑석동, 중앙대학교병원 원무팀)",
+  "faxTel": "0262992200",
+  "gtCdNm1": "상급종합병원",
+  "gwanriJisaCd": "2060",
+  "hospitalNm": "중앙대학교병원",
+  "hospitalNo": "1010854",
+  "jisaNm": "서울관악지사",
+  "tel": "0262992215"
+ },
+ {
+  "addr": "전남광주 목포시 영산로 623 (석현동)",
+  "faxTel": "0612823751",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "의료법인목포구암의료재단목포중앙병원",
+  "hospitalNo": "1019066",
+  "jisaNm": "목포지사",
+  "tel": "0612803153"
+ },
+ {
+  "addr": "대구 동구 아양로 99 (신암동)",
+  "faxTel": "0539520920",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4000",
+  "hospitalNm": "대구파티마병원",
+  "hospitalNo": "1007206",
+  "jisaNm": "대구지역본부",
+  "tel": "0539407298"
+ },
+ {
+  "addr": "인천 서해구 심곡로100번길  25 (심곡동, 인천국제성모병원)",
+  "faxTel": "0322902872",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5010",
+  "hospitalNm": "인천가톨릭학원가톨릭관동대학교국제성모병원",
+  "hospitalNo": "1017618",
+  "jisaNm": "인천북부지사",
+  "tel": "0322902862"
+ },
+ {
+  "addr": "대구 서구 달서로 42 (내당동, 대구굿모닝병원)",
+  "faxTel": "0536209168",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "대구굿모닝병원",
+  "hospitalNo": "1021756",
+  "jisaNm": "대구북부지사",
+  "tel": "0536209103"
+ },
+ {
+  "addr": "경북 김천시 신음1길 12 (신음동)",
+  "faxTel": "0544209414",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4120",
+  "hospitalNm": "김천제일병원(덕산의료재단)",
+  "hospitalNo": "1007104",
+  "jisaNm": "구미지사",
+  "tel": "0544209496"
+ },
+ {
+  "addr": "경북 구미시 인동가산로 14 6층 (진평동)",
+  "faxTel": "0547176003",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4120",
+  "hospitalNm": "근로복지공단 구미의원",
+  "hospitalNo": "1023929",
+  "jisaNm": "구미지사",
+  "tel": "0547176000"
+ },
+ {
+  "addr": "경기 고양시 일산동구 동국로 27 (식사동)",
+  "faxTel": "0319619339",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5180",
+  "hospitalNm": "동국대학교 일산불교병원",
+  "hospitalNo": "1011016",
+  "jisaNm": "고양지사",
+  "tel": "0319619335"
+ },
+ {
+  "addr": "충남 공주시 무령로 77 (웅진동, 공주의료원)",
+  "faxTel": "0419621519",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "충청남도 공주의료원",
+  "hospitalNo": "1004959",
+  "jisaNm": "세종지사",
+  "tel": "0419621304"
+ },
+ {
+  "addr": "경기 김포시 김포한강3로 283 (장기동)",
+  "faxTel": "0319829800",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "의료법인 인봉의료재단 뉴고려병원",
+  "hospitalNo": "1014277",
+  "jisaNm": "부천지사",
+  "tel": "0319988129"
+ },
+ {
+  "addr": "경기 시흥시 군자천로 381 (정왕동, 시화병원)",
+  "faxTel": "03151890779",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5140",
+  "hospitalNm": "의료법인남촌의료재단 시화병원",
+  "hospitalNo": "1019695",
+  "jisaNm": "안산지사",
+  "tel": "03151890532"
+ },
+ {
+  "addr": "서울 강동구 동남로 892 (상일동)",
+  "faxTel": "024406590",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2020",
+  "hospitalNm": "강동경희대학교병원",
+  "hospitalNo": "1013987",
+  "jisaNm": "서울동부지사",
+  "tel": "024406578"
+ },
+ {
+  "addr": "부산 부산진구 양정로 52-57 (양정동)",
+  "faxTel": "0518508818",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "3001",
+  "hospitalNm": "동의병원",
+  "hospitalNo": "1001562",
+  "jisaNm": "부산중부지사",
+  "tel": "0518508522"
+ },
+ {
+  "addr": "충북 청주시 서원구 흥덕로 48 (사직동, 충청북도 청주의료원)",
+  "faxTel": "0432790165",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7110",
+  "hospitalNm": "충청북도 청주의료원",
+  "hospitalNo": "1004713",
+  "jisaNm": "청주지사",
+  "tel": "0432792519"
+ },
+ {
+  "addr": "대구 북구 학정로 515 (학정동, 근로복지공단 대구병원)",
+  "faxTel": "0537157729",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "근로복지공단 대구병원",
+  "hospitalNo": "1016187",
+  "jisaNm": "대구북부지사",
+  "tel": "0537157773"
+ },
+ {
+  "addr": "대전 서구 둔산서로 95 (둔산동)",
+  "faxTel": "0422591162",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "학교법인 을지학원 대전을지대학교병원",
+  "hospitalNo": "1004951",
+  "jisaNm": "대전지역본부",
+  "tel": "0422591147"
+ },
+ {
+  "addr": "경기 고양시 일산동구 일산로 100 (백석동, 국민건강보험 일산병원)",
+  "faxTel": "030334487173",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5180",
+  "hospitalNm": "국민건강보험공단일산병원",
+  "hospitalNo": "1003207",
+  "jisaNm": "고양지사",
+  "tel": "0319000185"
+ },
+ {
+  "addr": "경기 성남시 분당구 야탑로 59 (야탑동)",
+  "faxTel": "0317805600",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "차의과학대학교 분당차병원",
+  "hospitalNo": "1003550",
+  "jisaNm": "성남지사",
+  "tel": "031780"
+ },
+ {
+  "addr": "경기 안성시 남파로 95 (당왕동)",
+  "faxTel": "03180465566",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5170",
+  "hospitalNm": "경기도의료원 안성병원",
+  "hospitalNo": "1002820",
+  "jisaNm": "평택지사",
+  "tel": "03180465172"
+ },
+ {
+  "addr": "전북 전주시 덕진구 견훤로 390 (우아동3가, 대자인병원)",
+  "faxTel": "0632402019",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "대자인병원",
+  "hospitalNo": "1016318",
+  "jisaNm": "전주지사",
+  "tel": "0632402007"
+ },
+ {
+  "addr": "서울 노원구 한글비석로 68 (하계동)",
+  "faxTel": "029708429",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2050",
+  "hospitalNm": "노원을지대학교병원",
+  "hospitalNo": "1000508",
+  "jisaNm": "서울북부지사",
+  "tel": "029708426"
+ },
+ {
+  "addr": "서울 중랑구 사가정로49길 53 (면목동)",
+  "faxTel": "024902111",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2050",
+  "hospitalNm": "녹색병원",
+  "hospitalNo": "1009808",
+  "jisaNm": "서울북부지사",
+  "tel": "024902166"
+ },
+ {
+  "addr": "경북 포항시 남구 희망대로 352 (이동, 에스포항병원)",
+  "faxTel": "0542899200",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4110",
+  "hospitalNm": "에스포항병원",
+  "hospitalNo": "1013850",
+  "jisaNm": "포항지사",
+  "tel": "0542899261"
+ },
+ {
+  "addr": "전남광주 목포시 백년대로 303 (상동)",
+  "faxTel": "0612807370",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "목포기독병원",
+  "hospitalNo": "1006376",
+  "jisaNm": "목포지사",
+  "tel": "0612807107"
+ },
+ {
+  "addr": "경기 성남시 수정구 수정로171번길 10 (태평동, 성남시의료원)",
+  "faxTel": "0317387879",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "성남시의료원",
+  "hospitalNo": "1020562",
+  "jisaNm": "성남지사",
+  "tel": "0317387856"
+ },
+ {
+  "addr": "서울 영등포구 버드나루로7길 12 (영등포동7가)",
+  "faxTel": "0226395029",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2040",
+  "hospitalNm": "한림대학교한강성심병원",
+  "hospitalNo": "1000849",
+  "jisaNm": "서울남부지사",
+  "tel": "0226395023"
+ },
+ {
+  "addr": "전북 군산시 의료원로 27 (지곡동)",
+  "faxTel": "0634725460",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6130",
+  "hospitalNm": "전북특별자치도 군산의료원",
+  "hospitalNo": "1005817",
+  "jisaNm": "군산지사",
+  "tel": "0634725470"
+ },
+ {
+  "addr": "경기도 용인시 기흥구 동백죽전대로 363",
+  "faxTel": "03151898039",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5210",
+  "hospitalNm": "(학교법인)연세의대용인세브란스병원",
+  "hospitalNo": "1002822",
+  "jisaNm": "용인지사",
+  "tel": "03151898026"
+ },
+ {
+  "addr": "경기도 군포시 군포로591 (당동)",
+  "faxTel": "0313893783",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5130",
+  "hospitalNm": "지샘병원",
+  "hospitalNo": "1016940",
+  "jisaNm": "안양지사",
+  "tel": "0313893167"
+ },
+ {
+  "addr": "경기 고양시덕양구 화정동   697-24",
+  "faxTel": "05029899622",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5180",
+  "hospitalNm": "명지의료재단 명지병원",
+  "hospitalNo": "1003200",
+  "jisaNm": "고양지사",
+  "tel": "0318105194"
+ },
+ {
+  "addr": "강원 원주시 서원대로 387 (개운동)",
+  "faxTel": "0337604655",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2140",
+  "hospitalNm": "강원도 원주의료원",
+  "hospitalNo": "1004672",
+  "jisaNm": "강원지역본부",
+  "tel": "0337604635"
+ },
+ {
+  "addr": "경기 성남시 분당구 서현로180번길 20 (서현동)",
+  "faxTel": "0317790127",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "(의료법인)대진의료재단분당제생병원",
+  "hospitalNo": "1003551",
+  "jisaNm": "성남지사",
+  "tel": "0317790128"
+ },
+ {
+  "addr": "전남광주 목포시 이로로 18 (용해동)",
+  "faxTel": "0612606457",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "목포시의료원",
+  "hospitalNo": "1006356",
+  "jisaNm": "목포지사",
+  "tel": "0612606366"
+ },
+ {
+  "addr": "강원 삼척시 오십천로 418 (남양동)",
+  "faxTel": "0335738425",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2120",
+  "hospitalNm": "강원특별자치도 삼척의료원",
+  "hospitalNo": "1004438",
+  "jisaNm": "태백지사",
+  "tel": "0335710753"
+ },
+ {
+  "addr": "대전 중구 대흥로 64 (대흥동)",
+  "faxTel": "0422539464",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "(학교법인)가톨릭대학교대전성모병원",
+  "hospitalNo": "1004954",
+  "jisaNm": "대전지역본부",
+  "tel": "0422209456"
+ },
+ {
+  "addr": "경북 구미시 1공단로 179 (공단동)",
+  "faxTel": "0544637179",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4120",
+  "hospitalNm": "순천향대학교부속구미병원",
+  "hospitalNo": "1013792",
+  "jisaNm": "구미지사",
+  "tel": "0544689571"
+ },
+ {
+  "addr": "서울 강동구 성안로 150 (길동)",
+  "faxTel": "024705225",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2020",
+  "hospitalNm": "강동성심병원",
+  "hospitalNo": "1000159",
+  "jisaNm": "서울동부지사",
+  "tel": "0222242127"
+ },
+ {
+  "addr": "경기 안양시 만안구 삼덕로 9 (안양동, 안양샘병원)",
+  "faxTel": "0314679198",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5130",
+  "hospitalNm": "효산의료재단 안양샘병원",
+  "hospitalNo": "1003779",
+  "jisaNm": "안양지사",
+  "tel": "0314679246"
+ },
+ {
+  "addr": "경기 구리시 경춘로 153 (교문동)",
+  "faxTel": "0315523116",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2080",
+  "hospitalNm": "한대의대부속구리병원",
+  "hospitalNo": "1003205",
+  "jisaNm": "남양주지사",
+  "tel": "0315602961"
+ },
+ {
+  "addr": "서울 도봉구 우이천로 308 (쌍문동)",
+  "faxTel": "029013834",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "2050",
+  "hospitalNm": "의료법인한전의료재단한일병원",
+  "hospitalNo": "1000503",
+  "jisaNm": "서울북부지사",
+  "tel": "029013858"
+ },
+ {
+  "addr": "경북 경주시 동대로 87 (석장동)",
+  "faxTel": "0547708501",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4110",
+  "hospitalNm": "동국대학교의과대학경주병원",
+  "hospitalNo": "1006909",
+  "jisaNm": "포항지사",
+  "tel": "0547708137"
+ },
+ {
+  "addr": "전남광주 광산구 목련로 316 (신가동)",
+  "faxTel": "0626108650",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6001",
+  "hospitalNm": "신가병원",
+  "hospitalNo": "1009177",
+  "jisaNm": "광산지사",
+  "tel": "0626108103"
+ },
+ {
+  "addr": "세종  보듬7로 20 (도담동)",
+  "faxTel": "0449954349",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "세종충남대학교병원",
+  "hospitalNo": "1020878",
+  "jisaNm": "세종지사",
+  "tel": "0449954347"
+ },
+ {
+  "addr": "충남 천안시 동남구 충절로 537 (삼룡동)",
+  "faxTel": "0415707029",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7210",
+  "hospitalNm": "충청남도천안의료원",
+  "hospitalNo": "1005313",
+  "jisaNm": "천안지사",
+  "tel": "0415707022"
+ },
+ {
+  "addr": "경기 여주시 청심로 47 (하동, 여주고려병원)",
+  "faxTel": "0318856677",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5210",
+  "hospitalNm": "세종여주병원",
+  "hospitalNo": "1011185",
+  "jisaNm": "용인지사",
+  "tel": "0318807795"
+ },
+ {
+  "addr": "인천 미추홀구 미추홀대로 726 (주안동)",
+  "faxTel": "0324250448",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "인천사랑병원",
+  "hospitalNo": "1002270",
+  "jisaNm": "경인지역본부",
+  "tel": "032457"
+ },
+ {
+  "addr": "경기 화성시 동탄구 큰재봉길 7 (석우동)",
+  "faxTel": "03180862058",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "5190",
+  "hospitalNm": "한림대학교동탄성심병원",
+  "hospitalNo": "1016514",
+  "jisaNm": "화성지사",
+  "tel": "03180862047"
+ },
+ {
+  "addr": "전북 전주시 완산구 한두평3길 13 (중화산동2가)",
+  "faxTel": "030334457242",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "의료법인영경의료재단전주병원",
+  "hospitalNo": "1012306",
+  "jisaNm": "전주지사",
+  "tel": "0632207214"
+ },
+ {
+  "addr": "충남 홍성군 홍성읍 조양로 224",
+  "faxTel": "0416306380",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "7220",
+  "hospitalNm": "충청남도 홍성의료원",
+  "hospitalNo": "1005466",
+  "jisaNm": "보령지사",
+  "tel": "0416306289"
+ },
+ {
+  "addr": "경남 김해시 김해대로 1814-37 (삼계동)",
+  "faxTel": "0553300345",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "3160",
+  "hospitalNm": "의)환명의료재단조은금강병원",
+  "hospitalNo": "1012425",
+  "jisaNm": "김해지사",
+  "tel": "0553300319"
+ },
+ {
+  "addr": "전북 전주시 완산구 서원로 365 (중화산동1가)",
+  "faxTel": "0632308540",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "예수병원",
+  "hospitalNo": "1005596",
+  "jisaNm": "전주지사",
+  "tel": "0632308549"
+ },
+ {
+  "addr": "전남광주 광산구 첨단중앙로170번길 59 (쌍암동)",
+  "faxTel": "0626018199",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6001",
+  "hospitalNm": "첨단종합병원",
+  "hospitalNo": "1009028",
+  "jisaNm": "광산지사",
+  "tel": "0626018031"
+ },
+ {
+  "addr": "전남광주 목포시 영산로 483 (상동)",
+  "faxTel": "0612770199",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "목포한국병원",
+  "hospitalNo": "1006360",
+  "jisaNm": "목포지사",
+  "tel": "0612705784"
+ },
+ {
+  "addr": "제주 제주시 도령로 65 (연동)",
+  "faxTel": "0647405676",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "6310",
+  "hospitalNm": "제주한라병원",
+  "hospitalNo": "1002203",
+  "jisaNm": "제주지사",
+  "tel": "0647405340"
+ },
+ {
+  "addr": "경북 안동시 앙실로 11 (수상동)",
+  "faxTel": "0548401515",
+  "gtCdNm1": "종합병원",
+  "gwanriJisaCd": "4140",
+  "hospitalNm": "안동병원",
+  "hospitalNo": "1007163",
+  "jisaNm": "안동지사",
+  "tel": "0548400107"
+ },
+ {
+  "addr": "경북 경산시 미래로 120 (평산동)",
+  "faxTel": "0534267465",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4001",
+  "hospitalNm": "경북권역재활병원",
+  "hospitalNo": "1021249",
+  "jisaNm": "경산지사",
+  "tel": "0532308862"
+ },
+ {
+  "addr": "부산 해운대구 좌동순환로 502 이룸제이타워 3층 해운대힐링스병 (중동)",
+  "faxTel": "0517440124",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3010",
+  "hospitalNm": "해운대나눔과행복병원",
+  "hospitalNo": "1016001",
+  "jisaNm": "부산동부지사",
+  "tel": "0517260502"
+ },
+ {
+  "addr": "부산 사상구 학감대로 269 (감전동)",
+  "faxTel": "0513223011",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3020",
+  "hospitalNm": "사상스마트병원",
+  "hospitalNo": "1020954",
+  "jisaNm": "부산북부지사",
+  "tel": "0513223000"
+ },
+ {
+  "addr": "서울 강북구 도봉로 266 (미아동)",
+  "faxTel": "029860001",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2050",
+  "hospitalNm": "포근한재활병원",
+  "hospitalNo": "1012849",
+  "jisaNm": "서울북부지사",
+  "tel": "029869988"
+ },
+ {
+  "addr": "부산 남구 양지골로  241 (감만동, 감만동 봉생 제3병원)",
+  "faxTel": "0516686099",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "봉생힐링병원",
+  "hospitalNo": "1022694",
+  "jisaNm": "부산지역본부",
+  "tel": "0516686091"
+ },
+ {
+  "addr": "전남광주 북구 앰코로 6 (오룡동)",
+  "faxTel": "0629712266",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "첨단우암병원",
+  "hospitalNo": "1018474",
+  "jisaNm": "광주지역본부",
+  "tel": "0626012000"
+ },
+ {
+  "addr": "대구 달서구 달구벌대로 1576 (감삼동)",
+  "faxTel": "0535630100",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4020",
+  "hospitalNm": "더나은병원",
+  "hospitalNo": "1020238",
+  "jisaNm": "대구서부지사",
+  "tel": "0535631000"
+ },
+ {
+  "addr": "부산 사상구 학장로 189 (학장동)",
+  "faxTel": "0513220051",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3020",
+  "hospitalNm": "큰솔2병원",
+  "hospitalNo": "1020151",
+  "jisaNm": "부산북부지사",
+  "tel": "0513220050"
+ },
+ {
+  "addr": "충북 청주시 흥덕구 2순환로 1234 (강서동, 1~10층(105,106호,2층,401호,5~10층))",
+  "faxTel": "0432364416",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7110",
+  "hospitalNm": "씨엔씨푸른병원",
+  "hospitalNo": "1017111",
+  "jisaNm": "청주지사",
+  "tel": "0432918114"
+ },
+ {
+  "addr": "경기 수원시 영통구 봉영로 1623 7~9층 (영통동)",
+  "faxTel": "0312030083",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5110",
+  "hospitalNm": "베데스다병원",
+  "hospitalNo": "1015456",
+  "jisaNm": "수원지사",
+  "tel": "03115447955"
+ },
+ {
+  "addr": "강원 원주시 오리현길 236 . (행구동, 영광재활의학과병원)",
+  "faxTel": "0337437900",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2140",
+  "hospitalNm": "영광재활병원",
+  "hospitalNo": "1015850",
+  "jisaNm": "강원지역본부",
+  "tel": "0337464100"
+ },
+ {
+  "addr": "부산 금정구  중앙대로 1951 (구서동, 메드월병원)",
+  "faxTel": "0515198007",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3010",
+  "hospitalNm": "메드윌병원",
+  "hospitalNo": "1016417",
+  "jisaNm": "부산동부지사",
+  "tel": "0515198144"
+ },
+ {
+  "addr": "경남 거제시 동부면 율포로 555-11 (마하의료원)",
+  "faxTel": "0556338274",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3150",
+  "hospitalNm": "사회복지법인 내원마하재활병원",
+  "hospitalNo": "1012383",
+  "jisaNm": "통영지사",
+  "tel": "0556333000"
+ },
+ {
+  "addr": "경기 파주시 금빛로 19 (금촌동, 파주프라임타워)",
+  "faxTel": "0318700099",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5220",
+  "hospitalNm": "수현의료재단 파주시티병원",
+  "hospitalNo": "1019102",
+  "jisaNm": "파주지사",
+  "tel": "0319427500"
+ },
+ {
+  "addr": "경남 진주시 진주대로 839 (주약동)",
+  "faxTel": "0557917650",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3140",
+  "hospitalNm": "예손재활의학과병원",
+  "hospitalNo": "1009954",
+  "jisaNm": "진주지사",
+  "tel": "0557917550"
+ },
+ {
+  "addr": "경북 구미시 3공단1로 280-3 (임수동)",
+  "faxTel": "0547106100",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4120",
+  "hospitalNm": "의)갑을의료재단 갑을구미병원",
+  "hospitalNo": "1016711",
+  "jisaNm": "구미지사",
+  "tel": "0547106102"
+ },
+ {
+  "addr": "경기 수원시 권선구 호매실로90번길  76 (호매실동)",
+  "faxTel": "0312928802",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5110",
+  "hospitalNm": "수원센텀병원",
+  "hospitalNo": "1022500",
+  "jisaNm": "수원지사",
+  "tel": "18990333"
+ },
+ {
+  "addr": "울산 북구 신답로 37 (상안동)",
+  "faxTel": "0522938702",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3170",
+  "hospitalNm": "북울산병원",
+  "hospitalNo": "1022582",
+  "jisaNm": "울산중부지사",
+  "tel": "0522938888"
+ },
+ {
+  "addr": "경기 의정부시 신흥로 84 (호원동, 지하 1,2층일부 3~6층)",
+  "faxTel": "0318790400",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2070",
+  "hospitalNm": "마스터플러스병원",
+  "hospitalNo": "1018004",
+  "jisaNm": "의정부지사",
+  "tel": "031879"
+ },
+ {
+  "addr": "경기도 양평군 양평읍 중앙로260",
+  "faxTel": "0315805409",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "국립교통재활병원",
+  "hospitalNo": "1017660",
+  "jisaNm": "성남지사",
+  "tel": "0315805402"
+ },
+ {
+  "addr": "서울 구로구 공원로6가길 4 (구로동)",
+  "faxTel": "0232812299",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2060",
+  "hospitalNm": "의료법인 서울효천의료재단 에이치플러스자립병원",
+  "hospitalNo": "1018496",
+  "jisaNm": "서울관악지사",
+  "tel": "07041715187"
+ },
+ {
+  "addr": "대구 중구 남산로13길 9 (남산동)",
+  "faxTel": "0532501166",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4000",
+  "hospitalNm": "남산병원",
+  "hospitalNo": "1011366",
+  "jisaNm": "대구지역본부",
+  "tel": "0532527575"
+ },
+ {
+  "addr": "경기 광주시 초월읍 경수길 25",
+  "faxTel": "0317623651",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "SRC재활병원",
+  "hospitalNo": "1003561",
+  "jisaNm": "성남지사",
+  "tel": "0317993705"
+ },
+ {
+  "addr": "충청북도 청주시 흥덕구  사직대로 26 (복대동)",
+  "faxTel": "07070387249",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7110",
+  "hospitalNm": "의료법인 송암의료재단 마이크로재활병원",
+  "hospitalNo": "1019368",
+  "jisaNm": "청주지사",
+  "tel": "0432650071"
+ },
+ {
+  "addr": "경북 포항시 북구 해동로 303 69-4 채움병원",
+  "faxTel": "0542560052",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4110",
+  "hospitalNm": "채움병원",
+  "hospitalNo": "1018587",
+  "jisaNm": "포항지사",
+  "tel": "0542562000"
+ },
+ {
+  "addr": "대구 북구 칠곡중앙대로 357 (태전동)",
+  "faxTel": "0533107109",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "의료법인대구의료재단 케이병원",
+  "hospitalNo": "1021900",
+  "jisaNm": "대구북부지사",
+  "tel": "0533107114"
+ },
+ {
+  "addr": "대구 북구 신암로 55 (대현동) 5층~10층 (대현동, 미래메디타워)",
+  "faxTel": "0532598600",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "미래병원",
+  "hospitalNo": "1022273",
+  "jisaNm": "대구북부지사",
+  "tel": "0532598800"
+ },
+ {
+  "addr": "인천 남동구 예술로192번길 36 (구월동)",
+  "faxTel": "0324567909",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "브래덤병원",
+  "hospitalNo": "1013516",
+  "jisaNm": "경인지역본부",
+  "tel": "0324567600"
+ },
+ {
+  "addr": "전남광주 북구 하서로 590 (본촌동)",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "호남권역재활병원",
+  "hospitalNo": "1016614",
+  "jisaNm": "광주지역본부",
+  "tel": "0626139061"
+ },
+ {
+  "addr": "서울 영등포구 영등포로 83 (양평동1가)",
+  "faxTel": "0220638319",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2040",
+  "hospitalNm": "한강수병원",
+  "hospitalNo": "1017120",
+  "jisaNm": "서울남부지사",
+  "tel": "0220638383"
+ },
+ {
+  "addr": "부산 사상구 대동로 141 (학장동)",
+  "faxTel": "0513229300",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3020",
+  "hospitalNm": "의료법인영재의료재단 큰솔병원",
+  "hospitalNo": "1013614",
+  "jisaNm": "부산북부지사",
+  "tel": "0513259700"
+ },
+ {
+  "addr": "전남광주 북구 동문대로248번길 10 (각화동)",
+  "faxTel": "0622602799",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "의료법인우암의료재단우암병원",
+  "hospitalNo": "1017316",
+  "jisaNm": "광주지역본부",
+  "tel": "0622602802"
+ },
+ {
+  "addr": "경기 구리시 건원대로 44 6,7층 (인창동, 태영빌딩)",
+  "faxTel": "0315547721",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2080",
+  "hospitalNm": "의료법인기상의료재단 카이저병원",
+  "hospitalNo": "1016565",
+  "jisaNm": "남양주지사",
+  "tel": "0315547727"
+ },
+ {
+  "addr": "서울 용산구 이촌로 318 (이촌동)",
+  "faxTel": "027995700",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2030",
+  "hospitalNm": "금강아산병원",
+  "hospitalNo": "1001317",
+  "jisaNm": "서울서부지사",
+  "tel": "027995711"
+ },
+ {
+  "addr": "경기 고양시 일산동구 고양대로 760 나동 6-10층 (중산동, 일산복음병원)",
+  "faxTel": "0319776622",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5180",
+  "hospitalNm": "일산복음재활병원",
+  "hospitalNo": "1018830",
+  "jisaNm": "고양지사",
+  "tel": "0319951600"
+ },
+ {
+  "addr": "대전 유성구 문화원로146번길 7-24 (봉명동)",
+  "faxTel": "0427177500",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "(복)성화 대전재활병원",
+  "hospitalNo": "1012525",
+  "jisaNm": "세종지사",
+  "tel": "0427177503"
+ },
+ {
+  "addr": "부산광역시 동래구 충렬대로 379 (안락동 )",
+  "faxTel": "0517144118",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3010",
+  "hospitalNm": "워크재활병원",
+  "hospitalNo": "1017654",
+  "jisaNm": "부산동부지사",
+  "tel": "0517144119"
+ },
+ {
+  "addr": "서울 관악구 남부순환로 1485 (신림동)",
+  "faxTel": "028578757",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2060",
+  "hospitalNm": "심정병원",
+  "hospitalNo": "1017923",
+  "jisaNm": "서울관악지사",
+  "tel": "0215883330"
+ },
+ {
+  "addr": "경기 부천시 소사구 심곡로10번길 63 (송내동)",
+  "faxTel": "0322060114",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "휴앤유병원",
+  "hospitalNo": "1013433",
+  "jisaNm": "부천지사",
+  "tel": "0322020114"
+ },
+ {
+  "addr": "서울 동대문구 무학로 88 (용두동)",
+  "faxTel": "029251121",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2000",
+  "hospitalNm": "왕십리휴병원",
+  "hospitalNo": "1023962",
+  "jisaNm": "서울지역본부",
+  "tel": "029276501"
+ },
+ {
+  "addr": "대구광역시 북구 복현2동 (복현동) 536-2 뉴라이프병원",
+  "faxTel": "0533849229",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "뉴라이프병원",
+  "hospitalNo": "1017700",
+  "jisaNm": "대구북부지사",
+  "tel": "0533849119"
+ },
+ {
+  "addr": "전남광주 장흥군 안양면 로하스로 121 (통합의학센터)",
+  "faxTel": "0618607778",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "(학교법인원광학원)장흥통합의료병원",
+  "hospitalNo": "1020257",
+  "jisaNm": "목포지사",
+  "tel": "0618607777"
+ },
+ {
+  "addr": "전남광주 북구 동문대로 208 (각화동)",
+  "faxTel": "0627167999",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "(의료법인)의료법인아주의료재단",
+  "hospitalNo": "1008443",
+  "jisaNm": "광주지역본부",
+  "tel": "07046190721"
+ },
+ {
+  "addr": "경기 안양시 동안구 관평로 307 (관양동, 센추리21프라자)",
+  "faxTel": "0313471789",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5130",
+  "hospitalNm": "아벤스병원",
+  "hospitalNo": "1018968",
+  "jisaNm": "안양지사",
+  "tel": "0313872211"
+ },
+ {
+  "addr": "경기 하남시 미사강변대로 42 2~7층 (풍산동, DK골드타워)",
+  "faxTel": "0317954960",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "라이프재활의학과병원",
+  "hospitalNo": "1024702",
+  "jisaNm": "성남지사",
+  "tel": "0317954900"
+ },
+ {
+  "addr": "경기 수원시 팔달구 경수대로 542 (인계동)",
+  "faxTel": "0312387512",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5110",
+  "hospitalNm": "해성병원",
+  "hospitalNo": "1019256",
+  "jisaNm": "수원지사",
+  "tel": "0312227511"
+ },
+ {
+  "addr": "충남 천안시 서북구 쌍용대로 225 (성정동)",
+  "faxTel": "0415757103",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7210",
+  "hospitalNm": "천안재활병원",
+  "hospitalNo": "1016947",
+  "jisaNm": "천안지사",
+  "tel": "0415757105"
+ },
+ {
+  "addr": "부산 남구 유엔평화로125번길 11-10 (대연동)",
+  "faxTel": "0516298188",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "파크사이드재활의학병원",
+  "hospitalNo": "1012072",
+  "jisaNm": "부산지역본부",
+  "tel": "0516298025"
+ },
+ {
+  "addr": "울산 북구 산업로 1001 (연암동)",
+  "faxTel": "0522808111",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3170",
+  "hospitalNm": "(의)송은의료재단울산시티2병원",
+  "hospitalNo": "1018690",
+  "jisaNm": "울산중부지사",
+  "tel": "0522808004"
+ },
+ {
+  "addr": "충남 천안시 서북구 불당25로 200 (불당동) 3,4,5층",
+  "faxTel": "0415717586",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7210",
+  "hospitalNm": "SG삼성조은병원",
+  "hospitalNo": "1019219",
+  "jisaNm": "천안지사",
+  "tel": "0415717585"
+ },
+ {
+  "addr": "경기도 용인시 수지구 상현1동 (상현동) 1186-1",
+  "faxTel": "03180051494",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5210",
+  "hospitalNm": "린병원",
+  "hospitalNo": "1019041",
+  "jisaNm": "용인지사",
+  "tel": "03180051471"
+ },
+ {
+  "addr": "서울 도봉구 도봉로 720 (방학동, 도봉병원)",
+  "faxTel": "0264997582",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2050",
+  "hospitalNm": "서울노보스병원",
+  "hospitalNo": "1016346",
+  "jisaNm": "서울북부지사",
+  "tel": "0234923250"
+ },
+ {
+  "addr": "제주 서귀포시 동문로 1 (서귀동)",
+  "faxTel": "0647620027",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6310",
+  "hospitalNm": "제주권역재활병원",
+  "hospitalNo": "1017185",
+  "jisaNm": "제주지사",
+  "tel": "0647309000"
+ },
+ {
+  "addr": "부산 북구 금곡대로 133 (덕천동)",
+  "faxTel": "0513632334",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3020",
+  "hospitalNm": "(재)일신기독교선교회맥켄지일신재활병원",
+  "hospitalNo": "1017932",
+  "jisaNm": "부산북부지사",
+  "tel": "07044986204"
+ },
+ {
+  "addr": "대구 북구 팔거천동로 209 (동천동)",
+  "faxTel": "0533201919",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4030",
+  "hospitalNm": "대구보건대학교병원",
+  "hospitalNo": "1014813",
+  "jisaNm": "대구북부지사",
+  "tel": "0533201909"
+ },
+ {
+  "addr": "대전 유성구 온천동로 15 (봉명동, 유성웰니스재활전문병원)",
+  "faxTel": "0428246914",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "의료법인 리노의료재단 유성웰니스재활병원",
+  "hospitalNo": "1016831",
+  "jisaNm": "세종지사",
+  "tel": "0428246900"
+ },
+ {
+  "addr": "대전 유성구 온천로107번길 34 (봉명동)",
+  "faxTel": "0426119001",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "(의)밝은마음의료재단워크런재활병원",
+  "hospitalNo": "1020266",
+  "jisaNm": "세종지사",
+  "tel": "0426071202"
+ },
+ {
+  "addr": "경남 양산시 동면 금오로 255 4층 (양산제일병원)",
+  "faxTel": "030331307570",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3130",
+  "hospitalNm": "양산제일병원",
+  "hospitalNo": "1018453",
+  "jisaNm": "양산지사",
+  "tel": "0559122027"
+ },
+ {
+  "addr": "서울 은평구 갈현로11길 30 (구산동)",
+  "faxTel": "0260203015",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2030",
+  "hospitalNm": "서울재활병원",
+  "hospitalNo": "1013511",
+  "jisaNm": "서울서부지사",
+  "tel": "0260203010"
+ },
+ {
+  "addr": "강원 춘천시 충열로142번길 24-16 (우두동)",
+  "faxTel": "0332487723",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2110",
+  "hospitalNm": "강원특별자치도재활병원",
+  "hospitalNo": "1011002",
+  "jisaNm": "춘천지사",
+  "tel": "0332487721"
+ },
+ {
+  "addr": "경남 창원시 성산구 원이대로393번길 25 6001호 (반지동, 희연빌딩)",
+  "faxTel": "0552707733",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3110",
+  "hospitalNm": "희연재활병원",
+  "hospitalNo": "1021173",
+  "jisaNm": "창원지사",
+  "tel": "0552702500"
+ },
+ {
+  "addr": "대전 서구 계룡로553번길 60 664",
+  "faxTel": "0427102535",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "다빈치병원",
+  "hospitalNo": "1019189",
+  "jisaNm": "대전지역본부",
+  "tel": "0427101950"
+ },
+ {
+  "addr": "서울 영등포구 대림로 223 (대림동, 명지춘혜병원)",
+  "faxTel": "0232847888",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2040",
+  "hospitalNm": "의료법인춘혜의료재단",
+  "hospitalNo": "1015349",
+  "jisaNm": "서울남부지사",
+  "tel": "0232847793"
+ },
+ {
+  "addr": "충남 천안시 동남구 향교1길 130-23 (유량동)",
+  "faxTel": "0415694000",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7210",
+  "hospitalNm": "새로나병원",
+  "hospitalNo": "1013374",
+  "jisaNm": "천안지사",
+  "tel": "0415207010"
+ },
+ {
+  "addr": "대전 대덕구 동서대로1777번길 2 (송촌동)",
+  "faxTel": "0427128599",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "대전웰니스병원",
+  "hospitalNo": "1016772",
+  "jisaNm": "대전지역본부",
+  "tel": "0427128531"
+ },
+ {
+  "addr": "경기 김포시 김포한강8로  412 501호 (구래동, 이타워)",
+  "faxTel": "03180493400",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "김포에이치(H)병원",
+  "hospitalNo": "1020047",
+  "jisaNm": "부천지사",
+  "tel": "03180490077"
+ },
+ {
+  "addr": "서울 송파구 송이로 111 (가락동, 일이빌딩)",
+  "faxTel": "07089963818",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2020",
+  "hospitalNm": "송파드림재활병원",
+  "hospitalNo": "1022715",
+  "jisaNm": "서울동부지사",
+  "tel": "024301122"
+ },
+ {
+  "addr": "서울 관악구 은천로 51 (봉천동) 은호빌딩 2~6F",
+  "faxTel": "028827070",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2060",
+  "hospitalNm": "서울퍼스트병원",
+  "hospitalNo": "1022807",
+  "jisaNm": "서울관악지사",
+  "tel": "028826900"
+ },
+ {
+  "addr": "서울 영등포구 영신로34길 5 (영등포동4가)",
+  "faxTel": "0226334687",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2040",
+  "hospitalNm": "덕수의료재단 서울브레인병원",
+  "hospitalNo": "1017031",
+  "jisaNm": "서울남부지사",
+  "tel": "0226788225"
+ },
+ {
+  "addr": "인천 남동구 남동대로799번길 25 구월동 1층~7층 전부 (구월동, 대흥빌딩)",
+  "faxTel": "0324297474",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "미추홀병원",
+  "hospitalNo": "1013254",
+  "jisaNm": "경인지역본부",
+  "tel": "0324306273"
+ },
+ {
+  "addr": "경기 성남시 분당구 성남대로926번길 6 야탑대덕프라자 7층 (야탑동)",
+  "faxTel": "0316247575",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "분당베스트병원",
+  "hospitalNo": "1016542",
+  "jisaNm": "성남지사",
+  "tel": "0317079712"
+ },
+ {
+  "addr": "경기 성남시 수정구 위례서일로 6 (창곡동)",
+  "faxTel": "0317550663",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5160",
+  "hospitalNm": "위례재활의학과병원",
+  "hospitalNo": "1020804",
+  "jisaNm": "성남지사",
+  "tel": "0317510660"
+ },
+ {
+  "addr": "전북 전주시 완산구 완산길 100 (서완산동1가)",
+  "faxTel": "0637103301",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "온고을재활의학과병원",
+  "hospitalNo": "1016292",
+  "jisaNm": "전주지사",
+  "tel": "0637103302"
+ },
+ {
+  "addr": "경기 의정부시 충의로 3 B1-4층 (용현동)",
+  "faxTel": "0318510712",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "2070",
+  "hospitalNm": "리하트병원",
+  "hospitalNo": "1019110",
+  "jisaNm": "의정부지사",
+  "tel": "0318510112"
+ },
+ {
+  "addr": "전북 전주시 덕진구 서가재미2길 7 (인후동1가)",
+  "faxTel": "0632439191",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "더세움병원",
+  "hospitalNo": "1018462",
+  "jisaNm": "전주지사",
+  "tel": "0632439100"
+ },
+ {
+  "addr": "인천 계양구 경명대로972번길 9 (계산동, 서송요양병원)",
+  "faxTel": "0325510116",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "5010",
+  "hospitalNm": "서송병원",
+  "hospitalNo": "1020945",
+  "jisaNm": "인천북부지사",
+  "tel": "0325510114"
+ },
+ {
+  "addr": "부산 북구 사상로 607 (구포동, 구포부민병원)",
+  "faxTel": "0513667115",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3020",
+  "hospitalNm": "의료법인 인당의료재단구포부민병원",
+  "hospitalNo": "1013781",
+  "jisaNm": "부산북부지사",
+  "tel": "0513667083"
+ },
+ {
+  "addr": "경남 김해시 분성로 202 (외동)",
+  "faxTel": "0553264498",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3160",
+  "hospitalNm": "래봄병원(의료법인희원의료재단)",
+  "hospitalNo": "1019311",
+  "jisaNm": "김해지사",
+  "tel": "0558177711"
+ },
+ {
+  "addr": "충청북도 청주시 청원구  향군로 132 (내덕동)",
+  "faxTel": "0432119091",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "7110",
+  "hospitalNm": "첼로병원",
+  "hospitalNo": "1020259",
+  "jisaNm": "청주지사",
+  "tel": "0432119090"
+ },
+ {
+  "addr": "경상남도 진주시 명석면 나불로 305 (명석면, 프라임병원)",
+  "faxTel": "0557726801",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3140",
+  "hospitalNm": "김취열기념의료재단 프라임병원",
+  "hospitalNo": "1020821",
+  "jisaNm": "진주지사",
+  "tel": "0557726900"
+ },
+ {
+  "addr": "경북 상주시 삼백로 66 (무양동)",
+  "faxTel": "0545313808",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "4130",
+  "hospitalNm": "바른재활의학과병원",
+  "hospitalNo": "1023051",
+  "jisaNm": "영주지사",
+  "tel": "0545310005"
+ },
+ {
+  "addr": "경북 영주시 신재로24번길 91 (가흥동, 기호의료재단 청하요양병원)",
+  "faxTel": "0546309999",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4130",
+  "hospitalNm": "의료법인 기호의료재단 청하요양병원",
+  "hospitalNo": "1017973",
+  "jisaNm": "영주지사",
+  "tel": "0546309900"
+ },
+ {
+  "addr": "경기 화성시 만세구 우정읍 쌍봉로 465-4 (경기요양병원)",
+  "faxTel": "0313513086",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5190",
+  "hospitalNm": "근로복지공단 경기요양병원",
+  "hospitalNo": "1014922",
+  "jisaNm": "화성지사",
+  "tel": "0313715222"
+ },
+ {
+  "addr": "경북 안동시 남후면 남일로 1463",
+  "faxTel": "0548516104",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4140",
+  "hospitalNm": "경상북도도립안동 노인전문 요양병원",
+  "hospitalNo": "1010435",
+  "jisaNm": "안동지사",
+  "tel": "0548516107"
+ },
+ {
+  "addr": "대전 유성구 도안대로567번길 26 (봉명동)",
+  "faxTel": "0423650104",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "7001",
+  "hospitalNm": "의료법인비에스의료재단 브레인요양병원",
+  "hospitalNo": "1019948",
+  "jisaNm": "세종지사",
+  "tel": "0423650101"
+ },
+ {
+  "addr": "부산 동구 중앙대로 281 (초량동)",
+  "faxTel": "0514613280",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "(의료법인)(의료법인)은경의료재단(인창병원)",
+  "hospitalNo": "1014441",
+  "jisaNm": "부산지역본부",
+  "tel": "0514661004"
+ },
+ {
+  "addr": "전북 전주시 덕진구 아중로 223 (우아동2가)",
+  "faxTel": "0637148800",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "아중요양병원",
+  "hospitalNo": "1019822",
+  "jisaNm": "전주지사",
+  "tel": "0637148888"
+ },
+ {
+  "addr": "전북 전주시 완산구 장승배기로 46 (삼천동1가) 한솔요양병원",
+  "faxTel": "0632281144",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6110",
+  "hospitalNm": "한솔요양병원",
+  "hospitalNo": "1015213",
+  "jisaNm": "전주지사",
+  "tel": "0632281122"
+ },
+ {
+  "addr": "경남 김해시 김해대로 2379 (부원동, 김해한솔재활요양병원)",
+  "faxTel": "0553310083",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3160",
+  "hospitalNm": "(의)푸른솔의료재단김해한솔요양병원",
+  "hospitalNo": "1012533",
+  "jisaNm": "김해지사",
+  "tel": "0553293340"
+ },
+ {
+  "addr": "경북 경산시 경산로 174 (옥산동, 양지요양병원)",
+  "faxTel": "0538131212",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4001",
+  "hospitalNm": "의료법인양지의료재단 양지요양병원",
+  "hospitalNo": "1017707",
+  "jisaNm": "경산지사",
+  "tel": "0538159100"
+ },
+ {
+  "addr": "전북 군산시 조촌4길 11 (조촌동)",
+  "faxTel": "0634500708",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6130",
+  "hospitalNm": "의료법인원광의료재단 군산원광효도요양병원",
+  "hospitalNo": "1016608",
+  "jisaNm": "군산지사",
+  "tel": "0634500700"
+ },
+ {
+  "addr": "경북 안동시 전거리길 57 (용상동)",
+  "faxTel": "0548203131",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4140",
+  "hospitalNm": "안동요양병원",
+  "hospitalNo": "1009114",
+  "jisaNm": "안동지사",
+  "tel": "0548203100"
+ },
+ {
+  "addr": "경기 안산시 단원구 광덕대로 162 1,2,3,4호 (고잔동, 창진타운)",
+  "faxTel": "0314877047",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5140",
+  "hospitalNm": "의료법인더존의료재단 경희요양병원",
+  "hospitalNo": "1017224",
+  "jisaNm": "안산지사",
+  "tel": "0314022222"
+ },
+ {
+  "addr": "전남광주 목포시 영산로 627 (석현동) 2동",
+  "faxTel": "0612806805",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6210",
+  "hospitalNm": "목포재활요양병원",
+  "hospitalNo": "1020914",
+  "jisaNm": "목포지사",
+  "tel": "0612806800"
+ },
+ {
+  "addr": "부산 남구 수영로 164 1239-19",
+  "faxTel": "0517741006",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "인창대연요양병원(의료법인은경의료재단)",
+  "hospitalNo": "1018771",
+  "jisaNm": "부산지역본부",
+  "tel": "0517741004"
+ },
+ {
+  "addr": "경남 창원시 성산구 창원천로94번길 82-18 (대원동)",
+  "faxTel": "0552708886",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3110",
+  "hospitalNm": "창아의료재단 푸른요양병원",
+  "hospitalNo": "1020081",
+  "jisaNm": "창원지사",
+  "tel": "0552708888"
+ },
+ {
+  "addr": "울산 울주군 삼남읍 하방로 39",
+  "faxTel": "0557801011",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3170",
+  "hospitalNm": "의료법인 이손의료재단 이손요양병원",
+  "hospitalNo": "1017028",
+  "jisaNm": "울산중부지사",
+  "tel": "0557801000"
+ },
+ {
+  "addr": "부산 서구 대신공원로 32 (동대신동3가)",
+  "faxTel": "0519600000",
+  "gtCdNm1": "병원",
+  "gwanriJisaCd": "3000",
+  "hospitalNm": "동아대학교대신병원",
+  "hospitalNo": "1022765",
+  "jisaNm": "부산지역본부",
+  "tel": "0519600100"
+ },
+ {
+  "addr": "경기 평택시 비전5로 20-30 (비전동) 2~5층",
+  "faxTel": "07052271040",
+  "gtCdNm1": "한방병원",
+  "gwanriJisaCd": "5170",
+  "hospitalNm": "도솔한방병원",
+  "hospitalNo": "1020403",
+  "jisaNm": "평택지사",
+  "tel": "07086641846"
+ },
+ {
+  "addr": "경기 김포시 김포한강10로133번길 67 (구래동)",
+  "faxTel": "0319897535",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "김포다올요양병원",
+  "hospitalNo": "1020640",
+  "jisaNm": "부천지사",
+  "tel": "0319897587"
+ },
+ {
+  "addr": "경북 포항시 북구 대신로 27 (대신동, 좋은선린요양병원)",
+  "faxTel": "0542456110",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4110",
+  "hospitalNm": "(의)은성의료재단좋은선린요양병원",
+  "hospitalNo": "1018628",
+  "jisaNm": "포항지사",
+  "tel": "0542456102"
+ },
+ {
+  "addr": "인천광역시 부평구 마장로246 (산곡동)",
+  "faxTel": "0325073356",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5010",
+  "hospitalNm": "새올요양병원",
+  "hospitalNo": "1017044",
+  "jisaNm": "인천북부지사",
+  "tel": "0325073355"
+ },
+ {
+  "addr": "경남 창원시 성산구 원이대로393번길 25 2층 (반지동)",
+  "faxTel": "0552379997",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3110",
+  "hospitalNm": "희연요양병원",
+  "hospitalNo": "1008689",
+  "jisaNm": "창원지사",
+  "tel": "0552702580"
+ },
+ {
+  "addr": "강원 동해시 중앙로 218 (천곡동)",
+  "faxTel": "0335312800",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "2130",
+  "hospitalNm": "(의)기호의료재단 동해요양병원",
+  "hospitalNo": "1018368",
+  "jisaNm": "강릉지사",
+  "tel": "0335312500"
+ },
+ {
+  "addr": "전라북도 익산시 함열읍 익산대로 1493 (함열읍)",
+  "faxTel": "0638600204",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6120",
+  "hospitalNm": "의료법인엔젤의료재단",
+  "hospitalNo": "1016910",
+  "jisaNm": "익산지사",
+  "tel": "0638600114"
+ },
+ {
+  "addr": "울산광역시 중구 내황4길11 (반구동)",
+  "faxTel": "0529201299",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3170",
+  "hospitalNm": "세민에스요양병원",
+  "hospitalNo": "1017659",
+  "jisaNm": "울산중부지사",
+  "tel": "0522932000"
+ },
+ {
+  "addr": "제주 제주시 관덕로 30  (삼도이동)",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6310",
+  "hospitalNm": "늘봄재활전문병원",
+  "hospitalNo": "1015226",
+  "jisaNm": "제주지사",
+  "tel": "0647520022"
+ },
+ {
+  "addr": "서울 강동구 고덕로 295-60 (고덕동)",
+  "faxTel": "0234264395",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "2020",
+  "hospitalNm": "서울숲재활요양병원",
+  "hospitalNo": "1021349",
+  "jisaNm": "서울동부지사",
+  "tel": "0220459000"
+ },
+ {
+  "addr": "경기 부천시 소사구 마니로24번길 43-17 (송내동, 가은병원A동)",
+  "faxTel": "0326677227",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5120",
+  "hospitalNm": "가은병원",
+  "hospitalNo": "1009211",
+  "jisaNm": "부천지사",
+  "tel": "0326670114"
+ },
+ {
+  "addr": "대전 중구 대종로 437 (대흥동)",
+  "faxTel": "0422531033",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "백세요양병원",
+  "hospitalNo": "1018818",
+  "jisaNm": "대전지역본부",
+  "tel": "0422260101"
+ },
+ {
+  "addr": "전북 김제시 하동1길 13 (하동, 가족사랑요양병원)",
+  "faxTel": "0635401610",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6120",
+  "hospitalNm": "（의）백상의료재단 가족사랑요양병원",
+  "hospitalNo": "1016442",
+  "jisaNm": "익산지사",
+  "tel": "0635401500"
+ },
+ {
+  "addr": "부산광역시 해운대구 APEC로17 (우동, 515~517호,709호,712호,715호,716~717호)",
+  "faxTel": "0517458389",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "3010",
+  "hospitalNm": "센텀이루다요양병원",
+  "hospitalNo": "1017548",
+  "jisaNm": "부산동부지사",
+  "tel": "0516087025"
+ },
+ {
+  "addr": "전남광주 화순군 화순읍 서양로 330 (화순읍)",
+  "faxTel": "0613796007",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "6000",
+  "hospitalNm": "화순군립요양병원",
+  "hospitalNo": "1016152",
+  "jisaNm": "광주지역본부",
+  "tel": "0613796102"
+ },
+ {
+  "addr": "인천 남동구 논고개로123번길 35 논현동칼리오페 10층 (논현동)",
+  "faxTel": "0324386868",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "5000",
+  "hospitalNm": "의)정강의료재단 위드미요양병원",
+  "hospitalNo": "1016508",
+  "jisaNm": "경인지역본부",
+  "tel": "0324385800"
+ },
+ {
+  "addr": "경북 경주시 승삼북길 31 (용강동)",
+  "faxTel": "0547440077",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "4110",
+  "hospitalNm": "위더스요양병원",
+  "hospitalNo": "1018827",
+  "jisaNm": "포항지사",
+  "tel": "0547440009"
+ },
+ {
+  "addr": "대전 중구 대종로 400 (대흥동)",
+  "faxTel": "0422566782",
+  "gtCdNm1": "요양병원",
+  "gwanriJisaCd": "7000",
+  "hospitalNm": "의법 산수의료재단 웰시티요양병원",
+  "hospitalNo": "1012398",
+  "jisaNm": "대전지역본부",
+  "tel": "0422561177"
+ }
+]
