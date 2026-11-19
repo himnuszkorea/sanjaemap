@@ -53,7 +53,7 @@ py -3 tools/build_data.py raw/hospitals_YYYYMMDD.csv
 # 3) 시도별 목록 페이지 r/<slug>/ 17개 + sitemap.xml 재생성(끝에 건수 검산을 찍는다 — 「일치」 확인)
 py -3 tools/build_pages.py
 # 4) index.html 의 안내(#about)·설명 문구와 루트 첫 화면의 숫자(6,742·220·78)는 손으로 고친다
-# 5) 확인 후 커밋·푸시 → Pages 가 자동 반영
+# 5) 게시 전 점검(아래 「게시 전 점검」) 후 커밋·푸시 → Pages 가 자동 반영
 ```
 
 키는 저장소 루트 `.env.local`(커밋 안 함)에 `VWORLD_KEY=...` 한 줄. 화면용 `config.js` 는
@@ -62,3 +62,35 @@ py -3 tools/build_pages.py
 
 키 없이 화면만 시험할 때: `py -3 tools/build_data.py raw/<csv> --no-geocode` (캐시에 있는 좌표만 쓴다),
 로컬 서버 `py -3 -m http.server 8765` (브이월드 타일은 키 도메인 제한으로 로컬에서 안 뜰 수 있다).
+
+## 게시 전 점검(11-19)
+
+푸시하기 전에 두 겹으로 본다. 둘 다 설치할 것이 없다.
+
+**① 정적 검사 — 매번**
+
+```bash
+py -3 tools/check.py
+```
+
+판 번호 4곳(`?v=` 3곳 + `VER`) 일치 · 자료 JSON 행·좌표 · 안내 글의 「N곳」과 자료 건수(index.html·루트 화면·시도 페이지 17)
+· 시도 slug·sitemap · 확인 태그·하단 비공식 문구·루트 자동 넘김 금지 · `.env.local` 키가 올라갈 파일에 섞였는지 · `app.js` 문법.
+하나라도 틀리면 종료코드 1 — 고친 뒤 다시 돌린다.
+
+**② 브라우저 점검 — 화면 파일(index.html·app.js·style.css)을 고쳤을 때**
+
+Claude 가 playwright MCP 로 로컬 미리보기를 띄워 `tools/browser-check.js` 를 돌린다(사람이 손으로 할 일 아님).
+
+1. 미리보기 서버: 루트 `.claude/launch.json` 의 `sanjaemap`(8765, `py -3 -m http.server`)
+2. playwright 로 세 번 연다 — 매번 새로 열고 아래 한 줄을 `browser_evaluate` 에 넘긴다
+   - 375×812 · `http://127.0.0.1:8765/` (휴대폰: 지도/목록 탭마다 목적 버튼·토글·지도 높이·가로 넘침, 처음이세요? 창, 약국 팝업 폭)
+   - 1280×800 · `http://127.0.0.1:8765/?id=1000001` (PC 배치 + `?id=` 팝업)
+   - 콘솔 오류·경고 0건(`browser_console_messages`)
+
+   ```js
+   async () => { const s = await fetch('tools/browser-check.js?t=' + Date.now()).then(r => r.text()); return await (0, eval)(s.slice(s.indexOf('async () =>')))(); }
+   ```
+3. 결과 `ok:false` 가 하나라도 있으면 게시하지 않는다. playwright 스냅샷은 `.playwright-mcp/`(git 제외)에 쌓인다.
+
+못 보는 것: 실제 휴대폰의 위치 권한 창·GPS 거리순·브이월드 타일(로컬은 키 도메인 제한) — 이건 게시 후 실기기로.
+처음 만들 때(11-19) 11-18 의 「휴대폰 지도 탭에서 약국 토글이 안 보임」(c045c1b 로 고친 것)을 흉내 내 잡히는 것을 확인했다.

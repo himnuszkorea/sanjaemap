@@ -1,5 +1,5 @@
 # Session Summary
-최종 갱신: 2026-11-18 (노트북)
+최종 갱신: 2026-11-19 (노트북)
 
 ## 1. 프로젝트 목적
 **산재맵** — 근로복지공단 산재보험 지정의료기관(공공데이터포털 CSV, 6,742곳, 2025-12-31 기준)·소음성 난청 청력 특진 의뢰기관 220곳·공단 소속기관 78곳을
@@ -21,7 +21,7 @@
 
 ## 4. 미완료 작업
 - **쿠키 없는 방문 통계(11-18 제안 5)** — 진행: 없음 / 남은 것: 사용자가 서비스 고르고 가입(예: GoatCounter·Cloudflare Web Analytics) → `index.html` 에 스크립트 한 줄 + `#about` 에 「쿠키 없는 방문 집계」 한 줄
-- 실제 휴대폰 세부 확인 — 진행: 약국 토글 표시 확인(사용자) / 남은 것: 목적 버튼 → GPS 권한 창 → 거리순 · 「산재 처음이세요?」 창 높이 · 약국 팝업이 오른쪽으로 살짝 넘치는지(미리보기 375px 에서 보였음) · `?id=` 링크·「링크 공유」
+- 실제 휴대폰 세부 확인 — 진행: 약국 토글 표시 확인(사용자) / 남은 것: 목적 버튼 → GPS 권한 창 → 거리순 · 「링크 공유」 (창 높이·약국 팝업 폭·`?id=` 팝업은 11-19 브라우저 점검 375px·1280px 통과 — 실기기 GPS 만 남음)
 - 검색 노출 관찰 — 진행: 구글·네이버 요청 완료(10-27) / 남은 것: `sitemap.xml?v=1` 상태 재확인 · 색인·순위 관찰
 - (선택) 약국 좌표 실패 705곳 — 주소에 건물명·층이 붙은 경우가 많다. 괄호·층 떼고 재지오코딩하면 일부 살아날 수 있음
 - (선택) 위치 미확인 지정기관 2곳(파주 교하하나의원·교하제일의원) · 이름만 맞춘 2곳(광명 윤정형외과·대전 드림치과) 전화 확인
@@ -30,6 +30,7 @@
 - `index.html` — 메타·`#quick`(목적 버튼·출발지·`.ext-row` 재활인증/약국 토글)·`#tabs`·`aside#side` 필터·`dialog#first`·`#about`, `?v=` 판 번호 3곳
 - `app.js` — `VER` · `init(d, rh)`(재활인증 표시) · `apply()`(필터·묶음·약국 `phit`·목록·`syncUrl`) · `phMarker/phPopup/phRow` · `pharmOn` change(지연 로드) · `setPurpose/presetFilters/locate` · `setTab/fitTo/placeQuick`
 - `style.css` — 색 토큰(`--ph`·`--rh` 포함, 다크 대응), 휴대폰 `@media (max-width:760px)` 의 `:root[data-tab]` 규칙
+- `tools/check.py` — 게시 전 정적 검사 · `tools/browser-check.js` — playwright 로 돌리는 화면 점검(11-19)
 - `tools/build_data.py` — CSV → `data/hospitals.json` · `tools/build_pages.py` — 시도 페이지 17 + `sitemap.xml`
 - `tools/build_extra.py` — API → `data/rehab.json`·`data/pharm.json`(+ `raw/api_*_<날짜>.json`), `fmt_tel`, `--no-geocode` 는 캐시만 · 키 `.env.local` `DATA_GO_KR_KEY`
 - `tools/geocode_cache.json` — 지오코딩 캐시(약국 포함, 커밋함)
@@ -62,6 +63,7 @@
 - 확인 태그 삭제 금지: 산재맵 `google-site-verification`, 루트 `naver-site-verification`·`google-site-verification` · 루트에 자동 넘김 다시 넣지 말 것
 - 「산재 처음이세요?」 문구를 고칠 때는 조문 원문을 다시 조회(기억 인용 금지)
 - 화면 파일을 고치면 `?v=`(3곳)와 `VER` 를 함께 올린다(Pages 10분 캐시)
+- **푸시 전 `py -3 tools/check.py`(매번) · 화면을 고쳤으면 `tools/browser-check.js` 브라우저 점검(README 「게시 전 점검」)** — 11-19 신설
 - **작업 전 `git pull`** — 노트북·사무실 PC 두 곳에서 푸시한다
 - 공개 저장소 — 커밋 전 `.env.local`·키 미포함 확인(`DATA_GO_KR_KEY` 값으로 grep). `config.js` 브이월드 키만 의도된 공개
 - 웹 확인·검색은 **Aside 먼저**(사용자 지시) — 내장 브라우저는 localhost 미리보기만(루트 `.claude/launch.json` `sanjaemap`, 8765)
