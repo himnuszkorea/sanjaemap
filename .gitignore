@@ -1,2 +1,4 @@
 .env.local
 __pycache__/
+# playwright MCP 스냅샷(페이지 내용이 담김)
+.playwright-mcp/
