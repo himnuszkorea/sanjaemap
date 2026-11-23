@@ -83,7 +83,7 @@ def has(text, n, where):
 
 for n in (n_desig, n_hear, n_off, n_rehab, n_pharm):
     has(index, n, "index.html")
-# 특진 종류별 내역(상급종합 33, 종합 82, 청력검사 전문 97, 공단 소속병원 8)
+# 특진 종류별 내역(상급종합 33, 종합 82, 청력검사 전문 98, 공단 소속병원 8)
 hk = H["meta"]["hkinds"]
 for i, label in enumerate(hk):
     short = {"청력검사전문의료기관": "청력검사 전문의료기관"}.get(label, label)

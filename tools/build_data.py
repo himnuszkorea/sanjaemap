@@ -57,6 +57,13 @@ SIDO_SHORT = {
     "경북": "경북", "경상북도": "경북", "경남": "경남", "경상남도": "경남",
     "제주": "제주", "제주도": "제주", "제주특별자치도": "제주", "전남광주": "광주",  # 특진 현황의 광주 표기
 }
+# 특진 현황(2026-10-07)보다 뒤에 추가된 청력검사 전문 의료기관 — 특진 지도 데이터에 없어 여기서 더한다.
+# 좌표는 같은 건물(드림프라자)의 지정기관 「공감 정신건강의학과」(1022933) 좌표. 기호는 모른다(빈칸 → 링크 공유 버튼 없음).
+# 특진 현황을 새로 받아 이 기관이 들어 있으면 여기서 지운다.
+EXTRA_HEARING = [
+    {"code": "", "name": "전주삼성이비인후과", "addr": "전북 전주시 덕진구 혁신로 697 401호", "tel": "063-716-9505",
+     "kind": "청력검사전문의료기관", "lat": 35.873979, "lng": 127.074268},  # 2026-11-23 사용자 제공
+]
 # 청력 특진 의뢰기관 종류(특진 지도 원자료의 의료기관종류 + 공단 소속병원)
 HKINDS = ["공단 소속병원", "상급종합병원", "종합병원", "청력검사전문의료기관"]
 # 마지막 칸: 이름이 '의료법인 ○○의료재단'뿐인 곳(30곳 중 27곳)과 연구소·국립재활원 등 — 종류를 알 수 없다는 뜻을 이름에 담는다
@@ -268,6 +275,7 @@ def main(src, no_geocode=False):
     # 같은 시도 안의 이름으로 맞춘다(공단 소속병원은 기호가 비어 있고, 충주의료원은 특진 현황의 기호가 한 자리 다르다).
     hdata = json.loads(HEARING.read_text(encoding="utf-8")) if HEARING.exists() else {"clinics": [], "offices": [], "meta": {}}
     hclin = [c for c in hdata["clinics"] if not c.get("note")]
+    hclin += [c for c in EXTRA_HEARING if not any(name_core(c["name"]) == name_core(h["name"]) for h in hclin)]
     by_code = {r["의료기관기호"].strip(): i for i, r in enumerate(rows)}
     by_name = {(region(r["주소"])[0], name_core(r["의료기관명"])): i for i, r in enumerate(rows)}
     hmatch, honly = {}, []

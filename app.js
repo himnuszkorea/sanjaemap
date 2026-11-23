@@ -3,7 +3,7 @@
 // 출발지·거리·길찾기·브이월드 검색·소속기관 표시는 청력 특진 지도(gj-hearing-clinic-map/index.html)와 같은 방식이다.
 "use strict";
 const VWORLD_KEY = window.VWORLD_KEY || "";
-const VER = "20261118e";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
+const VER = "20261123a";  // index.html 의 ?v= 와 같이 올린다(Pages 캐시 10분)
 const HEARING_MAP = "https://gj-hearing-clinic-map.vercel.app/";
 const REPORT = "https://github.com/himnuszkorea/sanjaemap/issues/new";  // 오류 제보 창구
 const SIDO_ORDER = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"];
@@ -116,7 +116,7 @@ const goLinks = c =>
 
 // 기관 링크(?id=기호) 공유 — 팝업 아래 작은 줄. 기관별 제보 링크는 두지 않는다(목록은 매년 갱신 때 일괄 정리, 10-22 사용자 결정)
 const shareUrl = c => `${location.origin}${location.pathname}?id=${encodeURIComponent(c.code)}`;
-const subLinks = c => `<div class="pop-sub"><button type="button" class="share" data-code="${esc(c.code)}">링크 공유</button></div>`;
+const subLinks = c => !c.code ? "" : `<div class="pop-sub"><button type="button" class="share" data-code="${esc(c.code)}">링크 공유</button></div>`;
 document.addEventListener("click", async e => {
   const b = e.target.closest("button.share");
   if (!b) return;

@@ -122,7 +122,9 @@ def page(sido, slug, full, rows, meta, kinds, hkinds):
             hear = "특진(" + escape(HSHORT.get(hkinds[r["hk"]], hkinds[r["hk"]])) + ")" if r["hk"] >= 0 else ""
             tel = tel_link(r["tel"]) + (f" · 특진 {tel_link(r['htel'])}" if r["htel"] else "")
             # 기관별 「지도」 — 산재맵이 ?id=기호 로 그 기관 팝업을 연다(위치 미확인은 목록으로)
-            name = (f'{escape(r["name"])} <a class="pin" href="../../?id={quote(r["code"])}">지도</a>' if r["lat"] is not None
+            # 기호가 없는 기관(build_data.py EXTRA_HEARING)은 ?q=이름 으로 연다
+            pin = f'id={quote(r["code"])}' if r["code"] else f'q={quote(r["name"])}'
+            name = (f'{escape(r["name"])} <a class="pin" href="../../?{pin}">지도</a>' if r["lat"] is not None
                     else f'{escape(r["name"])} <span class="out">위치 미확인</span>')
             out.append(f'<tr><td>{name}</td><td class="kind">{kind}</td><td>{escape(r["addr"])}</td>'
                        f'<td class="tel">{tel}</td><td class="hear">{hear}</td></tr>')
